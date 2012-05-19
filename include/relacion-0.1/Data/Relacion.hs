@@ -1,5 +1,5 @@
 {- | 
-    El contenedor Relación modela asociaciones dos elementos.
+    El contenedor Relation modela asociaciones dos elementos.
     Ofrece búsqueda eficiente por cualquiera de los dos elementos. 
 
     Es similar a Data.Map en que asocia llaves (k) con valores (v).
@@ -18,6 +18,8 @@
 -}     
 
 {-
+    2012/05/17. DD. Translating to English. Shortening names.
+
     2009/11/09. LFL. Se corrige la definición de delete.
 
     2009/11/26. LFL. Construcción
@@ -26,57 +28,59 @@
 
 module Data.Relacion (
 
-   -- * El tipo @Relación@
+   -- * The @Relation@ type
+                                   -- * El tipo @Relation@
 
-   Relación ()  
+   Relation ()  
 
-   -- *  Funcionalidad provista:
+   -- * Provided functionality:
+                                   -- *  Funcionalidad provista:
  
-   -- ** Consultas
+   -- Inquiry 
 
- , size         --  Tuplas en la relación.
- , null         --  Esta vacía?
+ , size         --  Number of tuples in the relation.
+ , null         --  Is the number of tuples 0?
 
-   -- ** Construcción
-
- , empty        --  Construya una relación vacía.
- , fromList     --  Construya una relación de una lista.
- , singleton    --  Construya una relación unitaria.
+   -- * Construction
+ 
+ , empty        --  Make an empty relation.
+ , fromList     --  Make a relation from a list.
+ , singleton    --  Build a FIXME: unitary relation.
 
    -- ** Operaciones 
 
  , union        --  Una dos relaciones.
  , unions       --  Concatene una lista de relaciones.
- , insert       --  Inserte una tupla en la relación.
- , delete       --  Elimine una tupla de la relación.
-   -- El conjunto con los valores asociados a un valor del dominio.
- , lookupDom     
-   -- El conjunto con los valores asociados a un valor del rango.
- , lookupRan    
- , memberDom    --  Pertenece el elemento al dominio?
- , memberRan    --  Pertenece el elemento al rango?
- , member       --  Pertenece la tupla a la relación?
+ , insert       --  Inserte una tupla en la relation.
+ , delete       --  Elimine una tupla de la relation.
+   -- El conjunto con los valores asociados a un valor del domain.
+ , lookupD     
+   -- El conjunto con los valores asociados a un valor del range.
+ , lookupR    
+ , inD    --  Is the element in the domain?
+ , inR    --  "   "     "    "   "  range?
+ , member --  "   "     "    "      either?
  , notMember    
  
    -- ** Conversión
 
- , toList       --  Construya una lista de una relación.
-   --  Extrae los elementos del dominio a un conjunto. 
+ , toList       --  Construya una lista de una relation.
+   --  Extract the domain into a Set.
  , dom          
-   --  Extrae los elementos del rango a un conjunto. 
+   --  Extract the range into a Set.
  , ran
 
    -- ** Utilitarios
 
- , compactarSet --  Compacta un conjunto de Maybe's.
+ , compactSet --  Compact a Set of Maybes
    
- , (|$>) -- restringe rango según subconjunto. PICA.
+ , (|$>) -- restringe range según subconjunto. PICA.
   
- , (<$|) -- restringe dominio según subconjunto. PICA.
+ , (<$|) -- restringe domain según subconjunto. PICA.
 
- , (<|)  -- restricción de dominio. Z.
+ , (<|)  -- restricción de domain. Z.
 
- , (|>)  -- restricción de rango. z.
+ , (|>)  -- restricción de range. z.
 
 )
 
@@ -106,8 +110,8 @@ import           Data.Maybe        (isJust, fromJust, fromMaybe)
    un conjunto de valores v.
    No permitimos la asociación k con un conjunto vacío.
 -}
-data Relación a b  = Relación { dominio ::  M.Map a (S.Set b)
-                              , rango   ::  M.Map b (S.Set a)
+data Relation a b  = Relation { domain ::  M.Map a (S.Set b)
+                              , range   ::  M.Map b (S.Set a)
                               }
 
     deriving (Show, Eq, Ord)
@@ -116,29 +120,29 @@ data Relación a b  = Relación { dominio ::  M.Map a (S.Set b)
 -- * Funciones sobre relaciones
 
 
---  El tamaño es calculado usando el dominio.
--- |  @size r@ devuelve la cantidad de tuplas en la relación.
+--  El tamaño es calculado usando el domain.
+-- |  @size r@ devuelve la cantidad de tuplas en la relation.
 
-size    ::  Relación a b -> Int
-size r  =   M.fold ((+) . S.size) 0 (dominio r)
+size    ::  Relation a b -> Int
+size r  =   M.fold ((+) . S.size) 0 (domain r)
 
 
 
--- | Construye una relación sin elementos.
+-- | Construye una relation sin elementos.
 
-empty   ::  Relación a b 
-empty   =   Relación M.empty M.empty
+empty   ::  Relation a b 
+empty   =   Relation M.empty M.empty
 
 
   
 -- |
 -- La lista debe tener formato [(k1, v1), (k2, v2),..,(kn, vn)].
 
-fromList    ::  (Ord a, Ord b) => [(a, b)] -> Relación a b
+fromList    ::  (Ord a, Ord b) => [(a, b)] -> Relation a b
 fromList xs =
-    Relación 
-        { dominio =  M.fromListWith S.union $ snd2Set    xs
-        , rango   =  M.fromListWith S.union $ flipAndSet xs
+    Relation 
+        { domain =  M.fromListWith S.union $ snd2Set    xs
+        , range   =  M.fromListWith S.union $ flipAndSet xs
         } 
     where  
        snd2Set    = map ( \(x,y) -> (x, S.singleton y) ) 
@@ -146,33 +150,33 @@ fromList xs =
 
 
 
-toList   ::  Relación a b -> [(a,b)]
+toList   ::  Relation a b -> [(a,b)]
 toList r =   concatMap
                ( \(x,y) -> zip (repeat x) (S.toList y) )
-               ( M.toList . dominio $ r)
+               ( M.toList . domain $ r)
   
   
 
 -- | 
--- Construye una relación compuesta por la asociación de @x@ y @y@.
+-- Construye una relation compuesta por la asociación de @x@ y @y@.
 
-singleton      ::  a -> b -> Relación a b
-singleton x y  =   Relación 
-                     { dominio = M.singleton x (S.singleton y) 
-                     , rango   = M.singleton y (S.singleton x)
+singleton      ::  a -> b -> Relation a b
+singleton x y  =   Relation 
+                     { domain = M.singleton x (S.singleton y) 
+                     , range   = M.singleton y (S.singleton x)
                      }
 
 
 
--- | La relación que resulta de unir dos relaciones @r@ y @s@.
+-- | La relation que resulta de unir dos relaciones @r@ y @s@.
 
 union ::  (Ord a, Ord b) 
-      =>  Relación a b -> Relación a b -> Relación a b
+      =>  Relation a b -> Relation a b -> Relation a b
 
 union r s       =  
-    Relación 
-      { dominio =  M.unionWith S.union (dominio r) (dominio s)
-      , rango   =  M.unionWith S.union (rango   r) (rango   s)
+    Relation 
+      { domain =  M.unionWith S.union (domain r) (domain s)
+      , range   =  M.unionWith S.union (range   r) (range   s)
       }
 
 
@@ -194,124 +198,124 @@ foldlStrict f z xs  =   case xs of
 
 
 
--- | Concatena una lista de relaciones en una sola relación.
+-- | Concatena una lista de relaciones en una sola relation.
 
-unions       ::  (Ord a, Ord b) => [Relación a b] -> Relación a b
+unions       ::  (Ord a, Ord b) => [Relation a b] -> Relation a b
 
 unions       =   foldlStrict union empty
 
 
 
--- | Inserta la asociación entre @ x @ y @ y @ en la relación @ r @
+-- | Inserta la asociación entre @ x @ y @ y @ en la relation @ r @
 
 insert       ::  (Ord a, Ord b) 
-             =>  a -> b -> Relación a b -> Relación a b
+             =>  a -> b -> Relation a b -> Relation a b
 
-insert x y r =  -- r { dominio = dominio', rango = rango' } 
-                Relación dominio' rango'
+insert x y r =  -- r { domain = domain', range = range' } 
+                Relation domain' range'
   where 
-   dominio'  =  M.insertWith S.union x (S.singleton y) (dominio r)
-   rango'    =  M.insertWith S.union y (S.singleton x) (rango   r)
+   domain'  =  M.insertWith S.union x (S.singleton y) (domain r)
+   range'    =  M.insertWith S.union y (S.singleton x) (range   r)
 
 
 {- 
    El borrado no es difícil pero es delicado.
-   r = { dominio {  (k1, {v1a, v3})
+   r = { domain {  (k1, {v1a, v3})
                  ,  (k2, {v2a})
                  ,  (k3, {v3b, v3})
                  }
-       , rango   {  (v1a, {k1}
+       , range   {  (v1a, {k1}
                  ,  (v2a, {k2{
                  ,  (v3 , {k1, k3}
                  ,  (v3b, {k3}
                  }
       }
 
-   Para borrar (k,v) de la relación haga:
-    1. Trabajando sobre el dominio:
+   Para borrar (k,v) de la relation haga:
+    1. Trabajando sobre el domain:
        1a. Borre v del conjunto VS asociado con k.
-       1b. Si VS es vacío, elimine k del dominio.
-    2. Trabajando sobre el rango:
+       1b. Si VS es vacío, elimine k del domain.
+    2. Trabajando sobre el range:
        2a. Borre k del conjunto VS asociado con v
-       2b. Si VS es vacío, elimine v del rango. 
+       2b. Si VS es vacío, elimine v del range. 
          
 -}
 
--- |  Remueve una asociación de la relación.
+-- |  Remueve una asociación de la relation.
 delete       ::  (Ord a, Ord b) 
-             =>  a -> b -> Relación a b -> Relación a b
+             =>  a -> b -> Relation a b -> Relation a b
 
-delete x y r  =  r { dominio = dominio', rango = rango' } 
+delete x y r  =  r { domain = domain', range = range' } 
    where 
-   dominio'   =  M.update (borrar y) x (dominio r)
-   rango'     =  M.update (borrar x) y (rango   r)
+   domain'   =  M.update (borrar y) x (domain r)
+   range'     =  M.update (borrar x) y (range   r)
    borrar e s =  if  S.singleton e == s
                      then  Nothing
                      else  Just $ S.delete e s
   
--- | El conjunto de valores asociados a un valor del dominio.
+-- | El conjunto de valores asociados a un valor del domain.
 
-lookupDom     ::  Ord a =>  a -> Relación a b -> Maybe (S.Set b)
-lookupDom x r =   M.lookup  x  (dominio r)
-
-
-
--- | El conjunto de valores asociados a un valor del rango.
-
-lookupRan     ::  Ord b =>  b -> Relación a b -> Maybe (S.Set a)
-lookupRan y r =   M.lookup  y  (rango   r)
+lookupD     ::  Ord a =>  a -> Relation a b -> Maybe (S.Set b)
+lookupD x r =   M.lookup  x  (domain r)
 
 
 
--- | True si el elemento @ x @ pertenece al dominio de @ r @.
+-- | El conjunto de valores asociados a un valor del range.
 
-memberDom     ::  Ord a =>  a -> Relación a b -> Bool
-memberDom x r =   isJust $ lookupDom x r
-
-
-
--- | True si el elemento pertenece al rango.
-
-memberRan     ::  Ord b =>  b -> Relación a b -> Bool
-memberRan y r =   isJust $ lookupRan y r
+lookupR     ::  Ord b =>  b -> Relation a b -> Maybe (S.Set a)
+lookupR y r =   M.lookup  y  (range   r)
 
 
 
--- | True si la relación está vacía.
+-- | True si el elemento @ x @ pertenece al domain de @ r @.
 
--- Before 2010/11/09 null::Ord b =>  Relación a b -> Bool
-null    ::  Relación a b -> Bool
-null r  =   M.null $ dominio r  
-
+inD     ::  Ord a =>  a -> Relation a b -> Bool
+inD x r =   isJust $ lookupD x r
 
 
--- | True si la relación contiene la asociación @x@ y @y@
 
-member       ::  (Ord a, Ord b) =>  a -> b -> Relación a b -> Bool
-member x y r =   case lookupDom x r of
+-- | True si el elemento pertenece al range.
+
+inR     ::  Ord b =>  b -> Relation a b -> Bool
+inR y r =   isJust $ lookupR y r
+
+
+
+-- | True si la relation está vacía.
+
+-- Before 2010/11/09 null::Ord b =>  Relation a b -> Bool
+null    ::  Relation a b -> Bool
+null r  =   M.null $ domain r  
+
+
+
+-- | True si la relation contiene la asociación @x@ y @y@
+
+member       ::  (Ord a, Ord b) =>  a -> b -> Relation a b -> Bool
+member x y r =   case lookupD x r of
                       Just s  ->  S.member y s
                       Nothing ->  False
     
 
 
--- | True si un par no pertenece a la relación
+-- | True si un par no pertenece a la relation
 
-notMember       ::  (Ord a, Ord b) =>  a -> b -> Relación a b -> Bool
+notMember       ::  (Ord a, Ord b) =>  a -> b -> Relation a b -> Bool
 notMember x y r =   not $ member x y r
 
 
 
--- | Devuelve el dominio de la relación como un conjunto.
+-- | Devuelve el domain de la relation como un conjunto.
 
-dom            ::  Relación a b -> S.Set a
-dom r          =   M.keysSet (dominio r)
+dom            ::  Relation a b -> S.Set a
+dom r          =   M.keysSet (domain r)
 
 
 
--- | Devuelve el rango de la relación como un conjunto.
+-- | Devuelve el range de la relation como un conjunto.
 
-ran            ::  Relación a b -> S.Set b
-ran r          =   M.keysSet (rango   r)
+ran            ::  Relation a b -> S.Set b
+ran r          =   M.keysSet (range   r)
 
 
 
@@ -323,9 +327,9 @@ ran r          =   M.keysSet (rango   r)
 
     Es similar a @concat@.
 -}
-compactarSet ::  Ord a => S.Set (Maybe (S.Set a)) -> S.Set a
+compactSet ::  Ord a => S.Set (Maybe (S.Set a)) -> S.Set a
 
-compactarSet =   S.fold ( S.union . fromMaybe S.empty ) S.empty
+compactSet =   S.fold ( S.union . fromMaybe S.empty ) S.empty
 
 
 
@@ -335,79 +339,79 @@ compactarSet =   S.fold ( S.union . fromMaybe S.empty ) S.empty
      
      PICA provee dos operadores |> y <|,
      respectivamente |$> y <$| en esta biblioteca, que trabajan
-     sobre una Relación y OIS's. PICA expone los operadores
+     sobre una Relation y OIS's. PICA expone los operadores
      definidos acá, para no romper con la abstracción del
-     tipo de datos Relación y porque teniendo acceso a los
-     componentes escondidos de Relación, es más eficiente
+     tipo de datos Relation y porque teniendo acceso a los
+     componentes escondidos de Relation, es más eficiente
      la implementación de la operación de restricción.
 
     (a <$| b) r 
 
       se lee: por cada elemento @b@ del conjunto @B@,
               seleccione un elemento @a@ del conjunto @A@
-              si @a@ está relacionado con @b@ en la relación @r@.
+              si @a@ está relacionado con @b@ en la relation @r@.
 
     (a |$> b) r
 
       se lee: por cada elemento @a@ del conjunto @A@, 
               seleccione un elemento @b@ del conjunto @B@
-              si @a@ está relacionado con @b@ en la relación @r@.
+              si @a@ está relacionado con @b@ en la relation @r@.
 
-    Con respecto a los operadores de restricción de dominio
-    y restricción de rango del lenguaje Z que devuelven una relación,
-    los descritos son diferentes y devuelven el dominio o el rango.
+    Con respecto a los operadores de restricción de domain
+    y restricción de range del lenguaje Z que devuelven una relation,
+    los descritos son diferentes y devuelven el domain o el range.
    
 
 -}
 
 
 (<$|)          ::  (Ord a, Ord b) 
-               =>  S.Set a -> S.Set b -> Relación a b -> S.Set a
+               =>  S.Set a -> S.Set b -> Relation a b -> S.Set a
 
 (as <$| bs) r  =   as `S.intersection` generarAS bs
 
-    where  generarAS = compactarSet . S.map (`lookupRan` r) 
+    where  generarAS = compactSet . S.map (`lookupR` r) 
     
-    -- Los sub-conjuntos del dominio (a) asociados con cada b,
-    -- tal que b en B y b está en el rango de la relación.
+    -- Los sub-conjuntos del domain (a) asociados con cada b,
+    -- tal que b en B y b está en el range de la relation.
     -- La expresión S.map retorna un conjunto de Either (S.Set a).
 
 
 -- ( Caso a |> r b )
 
 (|$>)          ::  (Ord a, Ord b) 
-               =>  S.Set a -> S.Set b -> Relación a b -> S.Set b
+               =>  S.Set a -> S.Set b -> Relation a b -> S.Set b
 
 (as |$> bs) r  =   bs `S.intersection`  generarBS as
 
-    where  generarBS = compactarSet . S.map (`lookupDom` r) 
+    where  generarBS = compactSet . S.map (`lookupD` r) 
 
 
 
--- | Restricción de dominio para una relación. Modelado como en z.
+-- | Restricción de domain para una relation. Modelado como en z.
 
-(<|) :: (Ord a, Ord b) => S.Set a -> Relación a b  -> Relación a b
+(<|) :: (Ord a, Ord b) => S.Set a -> Relation a b  -> Relation a b
 
 s <| r  =  fromList $ concatMap
                ( \(x,y) -> zip (repeat x) (S.toList y) )
-               ( M.toList dominio' )
+               ( M.toList domain' )
     where
-    dominio'  =  M.unions . map filtrar . S.toList $ s
-    filtrar x =  M.filterWithKey (\k _ -> k == x) dr
-    dr        =  dominio r  -- just to memoize the value
+    domain'  =  M.unions . map filter . S.toList $ s
+    filter x =  M.filterWithKey (\k _ -> k == x) dr
+    dr        =  domain r  -- just to memoize the value
 
 
--- | Restricción de rango para una relación. Modelado como en z.
+-- | Restricción de range para una relation. Modelado como en z.
 
-(|>) :: (Ord a, Ord b) => Relación a b -> S.Set b -> Relación a b
+(|>) :: (Ord a, Ord b) => Relation a b -> S.Set b -> Relation a b
 
 r |> t =  fromList $ concatMap
                ( \(x,y) -> zip (S.toList y) (repeat x) )
-               ( M.toList rango' )
+               ( M.toList range' )
     where
-    rango'    =  M.unions . map filtrar . S.toList $ t
-    filtrar x =  M.filterWithKey (\k _ -> k == x) rr
-    rr        =  rango r   -- just to memoize the value
+    range'    =  M.unions . map filter . S.toList $ t
+    filter x =  M.filterWithKey (\k _ -> k == x) rr
+    rr        =  range r   -- just to memoize the value
 
 
 {- Note:
@@ -425,7 +429,7 @@ r |> t =  fromList $ concatMap
 {- No implementadas
 
  
-   filter :: (a -> b -> Bool) -> Relación a b -> Relación a b
+   filter :: (a -> b -> Bool) -> Relation a b -> Relation a b
    map
    difference
 
