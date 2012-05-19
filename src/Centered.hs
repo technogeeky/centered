@@ -22,39 +22,38 @@
 --                         (<||)                  :: (a*b) -> b
 --   (1a)      h . cons  = (<||) . (id -*- h)
 
+h :: [a] -> b
+h = undefined
 -- |
 -- >>> :t h []
 -- h [] :: b
 
-h :: [a] -> b
-h = undefined
 
+cons (l,r)     = l  :  r
 -- |
 -- >>> :t h cons
 -- h . cons :: (a, [a]) -> c
 
-cons (l,r)     = l  :  r
+
+(-*-) :: (a -> c) -> (b -> d) -> (a,b) -> (c,d)
+(f -*- g) (x,y) = (f x, g y)
+
+
 uncons         = undefined  -- not necessary (yet)
 
 
-
-snoc (xs,x) = xs ++ [x]
-
-unsnoc :: [a] -> ([a],a)
-unsnoc (l:r:[]) = ([l],r)
-unsnoc ________ = error "i didn't write this correctly"
-
-
-foldrr :: ((a,b) -> b) -> ([a], b  ) -> b
-foldlr :: ((b,a) -> b) -> ( b , [a]) -> b
-
-
-
-
+-- |
+--
+-- We define a variation of foldr that takes the base case as an extra argument:
+--
 foldrr (<||) ( []  ,  e               ) = e
 foldrr (<||) ( x:xs,  e               ) = (<||) (  x  , foldrr (<||) (xs,e)  )
 
 -- |
+--   It can be seen as a "resumed" version of foldr.
+--
+--   That is:
+--
 --   (2)       from:
 --                            h            = foldr (<||) e
 --             show:
@@ -64,6 +63,30 @@ foldrr (<||) ( x:xs,  e               ) = (<||) (  x  , foldrr (<||) (xs,e)  )
 
 
 cat (xs,ys) = xs ++ ys
+-- |
+-- >>> :t cat
+-- cat :: ([a], [a]) -> [a]
+--
+-- |
+-- >>> cat ("this","word")
+-- "thisword"
+--
+-- |
+-- >>> cat ([1,2,3],[4,5,6])
+-- [1,2,3,4,5,6]
+--
+-- |
+-- >>> cat ([1,2,3],[])
+-- [1,2,3]
+--
+-- |
+-- >>> cat ([],[1,2,3])
+-- [1,2,3]
+--
+
+
+-- |
+-- 
 -- |
 --   (3)       with:
 --                            cat (xs,ys)    = xs ++ ys
@@ -81,6 +104,15 @@ cat (xs,ys) = xs ++ ys
 foldlr (||>) ( e   ,  []              ) = e
 foldlr (||>) ( e   , unsnoc -> (xs,x) ) = (||>) ( foldlr (||>) (e,xs)  ,  x  )
 
+snoc (xs,x) = xs ++ [x]
+
+unsnoc :: [a] -> ([a],a)
+unsnoc (l:r:[]) = ([l],r)
+unsnoc ________ = error "i didn't write this correctly"
+
+
+foldrr :: ((a,b) -> b) -> ([a], b  ) -> b
+foldlr :: ((b,a) -> b) -> ( b , [a]) -> b
 
 
 
@@ -125,8 +157,6 @@ unfoldlp (<||) p v = (|<|) (v, []) where (|<|) (v, xs) | p v                = [(
 
 
 -- * from AGDA:
-(-*-) :: (a -> c) -> (b -> d) -> (a,b) -> (c,d)
-(f -*- g) (x,y) = (f x, g y)
 
 (/\) :: (a -> b) -> (a -> c) -> a -> (b,c)
 (f /\ g) x = (f x, g x)
