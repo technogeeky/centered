@@ -16,6 +16,6 @@ main = doctest [
                , "src/Pearl/Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem/Section04.hs"
                , "src/Pearl/Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem/Section05.hs"
                , "src/Pearl/Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem/Section06.hs"
-               , "src/Pearl/Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem/Section07.hs"
+               , "src/Pearl/Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem/Ref.hs"
                ]
 

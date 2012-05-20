@@ -1,6 +1,8 @@
 {-# LANGUAGE ViewPatterns, PatternGuards #-}
 module Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section02 where
--- * The Third List-Homomorphism Theorem
+
+import Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section01
+
 
 -- | In the world of sets and total functions, the equations:
 -- 

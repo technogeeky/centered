@@ -25,7 +25,7 @@ library
                        Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section04,
                        Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section05,
                        Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section06,
-                       Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section07 
+                       Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Ref
   build-depends:       base ==4.5.*,
                        transformers ==0.3.*,
                        random ==1.0.*,

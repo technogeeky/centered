@@ -34,7 +34,7 @@ module Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Sect
 --
 -- #anchorBob#
 --
-test = id
+test04 = id
 -- ^
 -- >>> 2 + 2
 -- 4
