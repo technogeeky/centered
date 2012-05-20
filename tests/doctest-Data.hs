@@ -10,6 +10,5 @@ main = doctest [
                , "--optghc=-optP-include"
                , "--optghc=-optPdist/build/autogen/cabal_macros.h"
                , "src/Data/Centered.hs"
-
                ]
 

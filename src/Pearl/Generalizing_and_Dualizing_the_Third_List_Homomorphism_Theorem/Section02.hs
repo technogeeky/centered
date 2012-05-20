@@ -1,15 +1,5 @@
 {-# LANGUAGE ViewPatterns, PatternGuards #-}
-
--- * Introduction
---
--- Among the important 'parallel skeletons' in programming is the 'list homomorphism'.
---
--- >           h (xs ++ ys) = h xs `o` h ys
-
-module Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem where
-
-
-
+module Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section02 where
 -- * The Third List-Homomorphism Theorem
 
 -- | In the world of sets and total functions, the equations:
@@ -31,7 +21,11 @@ h = undefined
 --
 -- We deviate from standard and let fRev be uncurried for convenience in point-free style.
 
--- ** List constructor
+-- ** Introducers
+
+
+
+-- *** List constructor
 ccons = (:)
 -- ^
 -- First, we uncurry the normal (curried) Haskell list constructor @(:)@, which I've named "ccons".

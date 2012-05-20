@@ -17,25 +17,32 @@ cabal-version:       >=1.8
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Data.Centered
+  exposed-modules:     Data.Centered,
+                       Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Pearl,
+                       Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section01,
+                       Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section02,
+                       Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section03,
+                       Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section04,
+                       Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section05,
+                       Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section06,
+                       Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section07 
   build-depends:       base ==4.5.*,
                        transformers ==0.3.*,
                        random ==1.0.*,
                        QuickCheck ==2.4.*,
                        unfoldable ==0.5.*
-library
-  hs-source-dirs:      src/Pearl
-  exposed-modules:     Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem
-  build-depends:       base ==4.5.*,
-                       transformers ==0.3.*,
-                       random ==1.0.*,
-                       QuickCheck ==2.4.*,
-                       unfoldable ==0.5.*
-
-test-suite doctests
+test-suite dt-Pearl
   type:             exitcode-stdio-1.0
   hs-source-dirs:   tests
-  main-is:          doctests.hs
+  main-is:          doctest-Pearl.hs
+  ghc-options:      -threaded
+  build-depends:    base >= 3 && < 5,
+                    doctest >= 0.7 && < 0.8
+
+test-suite dt-Data
+  type:             exitcode-stdio-1.0
+  hs-source-dirs:   tests
+  main-is:          doctest-Data.hs
   ghc-options:      -threaded
   build-depends:    base >= 3 && < 5,
                     doctest >= 0.7 && < 0.8
