@@ -9,8 +9,7 @@ main = doctest [
                , "--optghc=-idist/build/autogen/"
                , "--optghc=-optP-include"
                , "--optghc=-optPdist/build/autogen/cabal_macros.h"
-               , "src/Centered.hs"
-               , "src/Homo.hs"
+               , "src/Data/Centered.hs"
 
                ]
 

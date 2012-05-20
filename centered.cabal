@@ -16,19 +16,17 @@ build-type:          Simple
 cabal-version:       >=1.8
 
 library
-  exposed-modules:     Homo,
-                       Centered
-  -- other-modules:       
+  hs-source-dirs:      src
+  exposed-modules:     Data.Centered
   build-depends:       base ==4.5.*,
                        transformers ==0.3.*,
                        random ==1.0.*,
                        QuickCheck ==2.4.*,
                        unfoldable ==0.5.*
-  hs-source-dirs:      src
 
 test-suite doctests
   type:             exitcode-stdio-1.0
-  hs-source-dirs    tests
+  hs-source-dirs:   tests
   main-is:          doctests.hs
   ghc-options:      -threaded
   build-depends:    base >= 3 && < 5,
