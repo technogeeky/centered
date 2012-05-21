@@ -8,6 +8,7 @@ module Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Ref 
 ref00 = undefined
 -- ^
 -- #00# Shin-Cheng Mu and Akimasa Morihata. Generalising and dualising the third list-homomorphism theorem. In the 16th ACM SIGPLAN International Conference on Functional Programming (ICFP 2011).
+--
 -- [@PDF: <http://www.iis.sinica.edu.tw/~scm/pub/icfp055fp-mu.pdf>@]
 
 -- ** Original References

@@ -1,163 +1,179 @@
 {-# LANGUAGE ViewPatterns, PatternGuards #-}
 module Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section02 where
 
-import Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section01
+import Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Ref
 
 
--- | In the world of sets and total functions, the equations:
--- 
--- > (1)       h    [ ]  =   e                    -- where e :: b
--- > (1)       h  (x:xs) = (<||) (x, h xs)        -- where (<||) :: (a*b) -> b 
---
--- have a unique solution for @h :: [a] -> b@, denoted by:
--- 
--- >           h         = foldr fReverse e
+-- * The Third-List Homomorphism Theorem
 
--- |
--- >>> :t h []
--- h [] :: b
 h :: [a] -> b
 h = undefined
-
--- * Uncurrying for Point-Free
+-- ^ As is well known, in the world of sets and total functions, the equations:
+-- 
+-- @
+--  (1)       'h'  [    ]  =   'e'
+--  (1)       'h'  (x:xs)  = ('<||') (x, 'h' xs)
+-- @
 --
--- We deviate from standard and let fRev be uncurried for convenience in point-free style.
+-- have a unique solution for @'h' :: [a] -> b@, denoted by:
+--
+-- @
+--            'h'          = 'foldr' ('<||') 'e'
+-- @
+--
 
--- ** Introducers
-
-
-
--- *** List constructor
-ccons = (:)
+e :: b
+e = undefined
 -- ^
--- First, we uncurry the normal (curried) Haskell list constructor @(:)@, which I've named "ccons".
+-- e is the unit for the fold, ie, it is like the @[]@ we replace at the end of a list.
+
+
+(<||) :: (a,b) -> b
+(<||) = undefined
+-- ^
+-- We deviate from the standard and let ('<||')  be uncurried since it is more convenient in point-free style,
+-- where programs are described by function composition rather than application. 
+
+
+-- |
+-- In fact, we will also introduce uncurried constructor: 
+-- @
+--   cons ( x, xs ) = x ∶ xs
+-- @
 --
--- >>> :t (ccons)
--- (ccons) :: a -> [a] -> [a]
---
--- >>> :t uncurry (ccons)
--- uncurry (ccons) :: (a, [a]) -> [a]
---
--- to get "cons":
 cons :: (a, [a]) -> [a]
 cons (x,xs)     = x:xs
 
--- ^
--- >>> cons (1,[2,3])
--- [1,2,3]
-
--- ^
--- >>> cons (1,[])
--- [1]
-
--- ^
--- >>> cons ([],[])
--- [[]]
-
--- ** List Concatenation
-cconcat = (++)
--- ^
--- We also uncurry @(++)@, which I've named "cconcat":
-
--- ^
--- >>> :t cconcat
--- cconcat :: [a] -> [a] -> [a]
-
--- ^
--- >>> :t uncurry cconcat
--- uncurry cconcat :: ([a], [a]) -> [a]
-
--- ^
--- >>> "this" `cconcat` "word"
--- "thisword"
-
--- To get "cat":
-cat :: ([a], [a]) -> [a]
-cat (xs,ys) = xs ++ ys
--- ^
--- >>> :t cat
--- cat :: ([a], [a]) -> [a]
-
--- ^
--- >>> cat ("this","word")
--- "thisword"
-
--- ^
--- >>> cat ([1,2,3],[4,5,6])
--- [1,2,3,4,5,6]
-
--- ^
--- >>> cat ([1,2,3],[])
--- [1,2,3]
-
--- ^
--- >>> cat ([],[1,2,3])
--- [1,2,3]
+(><) :: (a -> c) -> (b -> d) -> (a,b) -> (c,d)
+(f >< g) (x,y) = (f x, g y)
+-- ^ 
+-- and let: 
+-- 
+-- @ ( f '><' g ) ( x, y ) = ( f x, g y ) @
+-- 
+-- which satisfies a law:
+-- 
+-- @ ( f '><' g ) '.' ( h '><' k ) = ( f '.' h '><' g '.' k ) @
+-- 
+-- which we will refer to as @product functor@. 
 
 
 -- |
--- Then, we define a product functor, which must satisfy a law:
+-- Thus (1) can be written
+-- 
+-- @ (1a)  'h' '.' 'cons' = ('<||') '.' ('id' '><' 'h') @
 --
--- > (f >< g) . (h >< k) = ((f . h) >< (g . k))
---
-(><) :: (a -> c) -> (b -> d) -> (a,b) -> (c,d)
-(f >< g) (x,y) = (f x, g y)
+
+a1 = h . cons
 
 
-uncons         = undefined  -- not necessary (yet)
-
-
--- * Fold (uncurried)
+-- ** Deriving 'foldrr' from 'foldr'
+foldrr :: ((a,b) -> b) -> ([a], b  ) -> b
 foldrr (<||) ( []  ,  e ) = e
 foldrr (<||) ( x:xs,  e ) = (<||) (  x  , foldrr (<||) (xs,e)  )
 
 -- ^
--- We define a variation of foldr that takes the base case as an extra argument.
+-- We define a variation of 'foldr' that takes the base case as an extra argument.
 --
---   This can be seen as a "resumed" version of foldr.
+-- It can be seen as a @resumed@ version of 'foldr' (hence the suffix @r@ in the name).
 --
---   That is:
+-- That is, if:
 --
--- >   (2)      
--- >            from:
--- >                           h            = foldr  (<||) e
--- >            show:
--- >                           h (xs ++ ys) = foldrr (<||) ( xs , h ys )
--- >            by:
--- >                           induction on xs
-
-
-
-
-
--- |
+-- @    'h'              = 'foldr' ('<||') 'e' @
+--
+-- then one can show:
 -- 
--- |
---   (3)       with:
---                            cat (xs,ys)    = xs ++ ys
---             equation (2):
---                            h (xs ++ ys)   = foldrr (<||) ( xs , h ys )
---             can be written:
---                            h . cat        = foldrr (<||) . ( id >< h )
-
-
-
--- |
---   (4)                      h . cat        = foldlr (||>) . (h >< id)
+-- @(2) 'h' (xs '++' ys)   = 'foldrr' ('<||') ( xs , 'h' ys )@
 --
+-- by induction on xs.
 --
-foldlr (||>) ( e   ,  []              ) = e
-foldlr (||>) ( e   , unsnoc -> (xs,x) ) = (||>) ( foldlr (||>) (e,xs)  ,  x  )
 
-snoc (xs,x) = xs ++ [x]
+cat :: ([a],[a]) -> [a]
+cat (xs,ys) = xs ++ ys
+-- ^
+-- Let:
+--
+-- @ 'cat' (xs,ys) = xs '++' ys @
+-- 
+-- then equation (2):
+--
+-- @(2) 'h' (xs '++' ys) = 'foldrr' ('<||') ( xs , 'h' ys )@
+-- 
+-- can be point-free as:
+--
+-- @(3) 'h' '.' 'cat'      = 'foldrr' ('<||') '.' ( 'id' '><' 'h' ) @
+--
 
+
+-- ** 'foldlr' from 'foldl'
 unsnoc :: [a] -> ([a],a)
 unsnoc (l:r:[]) = ([l],r)
 unsnoc ________ = error "i didn't write this correctly"
 
+snoc :: ([a],a) -> [a]
+snoc (xs,x) = xs ++ [x]
 
-foldrr :: ((a,b) -> b) -> ([a], b  ) -> b
+-- ^
+--
+-- Symmetrically, let:
+--
+-- @ 'snoc' (xs, x) = xs '++' [x] @
+--
+-- It is known that 
+--
+-- @ 'foldl' ('||>') 'e' @
+--
+-- is the unique solution for @'h' :: [a] -> b@
+--
+-- in:
+--
+-- @
+--        'h' [] = 'e'
+--        'h' '.' 'snoc' = ('||>') '.' ( 'h' '><' 'id' )
+-- @
+--
+-- where @ ('||>') :: (b,a) -> b. @
+
+-- |
+-- Defining @resumable@ 'foldl' as:
+--
+-- @
+--   'foldlr' ('||>') ( 'e'   ,  []              ) = 'e'
+--   'foldlr' ('||>') ( 'e'   , 'unsnoc' -> (xs,x) ) = ('||>') ( 'foldlr' ('||>') ('e',xs)  ,  x  ) 
+-- @
+--
 foldlr :: ((b,a) -> b) -> ( b , [a]) -> b
+foldlr (||>) ( e   ,  []              ) = e
+foldlr (||>) ( e   , unsnoc -> (xs,x) ) = (||>) ( foldlr (||>) (e,xs)  ,  x  )
+
+-- ^
+-- we have, if @ 'h' = 'foldl' ('||>') 'e' @, that:
+--
+-- @ (4)  'h' '.' 'cat' = 'foldlr' ('||>') '.' ( 'h' '><' 'id' ) @
+--
+
+
+-- ** A List Homomorphism
+
+-- |
+-- A function @ 'hom' :: [a] -> b @ is a list homomoprhism if there exists:
+--
+-- @ 'e' :: b @
+--
+-- @ 'k' :: a -> b @
+--
+-- @ 'f' :: (b '><' b) -> b @
+--
+-- such that:
+-- 
+-- @
+--   hom [] = e
+--   hom [x] = k x
+--   hom (xs '++' ys) = f ('hom' xs, 'hom' ys)
+-- @
+hom :: [a] -> b
+hom = undefined
+
 
 
 
