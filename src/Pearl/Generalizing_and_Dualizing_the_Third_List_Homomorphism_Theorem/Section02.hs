@@ -105,7 +105,7 @@ cat (xs,ys) = xs ++ ys
 --
 
 
--- ** 'foldlr' from 'foldl'
+-- ** Deriving 'foldlr' from 'foldl'
 unsnoc :: [a] -> ([a],a)
 unsnoc (l:r:[]) = ([l],r)
 unsnoc ________ = error "i didn't write this correctly"
@@ -171,74 +171,167 @@ foldlr (||>) ( e   , unsnoc -> (xs,x) ) = (||>) ( foldlr (||>) (e,xs)  ,  x  )
 --   hom [x] = k x
 --   hom (xs '++' ys) = f ('hom' xs, 'hom' ys)
 -- @
+--
+-- In such a case, we denote 'h' by @'hom' f k 'e'@.
+--
+-- The equations imply that @f@ is associative, on the range of 'h', with unit 'e'. 
+-- To compute a list homomorphism 'h', one may
+--
+-- 1. split the list arbitrarily into two parts
+--
+-- 2. recursively compute 'h' on both parts
+--
+-- 3. and combine the results using @f@
+--
+-- implying a potential for parallel computation. If @f@ and @k@ are constant-time
+-- operations, a list homomorphism can be evaluted in time @ O( n / p + log p )@
+--
+-- where
+--
+-- * @n@ is the length of the list, and
+--
+-- * @p@ is the number of processors
+--
+-- 
+-- resulting in almost linear speedups with respect to @p@.
+
 hom :: [a] -> b
 hom = undefined
 
 
+-- * List Homomorphism Theorems
 
-
-
-
-unhom g f p q = k
-     where 
-     k v | p v = []
-         | q v = [f v]
-         | (l,r) <- g v = k l ++ k r
-
-
-
-
-
-
-unfoldr :: (b -> (a,b)) -> (b -> Bool) -> b -> [a]
-unfoldl :: (b -> (b,a)) -> (b -> Bool) -> b -> [a]
-
-unfoldrp :: (b -> (a,b)) -> (b -> Bool) -> b -> [([a], b)]
-unfoldlp :: (b -> (b,a)) -> (b -> Bool) -> b -> [(b, [a])]
-
-
-unfoldr (||>)    p v 
-               | p v                    = []
-               | (x, v') <- (||>) v     = x : unfoldr (||>) p v'
-
-unfoldl (<||)    p v
-               | p v                    = []
-               | (v', x) <- (<||) v     = unfoldl (<||) p v' ++ [x]
+-- ** Second List Homomorphism Theorem
 -- |
---   (2)       h (l ++ r) = foldrr (<||) (l, h r) if     h  =  foldr  (<||)  e
+-- (the 2nd list-homomorphism theorem [@'ref01'@]).
+-- #theorem01#
 --
+-- If
+-- @
+--        'h' = 'hom' f k 'e'
+-- @
+--
+-- Then
+--
+-- @
+--        'h' = 'foldr' '<||' 'e'
+--        'h' = 'foldl' '||>' 'e'
+-- @
+--
+-- Where
+--
+-- @
+--        ('<||') (x, v) = f (k x, v)
+--        ('||>') (v. x) = f (v, k x)
+-- @
+--
+theorem01 :: a
+theorem01 = undefined
+
+
+-- ** Third List Homomorphism Theorem 
+-- #theorem02#
+
+theorem02 :: a
+theorem02 = undefined
+-- ^
+-- Somewhat surprisingly, if a function can be computed both by a 'foldr' and a 'foldl',
+-- it /is/ a list homomorphism:
+-- 
+-- (the 3rd list-homomorphism theorem [@'ref06'@])
+-- 
+-- @
+--        'h' = 'foldr' '<||' 'e'
+--        'h' = 'foldl' '||>' 'e'
+-- @
+-- 
+-- implies
+--
+-- @
+--        'h' = 'hom' f k 'e'
+-- @
+--
+-- for some @f@ and @k@.
+
+theorem02proof :: a
+theorem02proof = undefined
+-- ^
+-- /Proof./
+--
+-- The only possible choice for @k@ is:
+--
+-- @
+--        'k' x = 'h' [x]
+-- @
+--
+-- The aim is to find @f@ such that:
+--
+-- @
+--        'h' . 'cat' = f . ('h' '><' 'h')
+-- @
+--
+-- A function @fI@ is called a /right inverse/ of @f@ if, for all @y@ in the
+-- range of @f@, we have @f (fI y) = y@. Equivalently, @f . fI . f = f@. 
+-- 
+-- In a set-theoretical model, a right inverse always exists but may not be unique.
+--
+-- While a semantical proof was given by [@Gibbons 'ref06'@], we will provide a proof
+-- having a much more equational flavour.
+--
+-- We reason:
+--
+-- @
+--                        'h' . 'cat'
+-- { use (3) }           =
+--                        'foldrr' '<||' . ('id' '><' 'h')
+-- { h = h . hI . h
+--  and product functor} =
+--                        'foldrr' '<||' . ('id' '><' 'h')   . ('id' '><' 'hI') . ('id' '><' 'h')
+-- { (3) backwards
+--  and (4) forwards }   =
+--                        'foldlr' '||>' . ('h'  '><' 'id')  . ('id' '><' 'hI') . ('id' '><' 'h')
+-- { h = h . hI . h
+--  and product functor} =
+--                        'foldlr' '||>' . ('h'  '><' 'id')  . ('hI' '><' 'hI') . ('h' '><' 'h')
+-- { (4) backwards }     =
+--                         'h' . 'cat'   . ('hI' '><' 'hI')  . ( 'h' '><' 'h' )
+-- @
+--
+-- Thus the theorem holds if we pick
+--
+-- @
+--                    f  = 'h' . 'cat'   . ('hI' '><' 'hI')
+-- @
+--
+
 -- |
---   (3)       h . cat = foldrr  (<||) . (id, h)
-
-unfoldrp (||>) p v = (|>|) ([], v) where (|>|) (xs, v) | p v                = [(xs, v)]
-                                                       | (x, v') <- (||>) v = (xs, v) : (|>|) (xs ++ [x], v')
-unfoldlp (<||) p v = (|<|) (v, []) where (|<|) (v, xs) | p v                = [(v,xs)]
-                                                       | (v', x) <- (<||) v = (|<|) (v', x:xs) ++ [(v,xs)]
-
-
-
--- * from AGDA:
-
-(/\) :: (a -> b) -> (a -> c) -> a -> (b,c)
-(f /\ g) x = (f x, g x)
-
-
-
-
-h_sum [] = 0
-h_sum [x] = (+) x
---h_sum (l ++ r) = f (h l, h r)
-
-
--- curry :: ((a,b) -> c) -> a -> b -> c
-
-
-
-uncurry1 :: (a -> b)           -> (a)     -> b
-uncurry2 :: (a -> b -> c)      -> (a,b)   -> c
-uncurry3 :: (a -> b -> c -> d) -> (a,b,c) -> d
-
-uncurry1 f (x) = f x
-uncurry2 f (x,y) = f x y
-uncurry3 f (x,y,z) = f x y z
-
+-- Theorem 2 in fact provides hints how to construct list homomorphisms. 
+-- 
+-- For example, since @sum = foldr (+) 0 = foldl (+) 0@, Theorem 2 states that sum can be written as:
+-- 
+-- @
+--      'sum' = 'hom' f k 0 
+--        where k x        = sum [ x ] = x 
+--              f ( v, w ) = sum ( g v ++ g w ) 
+-- @
+-- 
+-- for any right inverse @g@ of 'sum'. 
+-- 
+-- One may simply pick 
+-- 
+-- @
+--      g x = [x]
+-- @
+-- 
+-- and @f (v,w)@ simplifies to @v + w@.
+-- 
+-- Readers might have noticed something odd in the proof: the property much talked about, 
+-- that 'h' is both a 'foldr' and a 'foldl', could be weakened - properties (3) and (4) 
+-- were merely used to push 'h' to the right.  In fact, @'h' . 'cat'@ is never expanded in the proof.
+-- 
+-- One thus wonders whether there is something more general waiting
+-- to be discovered, which is indeed what we will see in the following sections. 
+-- The syntactical approach makes such generalisations much easier to spot.
+-- 
+theorem02comments :: a
+theorem02comments = undefined
