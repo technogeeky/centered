@@ -74,6 +74,6 @@ ref10 = undefined
 
 ref11 = undefined
 -- ^
--- #11#
+-- #11#   K. Morita, A. Morihata, K. Matsuzaki, Z. Hu, and M. Takeichi.  Automatic inversion generates divide-and-conquer parallel programs. In J. Ferrante and K. S. McKinley, editors, Proceedings of the ACM SIGPLAN 2007 Conference on Programming Language Design and Implementation, San Diego, California, USA, June 10-13, 2007, pages 146-155. ACM, 2007.
 --
--- This is a test to see if 'r03' works.
+-- [@PDF: <takeichi.ipl-lab.org/pub/PLDI2007.pdf>@]

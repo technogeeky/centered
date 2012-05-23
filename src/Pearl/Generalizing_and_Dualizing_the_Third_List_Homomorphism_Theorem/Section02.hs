@@ -221,8 +221,8 @@ hom = undefined
 -- Where
 --
 -- @
---        ('<||') (x, v) = f (k x, v)
---        ('||>') (v. x) = f (v, k x)
+--        ('<||') (x, v) = f (k x,   v)
+--        ('||>') (v, x) = f (  v, k x)
 -- @
 --
 theorem01 :: a
