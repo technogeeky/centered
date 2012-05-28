@@ -1,71 +1,81 @@
 {-# LANGUAGE ViewPatterns, PatternGuards #-}
 module Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section03 where
 
--- | This is a reference to the "Foo" module.
+(<||) (x, v) = f (k x,   v)
+     where k :: b -> [a]
+           k = undefined
+           f = undefined
+(||>) (v, x) = f (  v, k x)
+     where
+          k :: b -> [a]
+          k = undefined
+          f = undefined
 
--- | This is a bulleted list:
+-- |
+-- The function 'unfoldr', a dual of 'foldr' that generates a list from left
+-- to right, may be defined as follows: ['note01']
+-- 
+-- @
+-- unfoldr (||>)                  p   v 
+--                |               p   v     = []
+--                | (x, v') \<- (||>) v     = x : unfoldr (||>) p v'
+-- @
 --
---     * first item
---     * second item
+unfoldr :: (b -> (a,b)) -> (b -> Bool) -> b -> [a]
+unfoldr (||>)    p v 
+               | p v                    = []
+               | (x, v') <- (||>) v     = x : unfoldr (||>) p v'
 
--- | This is an enumerated list:
---
---     (1) first item
---
---     2. second item
-
--- | This is an enumerated list:
---
---     (1) first item
---
---     2. second item
-
--- | This is a definition list:
---
---   [@foo@] The description of @foo@.
---
---   [@bar@] The description of @bar@.
-
--- This is a URL:
-
--- <http://www.google.com>
+-- |
+-- Symmetrically, the function unfoldl is defined by:
+-- 
+-- @
+-- unfoldl (<||)                   p    v
+--                |                p    v     = []
+--                | (v', x) \<- ('<||') v     = unfoldl (<||) p v' ++ [x]
+-- @
+unfoldl :: (b -> (b,a)) -> (b -> Bool) -> b -> [a]
+unfoldl (<||)    p v
+               | p v                    = []
+               | (v', x) <- (<||) v     = unfoldl (<||) p v' ++ [x]
 
 
--- And this is an anchor:
---
--- #anchorBob#
---
-test03 = id
--- ^
--- >>> 2 + 2
--- 4
-
-
+-- |
+-- Typically, unfolds are defined for /coinductive, possibly infinite lists/. Since we want the unfolded lists to have both a left end
+-- and a right end, and for another important technical reason to be mentioned later, our "unfolds" in this pearl return inductive, finite
+-- lists and require separate proofs that all successive applications of '<||' and '||>' eventually reach some @v@ for which @p v@ is 'True'.
+-- Due to space constraints, however, the proof of termination is usually treated informally.
+-- 
+-- 
+-- Finally, we denote a function @k ∶∶ b → [ a ]@ by @'unhom' g f p q@ it it satisfies:
+-- 
+-- @
+-- unhom g f p q = k
+--      where 
+--      k v | p v = []
+--          | q v = [f v]
+--          | (l,r) <- g v = k l ++ k r
+-- @
+-- 
+-- 
 unhom g f p q = k
      where 
      k v | p v = []
          | q v = [f v]
          | (l,r) <- g v = k l ++ k r
+-- ^
+-- We also demand that successive applications of g eventually produce seeds for which either p or q is true, and thus k generates finite
+-- lists.
 
 
 
 
-
-
-unfoldr :: (b -> (a,b)) -> (b -> Bool) -> b -> [a]
-unfoldl :: (b -> (b,a)) -> (b -> Bool) -> b -> [a]
 
 unfoldrp :: (b -> (a,b)) -> (b -> Bool) -> b -> [([a], b)]
 unfoldlp :: (b -> (b,a)) -> (b -> Bool) -> b -> [(b, [a])]
 
 
-unfoldr (||>)    p v 
-               | p v                    = []
-               | (x, v') <- (||>) v     = x : unfoldr (||>) p v'
 
-unfoldl (<||)    p v
-               | p v                    = []
-               | (v', x) <- (<||) v     = unfoldl (<||) p v' ++ [x]
 -- |
 --   (2)       h (l ++ r) = foldrr (<||) (l, h r) if     h  =  foldr  (<||)  e
 --
