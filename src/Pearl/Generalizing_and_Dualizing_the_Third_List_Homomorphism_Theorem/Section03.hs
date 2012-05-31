@@ -67,14 +67,49 @@ unhom g f p q = k
 -- We also demand that successive applications of g eventually produce seeds for which either p or q is true, and thus k generates finite
 -- lists.
 
+unhom_without_pattern_guards g f p q = k
+     where 
+     k v | p v = []
+         | q v = [f v]
+         | otherwise = case g v of (l,r) -> k l ++ k r in unhom_without_pattern_guards
+
+unhom3 g f p q = k
+     where 
+     k v | p v = []
+         | q v = [f v]
+         | (l,c,r) <- g v = k l ++ k c ++ k r
 
 
 
+-- | example
+
+example0 :: Int -> [Int]
+example0 = unhom
+               (\n -> (n - 1, n - 1))
+               (\0 -> 1)
+               (0 >)
+               (0 ==)
+
+example_fib :: Int -> [Int]
+example_fib = unhom
+               (\n -> (n - 1, n - 2))
+               (\0 -> 1)
+               (0 >)
+               (0 ==)
+
+example3 = unhom3
+               (\n -> (n - 2, n - 2, n - 2))
+               (\0 -> 1)
+               (0 >)
+               (0 ==)
+
+-- >>> map example3 [1,3..99]
+-- [[],[],[],[],[],[],[],[],[],[],[],[],[],Interrupted. SLOW!
 
 unfoldrp :: (b -> (a,b)) -> (b -> Bool) -> b -> [([a], b)]
 unfoldlp :: (b -> (b,a)) -> (b -> Bool) -> b -> [(b, [a])]
 
-
+sdf
 
 -- |
 --   (2)       h (l ++ r) = foldrr (<||) (l, h r) if     h  =  foldr  (<||)  e
