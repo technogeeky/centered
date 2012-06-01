@@ -30,7 +30,8 @@ library
                        transformers ==0.3.*,
                        random ==1.0.*,
                        QuickCheck ==2.4.*,
-                       unfoldable ==0.5.*
+                       unfoldable ==0.5.*,
+                       base-unicode-symbols >= 0.2 && < 0.4
 test-suite dt-Pearl
   type:             exitcode-stdio-1.0
   hs-source-dirs:   tests
