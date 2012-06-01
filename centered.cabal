@@ -18,14 +18,14 @@ cabal-version:       >=1.8
 library
   hs-source-dirs:      src
   exposed-modules:     Data.Centered,
-                       Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Pearl,
-                       Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section01,
-                       Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section02,
-                       Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section03,
-                       Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section04,
-                       Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section05,
-                       Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section06,
-                       Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Ref
+                       Pearl.GaDtTLHT.Pearl,
+                       Pearl.GaDtTLHT.Section01,
+                       Pearl.GaDtTLHT.Section02,
+                       Pearl.GaDtTLHT.Section03,
+                       Pearl.GaDtTLHT.Section04,
+                       Pearl.GaDtTLHT.Section05,
+                       Pearl.GaDtTLHT.Section06,
+                       Pearl.GaDtTLHT.Ref
   build-depends:       base ==4.5.*,
                        transformers ==0.3.*,
                        random ==1.0.*,

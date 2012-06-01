@@ -1,7 +1,50 @@
 {-# LANGUAGE ViewPatterns, PatternGuards #-}
-module Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section02 where
+------------------------------------------------------------------------------------------------
+-- |
+-- Module      :  Pearl.GaDtTLHT.Section02
+-- Copyright   :  (c) Drew Day 2012
+--                (c) Shin-Cheng Mu 2011
+--                (c) Akimasa Morihata 2011
+-- License     :  BSD-style (see LICENSE)
+-- Maintainer  :  Drew Day <drewday@gmail.com>
+-- Stability   :  stable
+-- Portability :  portable (ViewPatterns, PatternGuards)
+--
+------------------------------------------------------------------------------------------------
+module Pearl.GaDtTLHT.Section02 
+     ( 
+     -- * The Third-List Homomorphism Theorem
+       h
+     , e
+     -- ** Uncurrying some familiar functions
+     , (<||)
+     , cons
+     -- ** a product function
+     , (><)
+     , a1
+     -- ** foldrr: a resumed foldr
+     , foldrr
+     , cat
+     -- ** DLists
+     , unsnoc
+     , snoc
+     -- ** foldlr: a resumed foldl
+     , foldlr
+     -- ** A List Homomorphism
+     , hom
+     -- * Some Theorems
 
-import Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Ref
+     -- ** Theorem 1
+     , theorem01
+     -- ** Theorem 2
+     , theorem02
+     -- *** Proof
+     , theorem02proof
+     -- *** Comments
+     , theorem02comments
+     ) where
+
+import Pearl.GaDtTLHT.Ref
 
 
 -- * The Third-List Homomorphism Theorem
@@ -36,7 +79,8 @@ e = undefined
 
 
 -- |
--- In fact, we will also introduce uncurried constructor: 
+-- In fact, we will also introduce uncurried constructor:
+--
 -- @
 --   cons ( x, xs ) = x ∶ xs
 -- @

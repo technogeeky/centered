@@ -1,10 +1,77 @@
 {-# LANGUAGE ViewPatterns, PatternGuards #-}
+------------------------------------------------------------------------------------------------
 -- |
+-- Module      :  Pearl.GaDtTLHT.Section03
+-- Copyright   :  (c) Drew Day 2012
+--                (c) Shin-Cheng Mu 2011
+--                (c) Akimasa Morihata 2011
+-- License     :  BSD-style (see LICENSE)
+-- Maintainer  :  Drew Day <drewday@gmail.com>
+-- Stability   :  stable
+-- Portability :  portable (ViewPatterns, PatternGuards)
+------------------------------------------------------------------------------------------------
+
+module Pearl.GaDtTLHT.Section01
+     (
+     -- ** Introduction 
+          -- $intro
+     
+     -- *** Parallel Skeletons
+          -- $skeletons
+     h
+     -- *** Foldable, and The Third-List Homomorphism Theorem
+          -- $thdlist
+
+     -- *** A Question of Associators     
+          -- $question01
+
+     -- *** Is there a Dual Theorem for Unfoldable?
+          -- $observation
+
+     -- *** Yes!
+          -- $result01
+
+     -- * Contents
+          -- $contents
+
+     -- ** Editor's Note
+
+     -- *** Uncurrying and Point-Free Syntax
+          -- $uncurry
+
+          -- $cons
+     , cons
+     , cons_from_Prelude
+
+          -- $concat
+     , cat_from_Prelude
+     , cat
+     )         where
+import Pearl.GaDtTLHT.Ref
+
+
+(⊙) :: [a] -> [a] -> [a]
+(⊙) = undefined
+-- ^
+-- An associative operator.
+--
+
+
+h :: [a] -> b
+h = undefined
+-- ^
+-- >>> :t h []
+-- h [] :: b
+
+
+-- $intro
 -- As multicore hardware has become standard in recent years, parallel programming rekindles as an important potential
 -- application of functional programming. The skeletal parallel programming [@'ref03'@] paradigm proposes the idea of
 -- developing parallel programs by combining parallel skeletons - functions that capture useful parallel programming
 -- patterns. 
 --
+
+-- $skeletons
 -- Among the important parallel skeletons is list homomorphism [@'ref01'@], one that satisﬁes the equation:
 --
 -- @
@@ -18,7 +85,9 @@
 -- 2. compute 'h' on them recursively in parallel, 
 --
 -- 3. and combine the results using an associative operator @⊙@.
---
+
+
+-- $thdlist
 -- A well-known third list-homomorphism theorem [@'ref03'@] says that a function is a list homomorphism if it can be described
 -- as an instance of both 'foldr' and 'foldl'. 
 --
@@ -37,7 +106,9 @@
 -- @       
 --
 -- For this simple example, (⊙) happens to be ('+') as well. 
--- 
+
+
+-- $question01
 -- One naturally wonders whether (⊙) can be mechanically constructed.
 --
 -- Such methods have been proposed (
@@ -46,7 +117,8 @@
 --  and   [@'ref11'@] )
 --  and even generalised to trees: [@'ref10'@].
 --
--- 
+
+-- $observation 
 -- Less noticed, however, is that the theorem and its proof dualise very well to unfolds on lists. 
 -- 
 -- Consider the function 
@@ -62,42 +134,35 @@
 -- 2. generating the list from the right
 -- 
 -- 3. generating the list from some arbitrary point in the middle. 
--- 
+
+-- $question02
 -- Is it true that any function that can be defined as both an 'Data.Sequence.unfoldr' and an 'Data.Sequence.unfoldl' can be written as one that generates the list from the middle?
--- 
+
+-- $result01
 -- We show in this pearl that the answer is @positive@. This is not only of theoretical interest but could also have a practical impact. First, there are several efficient algorithms that are based on divide-and-conquer sequence generation, such as Quicksort. Moreover, the performance bottleneck in distributed parallel computing often lies in data distribution. Being able to generate the list anywhere allows us to distribute seeds of sublists and simultaneously generate from them, and thereby reduce communication costs and increase parallelism.
---
+
+-- $contents
 -- List homomorphisms and the third list-homomorphism theorem are reviewed in Section 2, before we present a dualised
 -- theorem in Section 3 and apply it, in Section 4, to examples including sorting and parallel scan. In Section 5, the
 -- results are further generalised to trees, before we conclude in Section 6.
--- 
+
+
+-- $editornote
 -- NOTE:
 --
--- The rest of the documentation in this section (including 'ccons', 'cons', 'cconcat', 'cat', ...) are provided
+-- The rest of the documentation in this section (including 'cons_from_Prelude', 'cons', 'cat_from_Prelude', 'cat', ...) are provided
 -- to demonstrate and witness the conversion from traditional point-full Haskell syntax to point-free Haskell syntax. This
 -- should not be strictly necessary, but some programs are easier to express in one form or another. These examples were
 -- motivated by, but not included in, the original paper ('ref00').
 --
-module Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Section01 where
-import Pearl.Generalizing_and_Dualizing_the_Third_List_Homomorphism_Theorem.Ref
-
-
-(⊙) :: [a] -> [a] -> [a]
-(⊙) = undefined
--- ^
--- An associative operator.
---
-
-
-h :: [a] -> b
-h = undefined
--- ^
--- >>> :t h []
--- h [] :: b
 
 
 
--- * Uncurrying and Point-Free Syntax
+
+
+
+
+-- $uncurry
 --
 -- Normal (or point-full) Haskell uses 'curry'-ed functions and function application ('ap', but really just
 -- space) to programs.
@@ -109,17 +174,17 @@ h = undefined
 
 
 
--- ** List Constructor
-ccons = (:)
+-- $cons
+cons_from_Prelude = (:)
 -- ^
--- First, we uncurry the normal (curried) Haskell list constructor (':'), (which I've simply named @ccons@):
+-- First, we uncurry the normal (curried) Haskell list constructor (':'), (which I've simply named @cons_from_Prelude@):
 
 -- ^
 -- >>> 1 : [2,3]
 -- [1,2,3]
 
 -- ^
--- >>> 1 `ccons` [2,3]
+-- >>> 1 `cons_from_Prelude` [2,3]
 -- [1,2,3]
 
 -- ^
@@ -127,12 +192,12 @@ ccons = (:)
 -- (:) :: a -> [a] -> [a]
 
 -- ^
--- >>> :t (ccons)
--- (ccons) :: a -> [a] -> [a]
+-- >>> :t (cons_from_Prelude)
+-- (cons_from_Prelude) :: a -> [a] -> [a]
 
 -- ^
--- >>> :t uncurry (ccons)
--- uncurry (ccons) :: (a, [a]) -> [a]
+-- >>> :t uncurry (cons_from_Prelude)
+-- uncurry (cons_from_Prelude) :: (a, [a]) -> [a]
 
 
 -- ^
@@ -154,18 +219,17 @@ cons (x,xs)     = x:xs
 -- [[]]
 
 
-
--- ** List Concatenation
-cconcat = (++)
+-- $concat
+cat_from_Prelude = (++)
 -- ^
--- Then, we'll also need to uncurry ('++'), which I've named "cconcat":
+-- Then, we'll also need to uncurry ('++'), which I've named "cat_from_Prelude":
 
 -- ^
 -- >>> "this" ++ "word"
 -- "thisword"
 
 -- ^
--- >>> "this" `cconcat` "word"
+-- >>> "this" `cat_from_Prelude` "word"
 -- "thisword"
 
 -- ^
@@ -174,17 +238,15 @@ cconcat = (++)
 
 {- TODO: Fix this. Doctest doesn't support unicode!
 -- >>> :t ⊙
--- (⊙) :: [a] -> [a] -> [a]
-
--}
+-- (⊙) :: [a] -> [a] -> [a]                            -}
 
 -- ^
--- >>> :t cconcat
--- cconcat :: [a] -> [a] -> [a]
+-- >>> :t cat_from_Prelude
+-- cat_from_Prelude :: [a] -> [a] -> [a]
 
 -- ^
--- >>> :t uncurry cconcat
--- uncurry cconcat :: ([a], [a]) -> [a]
+-- >>> :t uncurry cat_from_Prelude
+-- uncurry cat_from_Prelude :: ([a], [a]) -> [a]
 
 
 -- ^
@@ -211,6 +273,17 @@ cat (xs,ys) = xs ++ ys
 -- ^
 -- >>> cat ([],[1,2,3])
 -- [1,2,3]
+
+
+
+
+
+
+
+
+
+
+
 
 
 
