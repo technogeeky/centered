@@ -2,6 +2,7 @@
 ------------------------------------------------------------------------------------------------
 -- |
 -- Module      :  Pearl.GaDtTLHT.Section03
+-- Description :  Introduction
 -- Copyright   :  (c) Drew Day 2012
 --                (c) Shin-Cheng Mu 2011
 --                (c) Akimasa Morihata 2011
@@ -66,13 +67,13 @@ h = undefined
 
 -- $intro
 -- As multicore hardware has become standard in recent years, parallel programming rekindles as an important potential
--- application of functional programming. The skeletal parallel programming [@'ref03'@] paradigm proposes the idea of
+-- application of functional programming. The skeletal parallel programming [@'r03'@] paradigm proposes the idea of
 -- developing parallel programs by combining parallel skeletons - functions that capture useful parallel programming
 -- patterns. 
 --
 
 -- $skeletons
--- Among the important parallel skeletons is list homomorphism [@'ref01'@], one that satisﬁes the equation:
+-- Among the important parallel skeletons is list homomorphism [@'r01'@], one that satisﬁes the equation:
 --
 -- @
 --        'h' (xs '++' ys) = 'h' xs ⊙ 'h' ys
@@ -88,7 +89,7 @@ h = undefined
 
 
 -- $thdlist
--- A well-known third list-homomorphism theorem [@'ref03'@] says that a function is a list homomorphism if it can be described
+-- A well-known third list-homomorphism theorem [@'r03'@] says that a function is a list homomorphism if it can be described
 -- as an instance of both 'foldr' and 'foldl'. 
 --
 -- For example, since:
@@ -112,10 +113,10 @@ h = undefined
 -- One naturally wonders whether (⊙) can be mechanically constructed.
 --
 -- Such methods have been proposed (
---        [@'ref05'@], 
---        [@'ref09'@], 
---  and   [@'ref11'@] )
---  and even generalised to trees: [@'ref10'@].
+--        [@'r05'@], 
+--        [@'r09'@], 
+--  and   [@'r11'@] )
+--  and even generalised to trees: [@'r10'@].
 --
 
 -- $observation 
@@ -153,7 +154,7 @@ h = undefined
 -- The rest of the documentation in this section (including 'cons_from_Prelude', 'cons', 'cat_from_Prelude', 'cat', ...) are provided
 -- to demonstrate and witness the conversion from traditional point-full Haskell syntax to point-free Haskell syntax. This
 -- should not be strictly necessary, but some programs are easier to express in one form or another. These examples were
--- motivated by, but not included in, the original paper ('ref00').
+-- motivated by, but not included in, the original paper ('r00').
 --
 
 

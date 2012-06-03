@@ -2,6 +2,7 @@
 ------------------------------------------------------------------------------------------------
 -- |
 -- Module      :  Pearl.GaDtTLHT.Section02
+-- Description :  The Third-List Homomorphism Theorem
 -- Copyright   :  (c) Drew Day 2012
 --                (c) Shin-Cheng Mu 2011
 --                (c) Akimasa Morihata 2011
@@ -13,8 +14,10 @@
 ------------------------------------------------------------------------------------------------
 module Pearl.GaDtTLHT.Section02 
      ( 
-     -- * The Third-List Homomorphism Theorem
+     -- ** The Third-List Homomorphism Theorem
        h
+     , p01
+     , p01a
      , e
      -- ** Uncurrying some familiar functions
      , (<||)
@@ -47,23 +50,29 @@ module Pearl.GaDtTLHT.Section02
 import Pearl.GaDtTLHT.Ref
 
 
--- * The Third-List Homomorphism Theorem
+-- $p01
+p01 :: [a] -> b
+p01 []     = e
+p01 (x:xs) = (<||) (x, p01 xs)
+
+-- ^
+-- As is well known, in the world of sets and total functions, the equations:
+-- 
+-- @
+--  ('p01')       'h'  [    ]  =   'e'
+--  ('p01')       'h'  (x:xs)  = ('<||') (x, 'h' xs)
+-- @
+--
+-- have @('p01a')@ as unique solution for @'h' :: [a] -> b@.
+
+p01a = foldr (<||) e
+-- ^
+-- @
+--  ('p01a')      'h'          = 'foldr' ('<||') 'e'
+-- @
 
 h :: [a] -> b
 h = undefined
--- ^ As is well known, in the world of sets and total functions, the equations:
--- 
--- @
---  (1)       'h'  [    ]  =   'e'
---  (1)       'h'  (x:xs)  = ('<||') (x, 'h' xs)
--- @
---
--- have a unique solution for @'h' :: [a] -> b@, denoted by:
---
--- @
---            'h'          = 'foldr' ('<||') 'e'
--- @
---
 
 e :: b
 e = undefined
@@ -103,9 +112,9 @@ cons (x,xs)     = x:xs
 
 
 -- |
--- Thus (1) can be written
+-- Thus ('p01') can be written
 -- 
--- @ (1a)  'h' '.' 'cons' = ('<||') '.' ('id' '><' 'h') @
+-- @ (1b)  'h' '.' 'cons' = ('<||') '.' ('id' '><' 'h') @
 --
 
 a1 = h . cons
@@ -247,7 +256,7 @@ hom = undefined
 
 -- ** Second List Homomorphism Theorem
 -- |
--- (the 2nd list-homomorphism theorem [@'ref01'@]).
+-- (the 2nd list-homomorphism theorem [@'r01'@]).
 -- #theorem01#
 --
 -- If
@@ -282,7 +291,7 @@ theorem02 = undefined
 -- Somewhat surprisingly, if a function can be computed both by a 'foldr' and a 'foldl',
 -- it /is/ a list homomorphism:
 -- 
--- (the 3rd list-homomorphism theorem [@'ref06'@])
+-- (the 3rd list-homomorphism theorem [@'r06'@])
 -- 
 -- @
 --        'h' = 'foldr' '<||' 'e'
@@ -319,7 +328,7 @@ theorem02proof = undefined
 -- 
 -- In a set-theoretical model, a right inverse always exists but may not be unique.
 --
--- While a semantical proof was given by [@Gibbons 'ref06'@], we will provide a proof
+-- While a semantical proof was given by [@Gibbons 'r06'@], we will provide a proof
 -- having a much more equational flavour.
 --
 -- We reason:

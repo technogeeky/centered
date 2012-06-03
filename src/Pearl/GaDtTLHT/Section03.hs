@@ -2,6 +2,7 @@
 ------------------------------------------------------------------------------------------------
 -- |
 -- Module      :  Pearl.GaDtTLHT.Section03
+-- Description :  Dual of Third List-Homomorphism Theorem
 -- Copyright   :  (c) Drew Day 2012
 --                (c) Shin-Cheng Mu 2011
 --                (c) Akimasa Morihata 2011
@@ -99,7 +100,7 @@ import Data.List.Unicode ((∈),(∋),(∪),(∩))
 (<||) :: (b, t) -> t
 (<||) (x, v) = f (k x,   v)
      where k :: b -> [a]
-           k = undefined
+           k = unhom g f p q
            f = undefined
 
 (||>) :: (t1, b) -> t
@@ -220,7 +221,7 @@ lemma03proof = undefined
 -- @
 --
 -- But it /can not/ be defined by an 'unfoldl' or 'unfoldr'. An intuitive reason is that there
--- is not always an m such that @2^n - 1 = 2^m@. One may use theories of Gibbons et al. [@'ref07'@]
+-- is not always an m such that @2^n - 1 = 2^m@. One may use theories of Gibbons et al. [@'r07'@]
 -- for proof.
 
 example0 :: Int -> [Int]
@@ -373,6 +374,11 @@ unfoldlp (<||) p v = (|<|) (v, []) where (|<|) (v, xs) | p v                = [(
 --   (4)       'h' '.' 'cat' = 'foldlr' ('||>') '.' ( 'h' '><' 'id' )
 -- @
 --
+-- @
+--   (5)       'splits' . 'k' = 'map' ('id' '><' k) . 'unfoldrp' ('||>')
+--   (6)       'splits' . 'k' = 'map' (k '><' 'id') . 'unfoldlp' ('<||')
+-- @
+--
 --
 -- * the functions next to the composition ('.') are swapped
 --
@@ -407,7 +413,7 @@ splits = undefined
 -- unfortunate misunderstanding.
 --
 -- Dijkstra argued that, for /program derivation/, non-determinism should be the norm
--- and determinism a special case ['ref04'], and this pearl is indeed a case where one
+-- and determinism a special case ['r04'], and this pearl is indeed a case where one
 -- has to bring up relations to appreciate the nice duality between the theorems for
 -- folding and unfolding.
 --
@@ -470,7 +476,7 @@ splits = undefined
 -- @
 -- \       \ \   (  R°  )°   = R        \ \ -- ( ° on (R°) is the original R )
 -- \ And:         'id'°      = 'id'         -- ( ° on  'id'  is 'id' )
--- \ Also:     (R '><' S)°   = (R '><' S)   -- ( ° distributes covariantly      over ('><') )
+-- \ Also:     (R '><' S)°   = (R° '><' S°)   -- ( ° distributes covariantly      over ('><') )
 -- \ And:      (R  '.' S)°   = S°  '.' R°   -- ( ° distributes contravariantly  over ('.')  )
 -- \                                              
 -- @
@@ -490,6 +496,10 @@ splits = undefined
 --        unfr ('||>') p = 'mem' . 'unfoldrp' ('||>') p
 --        unfl ('<||') p = 'mem' . 'unfoldlp' ('<||') p
 -- @
+
+unfr fwd p = elem . (unfoldrp fwd p)
+
+
 --
 -- While 'unfoldrp' and 'unfoldlp' generate the entire trace, 'unfr' and 'unfl' map
 -- the input seed to one arbitrary intermediate state.
@@ -752,7 +762,7 @@ f = undefined
 p = undefined
 q = undefined
 unfl = undefined
-unfr = undefined
+-- unfr = undefined
 (|<|) = undefined
 (|>|) = undefined
 

@@ -1,6 +1,7 @@
 ------------------------------------------------------------------------------------------------
 -- |
 -- Module      :  Pearl.GaDtTLHT.Section05
+-- Description :  Generalising to Trees
 -- Copyright   :  (c) Drew Day 2012
 --                (c) Shin-Cheng Mu 2011
 --                (c) Akimasa Morihata 2011
@@ -99,4 +100,236 @@ theorem07proof = undefined
 -- sub-expression of @R@ (for example, to prove Corrolary 5, we used @R = k° . cat@ and @S = T = k°@.
 -- We do not require @S = T@ in general), and we use Theorem 7 to establish recursive equations about @S@,
 -- hoping to construct a terminating definition of @S@.
+--
+-- 5.1   Third Homomorphism Theorem on Trees Revisited
+-- 
+-- Consider the Tree datatype defined in Section 4.2 and assume that
+-- we wish to efficiently compute a function on trees by distributing
+-- the work to multiple processors. One slight annoyance is that split
+-- ing a tree into two at an arbitrary point yields not two trees, but
+-- one tree and a context containing a single hole that can be filled
+-- by a tree. The concept of contexts of a datatype was proposed by
+-- Huet [@'r08'@] as the zipper. In particular, the context for Tree can be
+-- modelled by
+-- 
+-- @
+-- type Cxt a = [ Z a ]
+-- data Z a = Nl a ( Tree a )  
+--          | Nr   ( Tree a ) a
+-- @
+-- 
+-- with a function fill :: ( Cxt a, Tree a ) -> Tree a that fills the hole
+-- of the context by a tree:
+-- 
+-- @
+-- fill ([ ] , t ) = t
+-- fill ( Nl x u : xs, t )  = fill ( xs, N t x u )
+-- fill ( Nr t x : xs, u ) = fill ( xs, N t x u ) .
+-- @
+-- 
+-- For example, consider the tree
+-- 
+-- @
+-- t = N ( N ( L 1 ) 2 ( L 3 )) 4 ( N ( N ( L 5 ) 6 ( L 7 )) 8 ( L 9 ))
+-- @
+-- 
+-- What remains after taking out the subtree u = N ( L 5 ) 6 ( L 7 ) is
+-- 
+-- @
+-- cx = [ Nl 8 ( L 9 ) , Nr ( N ( L 1 ) 2 ( L 3 )) 4 ]
+-- @
+-- 
+-- with fill ( cx, u ) = t.
+-- 
+-- 
+-- To parallelise a function f :: Tree  a -> b, we must have a
+-- variation f' :: Cxt  a -> b defined on contexts. Instantiating R,
+-- S, and T in Theorem 7 respectively to f . fill, f, and f', we see
+-- that f t can be computed in terms of f' cx and f u,
+-- 
+-- @
+-- f . fill = f . fill . ( f' . '><' f . ) . ( f' '><' f ) ,
+-- @
+-- 
+-- if there exist U and V such that
+-- 
+-- @
+-- f . fill = U . ( id '><' f ) ∧ (11)
+-- f . fill = V . ( f′ '><' id )  (12)
+-- @
+-- 
+-- 
+-- Equation (11) basically says that f is outwards - f ( fill ( cx, u ))
+-- can be computed from cx and f u, while (12) says that f is also
+-- inwards - f ( fill ( cx, u )) can be computed from f′
+-- cx and u.
+-- 
+-- This is another way to view the previous work of Morihata et
+-- al. [@'r10'@].
+-- 
+-- 
+-- 5.2   Generating Trees from the Middle
+-- 
+-- One naturally wonders whether the result can also be dualised to
+-- generating trees rather than consuming them. Again the answer is
+-- yes: if a tree can be generated both upwards and downwards, it can
+-- be generated /from the middle/. We will formalise what we mean
+-- below.
+-- 
+-- 
+-- Let b be the type of seeds. Unfolding a tree downwards from the
+-- root using a function g↓ :: b -> ( b, a, b ) is relatively familiar:
 
+
+test55 = undefined
+
+
+-- @
+-- (|↓|) ::  ( b -> ( b, a, b ) , b -> a, b -> Bool ) -> b -> Tree a 
+-- (|↓|) (fs@ ( g↓, f↓, p )) v    | p v
+--                               = L ( f↓ v )
+--                               | (v1,x,v2) <- g↓ v      
+--                               = N ( unf↓ fs v1 ) x ( unf↓ fs v2 )
+-- @
+-- 
+-- As in the case of lists, our unfolds are actually converses of folds
+-- in disguise and are well-defined only if they terminate and produce
+-- finite trees. We consider paused versions of unfolding, which yields
+-- ( Cxt a, b ) , a context and a seed. The function unfp↓ returns a list
+-- containing all such pairs of contexts and seeds:
+-- 
+-- @
+-- unfp↓ ::  ( b -> ( b, a, b ) , b -> a, b -> Bool ) -> b -> [( Cxt a, b )]
+-- unfp↓ ( fs@ ( g↓, f↓, p )) v = iter↓ ([],v) 
+--      where
+--           iter↓ ( xs, v ) | p v = [( xs, v )]
+--                           | ( v1 , x, v2 ) <- g↓ v 
+--                           = ( xs, v ) : iter↓ ( Nl x ( unf↓ fs v2 ) : xs, v1 ) 
+--                                     ++ iter↓ ( Nr ( unf↓ fs v1 ) x : xs, v2 )
+-- @
+-- 
+-- 
+-- With the definition we have, for k = unf↓ ( g↓, f↓, p ) , that
+-- 
+-- @
+-- fill° . k = ( id '><' k ) . mem . unfp↓ ( g↓, f↓, p )
+-- @
+-- 
+-- By generating a tree “from the middle” we mean to find 
+--      g :: b -> ( b, b )
+-- and  k′ :: b -> Cxt a such that
+-- 
+-- @
+-- k v  | p v = L ( f↓ v )
+--      | ( v↑, v↓ ) <- g v = fill ( k' v↑ ) ( k v↓ )
+-- @
+-- 
+-- 
+-- That is, the tree returned by k, if not a leaf, can be split into a
+-- context and a subtree that can be generated separately from the two
+-- seeds returned by g. It suffices for g and k'
+-- to satisfy:
+-- 
+-- @
+-- fill° . k = (k '><' k ) . g
+-- @
+-- 
+-- 
+-- Generating a tree “upwards” intuitively means to start from a
+-- leaf and find the path back to the root. With application of Theorem
+-- 7 in mind, we want to come up with a function 
+-- 
+-- unfp↑ ( g↑, f↑ ) :: b -> [( b, Tree a )] 
+-- 
+-- that satisfies, for some k'
+-- 
+-- @
+-- fill° . k = ( k' '><' id ) . mem . unfp↑ ( g↑, f↑ )          (14)
+-- @
+-- 
+-- thus each of (13) and (14) matches one antecedent of Theorem 7.
+-- 
+-- 
+-- To grow a tree upwards from a leaf, we use a function g↑ having
+-- 
+-- type G↑  a b = b -> [( b, ( a, b ) + ( b, a ))] (where data a + b =
+-- Lt a | Rt b). 
+-- 
+-- If g↑  v is empty, we have reached the root.
+-- 
+-- If it contains ( v', Lt ( x, v r )) , we go up by using the current tree as
+-- the left child, v r the seed for the right child, and v'
+-- the seed going up. 
+-- 
+-- Similarly with Rt. 
+-- 
+-- We could have grown a Tree a. To reuse the function later, however, we grow a context instead. 
+-- 
+-- Define
+-- 
+-- cxtp↑ g↑ :: b -> [( b, Cxt a )] that generates all (seed, context) pairs
+-- when one goes upwards:
+-- 
+-- @
+-- cxtp↑ g↑ v = iter↑ ( v, [ ])
+--      where
+--              iter↑ ( v, cx ) = ( v, cx ) 
+--                          : [ y | ( v', lr ) <- g↑ v, y <- iter↑ ( v', cx ++ [ up lr ])]
+-- 
+-- up ( Lt ( x, v r )) = Nl x ( k v r )
+-- up ( Rt ( v l , x )) = Nr ( k v l ) x.
+-- 
+-- 
+-- To generate all the splits, we need to be able to start from any leaf.
+-- Thus we let f↑ :: b -> [( b, a )] return the list of values on each leaf,
+-- paired with a seed to go up with. 
+-- 
+-- We may then define unfp↑ by:
+-- 
+-- @
+-- unfp↑ ::  ( G↑ a b, b -> [( b, a )]) -> b -> [( b, Tree a )]
+-- 
+-- unfp↑ ( g↑, f↑ ) v = [( v'' , fill ( cx, L x )) | ( v', x ) <- f↑ v, ( v'', cx ) <- cxtp↑ g↑ v' ]
+-- @
+-- 
+-- While cxtp↑ and unfp↑ return the entire history of upwards tree generation, 
+-- their non-pausing version, cxt↑  and unf↑, keep only
+-- completed contexts and trees (those which have reached the root):
+-- 
+-- @
+-- cxt↑ g↑ v = [ cx | ( v', cx ) <- cxtp↑ g↑ v, null ( p v' )]
+-- 
+-- unf↑ ( g↑, f↑ ) v = [ t | ( v', t ) <- unfp↑ ( g↑, f↑ ) v, null ( p v' )]
+-- @
+-- 
+-- 
+-- Equation (14) is satisfiable if 
+-- 
+-- @
+-- k = mem . unf↑ ( g↑, f↑ ) 
+-- @
+-- 
+-- is a function
+-- (that is, all routes from leaves to the root yields the same tree), and
+-- 
+-- @
+-- k' = mem . cxt↑ g↑ v.
+-- @
+-- 
+-- 
+-- With (13) and (14), we therefore obtain from Theorem 7 that
+-- 
+-- @
+-- fill° . k = ( k' '><' k ) . ( k'° '><' k° ) . fill° .k
+-- 
+-- if k = unf↓ ( g↓, f↓, p ) = mem .  unf↑ ( g↑, f↑ ) and k' = mem . cxt↑ g↑ v. 
+-- @
+-- 
+-- 
+-- To compute k “from the middle”, we may pick g to be a subset of 
+-- 
+-- @
+-- ( k'° '><' k°) . fill° . k
+-- @
+-- 
+-- 

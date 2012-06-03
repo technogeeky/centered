@@ -1,6 +1,7 @@
 ------------------------------------------------------------------------------------------------
 -- |
 -- Module      :  Pearl.GaDtTLHT.Section06
+-- Description :  Conclusions
 -- Copyright   :  (c) Drew Day 2012
 --                (c) Shin-Cheng Mu 2011
 --                (c) Akimasa Morihata 2011
