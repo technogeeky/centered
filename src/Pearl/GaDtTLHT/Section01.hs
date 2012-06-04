@@ -47,8 +47,299 @@ module Pearl.GaDtTLHT.Section01
           -- $concat
      , cat_from_Prelude
      , cat
+
+     -- * Familar Functions
+     -- $familiar
+     
+     -- ** (<- Prelude?) <- Data.List
+     -- $hasklistsigs
+
+
+     -- * Unfamiliar Functions
+     -- $unfamiliar
+
+     -- ** \<- Data.DList
+     -- $difflistsigs
+
+     -- * Comparing "Data.List" and "Data.Dlist"
+     -- $comparefoldsigs
+
      )         where
 import Pearl.GaDtTLHT.Ref
+
+import qualified Data.List  as HaskList
+import qualified Data.DList as DList
+
+-- $fromprelude
+--
+-- These functions are part of the Haskell Prelude, so they are sitting at your fingertips, like it or not!
+
+-- $familiar
+--
+-- This functional pearl assumes familiarity and understanding  of the following functions, as variants of these will be discussed.
+--
+
+-- $unfamiliar
+--
+-- This functional pearl assumes a passable understanding of the following functions
+
+
+
+-- $hasklistsigs
+--
+-- Here is the /huge/ list of functions exported by "Data.List". 
+--
+-- Don't worry, though! You only need to know about those which are linked. 
+-- Many of these are exported to the "Prelude" already, so you should be familiar with them. Right?
+--
+-- @
+-- \  -- * Basic functions
+-- \  
+-- \    ('++')              -- :: [a] -> [a] -> [a]
+-- \  , head              -- :: [a] -> a
+-- \  , last              -- :: [a] -> a
+-- \  , tail              -- :: [a] -> [a]
+-- \  , init              -- :: [a] -> [a]
+-- \  , 'null'              -- :: [a] -> Bool
+-- \  , length            -- :: [a] -> Int
+-- \  
+-- \  -- * List transformations
+-- \  , 'map'               -- :: (a -> b) -> [a] -> [b]
+-- \  , reverse           -- :: [a] -> [a]
+-- \  
+-- \  , intersperse       -- :: a -> [a] -> [a]
+-- \  , intercalate       -- :: [a] -> [[a]] -> [a]
+-- \  , transpose         -- :: [[a]] -> [[a]]
+-- \  
+-- \  , 'subsequences'      -- :: [a] -> [[a]]
+-- \  , permutations      -- :: [a] -> [[a]]
+-- \  
+-- \  -- * Reducing lists (folds)
+-- \  
+-- \  , 'foldl'             -- :: (a -> b -> a) -> a -> [b] -> a
+-- \  , 'foldl''            -- :: (a -> b -> a) -> a -> [b] -> a
+-- \  , 'foldl1'            -- :: (a -> a -> a) -> [a] -> a
+-- \  , 'foldl1''           -- :: (a -> a -> a) -> [a] -> a
+-- \  , 'foldr'             -- :: (a -> b -> b) -> b -> [a] -> b
+-- \  , 'foldr1'            -- :: (a -> a -> a) -> [a] -> a
+-- \  
+-- \  -- ** Special folds
+-- \  
+-- \  , 'concat'            -- :: [[a]] -> [a]
+-- \  , 'concatMap'         -- :: (a -> [b]) -> [a] -> [b]
+-- \  , and               -- :: [Bool] -> Bool
+-- \  , or                -- :: [Bool] -> Bool
+-- \  , any               -- :: (a -> Bool) -> [a] -> Bool
+-- \  , all               -- :: (a -> Bool) -> [a] -> Bool
+-- \  , 'sum'               -- :: (Num a) => [a] -> a
+-- \  , product           -- :: (Num a) => [a] -> a
+-- \  , 'maximum'           -- :: (Ord a) => [a] -> a
+-- \  , 'minimum'           -- :: (Ord a) => [a] -> a
+-- \  
+-- \  -- * Building lists
+-- \  
+-- \  -- ** Scans
+-- \  , 'scanl'             -- :: (a -> b -> a) -> a -> [b] -> [a]
+-- \  , scanl1            -- :: (a -> a -> a) -> [a] -> [a]
+-- \  , 'scanr'             -- :: (a -> b -> b) -> b -> [a] -> [b]
+-- \  , scanr1            -- :: (a -> a -> a) -> [a] -> [a]
+-- \  
+-- \  -- ** Accumulating maps
+-- \  , mapAccumL         -- :: (a -> b -> (a,c)) -> a -> [b] -> (a,[c])
+-- \  , mapAccumR         -- :: (a -> b -> (a,c)) -> a -> [b] -> (a,[c])
+-- \  
+-- \  -- ** Infinite lists
+-- \  , iterate           -- :: (a -> a) -> a -> [a]
+-- \  , repeat            -- :: a -> [a]
+-- \  , replicate         -- :: Int -> a -> [a]
+-- \  , cycle             -- :: [a] -> [a]
+-- \  
+-- \  -- ** Unfolding
+-- \  , 'unfoldr'           -- :: (b -> Maybe (a, b)) -> b -> [a]
+-- \  
+-- \  -- * Sublists
+-- \  
+-- \  -- ** Extracting sublists
+-- \  , take              -- :: Int -> [a] -> [a]
+-- \  , drop              -- :: Int -> [a] -> [a]
+-- \  , splitAt           -- :: Int -> [a] -> ([a], [a])
+-- \  
+-- \  , takeWhile         -- :: (a -> Bool) -> [a] -> [a]
+-- \  , dropWhile         -- :: (a -> Bool) -> [a] -> [a]
+-- \  , dropWhileEnd      -- :: (a -> Bool) -> [a] -> [a]
+-- \  , span              -- :: (a -> Bool) -> [a] -> ([a], [a])
+-- \  , break             -- :: (a -> Bool) -> [a] -> ([a], [a])
+-- \  
+-- \  , stripPrefix       -- :: Eq a => [a] -> [a] -> Maybe [a]
+-- \  
+-- \  , group             -- :: Eq a => [a] -> [[a]]
+-- \  
+-- \  , inits             -- :: [a] -> [[a]]
+-- \  , tails             -- :: [a] -> [[a]]
+-- \  
+-- \  -- ** Predicates
+-- \  , 'isPrefixOf'        -- :: (Eq a) => [a] -> [a] -> Bool
+-- \  , 'isSuffixOf'        -- :: (Eq a) => [a] -> [a] -> Bool
+-- \  , isInfixOf         -- :: (Eq a) => [a] -> [a] -> Bool
+-- \  
+-- \  -- * Searching lists
+-- \  
+-- \  -- ** Searching by equality
+-- \  , 'elem'              -- :: a -> [a] -> Bool
+-- \  , 'notElem'           -- :: a -> [a] -> Bool
+-- \  , 'lookup'            -- :: (Eq a) => a -> [(a,b)] -> Maybe b
+-- \  
+-- \  -- ** Searching with a predicate
+-- \  , find              -- :: (a -> Bool) -> [a] -> Maybe a
+-- \  , filter            -- :: (a -> Bool) -> [a] -> [a]
+-- \  , partition         -- :: (a -> Bool) -> [a] -> ([a], [a])
+-- \  
+-- \  
+-- \  -- ** \"Set\" operations
+-- \  
+-- \  , nub               -- :: (Eq a) => [a] -> [a]
+-- \  
+-- \  , delete            -- :: (Eq a) => a -> [a] -> [a]
+-- \  , (\\\\)              -- :: (Eq a) => [a] -> [a] -> [a]
+-- \  
+-- \  , 'union'             -- :: (Eq a) => [a] -> [a] -> [a]
+-- \  , 'intersect'         -- :: (Eq a) => [a] -> [a] -> [a]
+-- \  
+-- \  -- ** Ordered lists
+-- \  , 'sort'              -- :: (Ord a) => [a] -> [a]
+-- \  , 'insert'            -- :: (Ord a) => a -> [a] -> [a]
+-- \  
+-- \  -- * Generalized functions
+-- \  
+-- \  -- ** The By operations
+-- \  -- | By convention, overloaded functions have a non-overloaded
+-- \  -- counterpart whose name is suffixed with \`By\'.
+-- \  --
+-- \  -- It is often convenient to use these functions together with
+-- \  -- \'on\', for instance \'sortBy\' (\'compare\' \`on\` \'fst\').
+-- \  
+-- \  -- *** User-supplied equality (replacing an Eq context)
+-- \  -- | The predicate is assumed to define an equivalence.
+-- \  , nubBy             -- :: (a -> a -> Bool) -> [a] -> [a]
+-- \  , deleteBy          -- :: (a -> a -> Bool) -> a -> [a] -> [a]
+-- \  , deleteFirstsBy    -- :: (a -> a -> Bool) -> [a] -> [a] -> [a]
+-- \  , unionBy           -- :: (a -> a -> Bool) -> [a] -> [a] -> [a]
+-- \  , intersectBy       -- :: (a -> a -> Bool) -> [a] -> [a] -> [a]
+-- \  , groupBy           -- :: (a -> a -> Bool) -> [a] -> [[a]]
+-- \  
+-- \  -- *** User-supplied comparison (replacing an Ord context)
+-- \  -- | The function is assumed to define a total ordering.
+-- \  , sortBy            -- :: (a -> a -> Ordering) -> [a] -> [a]
+-- \  , insertBy          -- :: (a -> a -> Ordering) -> a -> [a] -> [a]
+-- \  , maximumBy         -- :: (a -> a -> Ordering) -> [a] -> a
+-- \  , minimumBy         -- :: (a -> a -> Ordering) -> [a] -> a
+-- \  
+-- \  -- ** The \"generic\" operations
+-- \  -- | The prefix \`generic\' indicates an overloaded function that
+-- \  -- is a generalized version of a \"Prelude\" function.
+-- \  
+-- \  , genericLength     -- :: (Integral a) => [b] -> a
+-- \  , genericTake       -- :: (Integral a) => a -> [b] -> [b]
+-- \  , genericDrop       -- :: (Integral a) => a -> [b] -> [b]
+-- \  , genericSplitAt    -- :: (Integral a) => a -> [b] -> ([b], [b])
+-- \  , genericIndex      -- :: (Integral a) => [b] -> a -> b
+-- \  , genericReplicate  -- :: (Integral a) => a -> b -> [b]
+-- @
+
+-- $difflistsigs
+--
+-- The export list for DList is incredibly small compared to that of 'Data.List'. Again,
+-- the linked functions will be those relevant to this pearl.
+--
+-- @
+-- \  -- * Construction
+-- \  , 'DList.fromList'      -- :: [a] -> DList a
+-- \  , 'DList.toList'        -- :: DList a -> [a]
+-- \  -- * Basic functions
+-- \  , 'DList.empty'         -- :: DList a
+-- \  , 'DList.singleton'     -- :: a -> DList a
+-- \  , 'DList.cons'          -- :: a -> DList a -> DList a
+-- \  , 'DList.snoc'          -- :: DList a -> a -> DList a
+-- \  , 'DList.append'        -- :: DList a -> DList a -> DList a
+-- \  , 'DList.concat'        -- :: [DList a] -> DList a
+-- \  , replicate     -- :: Int -> a -> DList a
+-- \  , list          -- :: b -> (a -> DList a -> b) -> DList a -> b
+-- \  , head          -- :: DList a -> a
+-- \  , tail          -- :: DList a -> DList a
+-- \  , 'DList.unfoldr'       -- :: (b -> Maybe (a,  b)) -> b -> DList a
+-- \  , 'DList.foldr'         -- :: (a -> b -> b) -> b -> DList a -> b
+-- \  , 'map'           -- :: (a -> b) -> DList a -> DList b
+-- \  -- * MonadPlus
+-- \  ,  maybeReturn
+-- @
+-- 
+
+
+-- $comparefoldsigs
+-- 
+-- "Data.List":
+--
+-- @
+-- \  , 'foldr'             -- :: (a -> b -> b) -> b -> [a] -> b
+-- \  , 'Data.List.unfoldr'           -- :: (b -> Maybe (a, b)) -> b -> [a]
+-- \ 
+-- \  , 'map'               -- :: (a -> b) -> [a] -> [b]
+-- \ 
+-- \  , 'concat'            -- :: [[a]] -> [a]
+-- \  , 'concatMap'         -- :: (a -> [b]) -> [a] -> [b]
+-- @
+--
+-- "Data.DList":
+--
+-- @
+--   , 'DList.foldr'         -- :: (a -> b -> b) -> b -> DList a -> b
+--   , 'DList.unfoldr'       -- :: (b -> Maybe (a,  b)) -> b -> DList a
+-- \
+--   , 'map'           -- :: (a -> b) -> DList a -> DList b
+-- \  
+--   , 'DList.append'        -- :: DList a -> DList a -> DList a
+--   , 'DList.concat'        -- :: [DList a] -> DList a
+-- @
+
+
+-- @
+--  \  , 'foldl'             -- :: (a -> b -> a) -> a -> [b] -> a
+--  \  , 'foldr1'            -- :: (a -> a -> a) -> [a] -> a
+--  \  , 'foldl''            -- :: (a -> b -> a) -> a -> [b] -> a
+--  \  , 'foldl1'            -- :: (a -> a -> a) -> [a] -> a
+--  \  , 'foldl1''           -- :: (a -> a -> a) -> [a] -> a
+--  \  
+--  \  , and               -- :: [Bool] -> Bool
+--  \  , or                -- :: [Bool] -> Bool
+--  \  , any               -- :: (a -> Bool) -> [a] -> Bool
+--  \  , all               -- :: (a -> Bool) -> [a] -> Bool
+--  \  , 'sum'               -- :: (Num a) => [a] -> a
+--  \  , product           -- :: (Num a) => [a] -> a
+--  \  , 'maximum'           -- :: (Ord a) => [a] -> a
+--  \  , 'minimum'           -- :: (Ord a) => [a] -> a
+--  \  
+--  \  -- * Building lists
+--  \  
+--  \  -- ** Scans
+--  \  , 'scanl'             -- :: (a -> b -> a) -> a -> [b] -> [a]
+--  \  , scanl1            -- :: (a -> a -> a) -> [a] -> [a]
+--  \  , 'scanr'             -- :: (a -> b -> b) -> b -> [a] -> [b]
+--  \  , scanr1            -- :: (a -> a -> a) -> [a] -> [a]
+--  \  
+--  \  -- ** Accumulating maps
+--  \  , mapAccumL         -- :: (a -> b -> (a,c)) -> a -> [b] -> (a,[c])
+--  \  , mapAccumR         -- :: (a -> b -> (a,c)) -> a -> [b] -> (a,[c])
+--  \  
+--  \  -- ** Infinite lists
+--  \  , iterate           -- :: (a -> a) -> a -> [a]
+--  \  , repeat            -- :: a -> [a]
+--  \  , replicate         -- :: Int -> a -> [a]
+--  \  , cycle             -- :: [a] -> [a]
+--  \  
+--  \  -- ** Unfolding
+--  \
+--  @
+
 
 
 (⊙) :: [a] -> [a] -> [a]
