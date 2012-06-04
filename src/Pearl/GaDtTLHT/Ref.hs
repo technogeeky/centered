@@ -104,8 +104,7 @@ r09 = undefined
 -- ^
 -- #09#     A. Morihata, K. Matsuzaki, Z. Hu, and M. Takeichi.  Program parallelization by candidate generation and conformity testing. IPSJ Transaction on Programming, 2(2):132-143, 2009. (In Japanese).
 --
--- [@PDF: <http://shelf3.bookpark.ne.jp/pdf/view.asp?site_id=IPSJ&pg=0&of=IPSJ-TPRO0202011&nf=free&st=IPSJ534&fs=7820c28ca04339214847f6a45384c37e&ct=Trans&ms=>@]
-
+-- [@PDF: <http://www.bookpark.ne.jp/cm/ipsj/search.asp?flag=6&keyword=IPSJ-TPRO0202011&mode=PDF>@]
 r10 = undefined
 -- ^
 -- #10#    A. Morihata, K. Matsuzaki, Z. Hu, and M. Takeichi. The third homomorphism theorem on trees: Downward & upward lead to divide-and-conquer.  In Proceedings of the 36th ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages, POPL 2009, Savannah, Georgia, USA, January 21-23, 2009, pages 177-185. ACM, 2009.
@@ -116,4 +115,4 @@ r11 = undefined
 -- ^
 -- #11#   K. Morita, A. Morihata, K. Matsuzaki, Z. Hu, and M. Takeichi.  Automatic inversion generates divide-and-conquer parallel programs. In J. Ferrante and K. S. McKinley, editors, Proceedings of the ACM SIGPLAN 2007 Conference on Programming Language Design and Implementation, San Diego, California, USA, June 10-13, 2007, pages 146-155. ACM, 2007.
 --
--- [@PDF: <takeichi.ipl-lab.org/pub/PLDI2007.pdf>@]
+-- [@PDF: <http://takeichi.ipl-lab.org/pub/PLDI2007.pdf>@]

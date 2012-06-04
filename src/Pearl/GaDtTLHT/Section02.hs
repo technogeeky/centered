@@ -21,6 +21,7 @@ module Pearl.GaDtTLHT.Section02
      , e
      -- ** Uncurrying some familiar functions
      , (<||)
+     , (||>)
      , cons
      -- ** a product function
      , (><)
@@ -82,6 +83,10 @@ e = undefined
 
 (<||) :: (a,b) -> b
 (<||) = undefined
+
+(||>) :: (a,b) -> b
+(||>) = undefined
+
 -- ^
 -- We deviate from the standard and let ('<||')  be uncurried since it is more convenient in point-free style,
 -- where programs are described by function composition rather than application. 
@@ -97,8 +102,27 @@ e = undefined
 cons :: (a, [a]) -> [a]
 cons (x,xs)     = x:xs
 
-(><) :: (a -> c) -> (b -> d) -> (a,b) -> (c,d)
+
+infix 6  /\
+-- | The infix split combinator.
+(/\) :: (a -> b) -> (a -> c) -> a -> (b,c)
+(/\) f g x = (f x, g x)
+
+infix 7  ><
+(><) :: (l -> r) -> (u -> d) -> (l,u) -> (r,d)
 (f >< g) (x,y) = (f x, g y)
+
+infix 7  |><|
+(|><|) :: (l -> r) -> (u -> d) -> (l,u) -> (r,d)
+f |><| g = f . fst /\ g . snd
+
+
+
+infix 4 \/
+-- | The infix either combinator.
+(\/) :: (b -> a) -> (c -> a) -> Either b c -> a
+(\/) = either
+
 -- ^ 
 -- and let: 
 -- 

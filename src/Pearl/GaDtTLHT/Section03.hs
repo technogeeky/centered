@@ -286,7 +286,7 @@ question = undefined
 -- \ \   \     \    \|   \|   \|
 -- \ \   \     \    'f'   |   \|      =     'fst' . ('||>')        -- fixme?
 -- \ \   \     \    \ \   p'  \|      = 'p'
--- \ \   \     \    \ \       'q'      = 'p' . 'snd' . ('<||')        -- fixme?
+-- \ \   \     \    \ \       'q'      = 'p' . 'snd' . ('||>')        -- fixme?
 -- @
 --
 -- The challenge is to construct 'g'. To do so, we introduce some concepts dual to those for folds.
