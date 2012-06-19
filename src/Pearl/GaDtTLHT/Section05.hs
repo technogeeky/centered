@@ -13,55 +13,13 @@
 ------------------------------------------------------------------------------------------------
 module Pearl.GaDtTLHT.Section05 where
 
--- | This is a reference to the "Foo" module.
-
--- | This is a bulleted list:
---
---     * first item
---     * second item
-
--- | This is an enumerated list:
---
---     (1) first item
---
---     2. second item
-
--- | This is an enumerated list:
---
---     (1) first item
---
---     2. second item
-
--- | This is a definition list:
---
---   [@foo@] The description of @foo@.
---
---   [@bar@] The description of @bar@.
-
--- This is a URL:
-
--- <http://www.google.com>
-
-
--- And this is an anchor:
---
--- #anchorBob#
---
-test05 = id
+t07 :: theorem
+t07 = undefined
 -- ^
--- >>> 2 + 2
--- 4
-
-
--- |
 -- As mentioned earlier, when looking at the proof of Theorem 2 in detail, one notices that further generalization
 -- is possible. Indeed, the presence of @R . cat@ in Theorem 4 is superficial, and the theorem can still be
--- generalized.
---
-
-theorem07 :: a
-theorem07 = undefined
--- ^
+-- generalized:
+-- 
 -- @
 -- R   = U . (id '><' S )    -- (RUS)
 --     = V . (T  '><' id)    -- (RVT)
@@ -81,8 +39,8 @@ theorem07 = undefined
 -- @
 
 
-theorem07proof :: a
-theorem07proof = undefined
+t07proof :: proof
+t07proof = undefined
 -- ^
 -- @
 --                     R = U . (id x S)
@@ -94,13 +52,20 @@ theorem07proof = undefined
 --
 --  { done }           R = R . (T° x S°) . (T x S)
 -- @
--- 
+--
+
+
+t07comments :: comments
+t07comments = undefined
+-- ^
 -- However, the conclusion of the theorem, that @R = R . (T° x S°) . (T x S)@, does not have much
 -- structure hinting at how this theorem can be useful. The use cases we have found are when @S@ is a
 -- sub-expression of @R@ (for example, to prove Corrolary 5, we used @R = k° . cat@ and @S = T = k°@.
 -- We do not require @S = T@ in general), and we use Theorem 7 to establish recursive equations about @S@,
 -- hoping to construct a terminating definition of @S@.
---
+
+
+
 -- 5.1   Third Homomorphism Theorem on Trees Revisited
 -- 
 -- Consider the Tree datatype defined in Section 4.2 and assume that
@@ -153,21 +118,39 @@ theorem07proof = undefined
 -- 
 -- if there exist U and V such that
 -- 
+--
 -- @
--- f . fill = U . ( id '><' f ) ∧ (11)
--- f . fill = V . ( f′ '><' id )  (12)
+--   ('p11')   f . fill = U . ( id '><' f ) ∧
+--   ('p12')   f . fill = V . ( f′ '><' id )
 -- @
+
+p11 :: property
+p11 = undefined
+-- ^
+-- @
+--   ('p11')   f . fill = U . ( id '><' f ) ∧
+-- @
+
+p12 :: property
+p12 = undefined
+-- ^
+-- @
+--   ('p12')   f . fill = V . ( f′ '><' id )
+-- @
+
+
 -- 
 -- 
--- Equation (11) basically says that f is outwards - f ( fill ( cx, u ))
--- can be computed from cx and f u, while (12) says that f is also
+-- Equation ('p11') basically says that f is outwards - f ( fill ( cx, u ))
+-- can be computed from cx and f u, while ('p12') says that f is also
 -- inwards - f ( fill ( cx, u )) can be computed from f′
 -- cx and u.
 -- 
 -- This is another way to view the previous work of Morihata et
 -- al. [@'r10'@].
 -- 
--- 
+
+--
 -- 5.2   Generating Trees from the Middle
 -- 
 -- One naturally wonders whether the result can also be dualised to
@@ -211,13 +194,22 @@ test55 = undefined
 -- 
 -- With the definition we have, for k = unf↓ ( g↓, f↓, p ) , that
 -- 
+
+p13 :: property
+p13 = undefined
+-- ^
 -- @
--- fill° . k = ( id '><' k ) . mem . unfp↓ ( g↓, f↓, p )
+--   ('p13')   fill° . k = ( id '><' k ) . mem . unfp↓ ( g↓, f↓, p )
 -- @
 -- 
--- By generating a tree “from the middle” we mean to find 
---      g :: b -> ( b, b )
--- and  k′ :: b -> Cxt a such that
+-- By generating a tree “from the middle” we mean to find:
+--
+-- @
+-- \    g  :: b -> ( b, b )
+-- \    k′ :: b ->  Cxt a 
+-- @
+--
+-- such that:
 -- 
 -- @
 -- k v  | p v = L ( f↓ v )
@@ -227,48 +219,63 @@ test55 = undefined
 -- 
 -- That is, the tree returned by k, if not a leaf, can be split into a
 -- context and a subtree that can be generated separately from the two
--- seeds returned by g. It suffices for g and k'
--- to satisfy:
+-- seeds returned by g. 
+--
+-- It suffices for g and k'to satisfy:
 -- 
 -- @
--- fill° . k = (k '><' k ) . g
+-- \      fill° . k = (k '><' k ) . g
 -- @
 -- 
 -- 
 -- Generating a tree “upwards” intuitively means to start from a
--- leaf and find the path back to the root. With application of Theorem
--- 7 in mind, we want to come up with a function 
--- 
--- unfp↑ ( g↑, f↑ ) :: b -> [( b, Tree a )] 
--- 
--- that satisfies, for some k'
+-- leaf and find the path back to the root. 
+--
+-- With application of Theorem 7 in mind, we want to come up with a function:
 -- 
 -- @
--- fill° . k = ( k' '><' id ) . mem . unfp↑ ( g↑, f↑ )          (14)
+--   unfp↑ ( g↑, f↑ ) :: b -> [( b, Tree a )]
 -- @
 -- 
--- thus each of (13) and (14) matches one antecedent of Theorem 7.
+-- that satisfies, for some k':
 -- 
+
+p14 :: property
+p14 = undefined
+-- ^
+-- @
+--   ('p14')   fill° . k = ( k' '><' id ) . mem . unfp↑ ( g↑, f↑ )
+-- @
+
+
+-- Thus each of ('p13') and ('p14') matches one antecedent of Theorem 7.
+
+
+-- To grow a tree upwards from a leaf, we use a function:
+--
+-- g↑ :: G↑ a b = b -> [( b, ( a, b ) + ( b, a ))] 
+--
+-- (where data a + b = Lt a | Rt b).
 -- 
--- To grow a tree upwards from a leaf, we use a function g↑ having
+-- If @g↑  v@ is empty, we have reached the root.
 -- 
--- type G↑  a b = b -> [( b, ( a, b ) + ( b, a ))] (where data a + b =
--- Lt a | Rt b). 
--- 
--- If g↑  v is empty, we have reached the root.
--- 
--- If it contains ( v', Lt ( x, v r )) , we go up by using the current tree as
--- the left child, v r the seed for the right child, and v'
--- the seed going up. 
+-- If it contains @( v', Lt ( x, v r ))@, we go up by using:
+--
+-- * the current tree as the left child
+--
+-- * @v r@ the seed for the right child
+--
+-- * and @v'@ the seed going up. 
 -- 
 -- Similarly with Rt. 
 -- 
--- We could have grown a Tree a. To reuse the function later, however, we grow a context instead. 
+-- We could have grown a @Tree a@. To reuse the function later, however, we grow a context instead. 
 -- 
 -- Define
 -- 
--- cxtp↑ g↑ :: b -> [( b, Cxt a )] that generates all (seed, context) pairs
--- when one goes upwards:
+-- cxtp↑ g↑ :: b -> [( b, Cxt a )] 
+--
+-- that generates all (seed, context) pairs when one goes upwards:
 -- 
 -- @
 -- cxtp↑ g↑ v = iter↑ ( v, [ ])
@@ -278,11 +285,19 @@ test55 = undefined
 -- 
 -- up ( Lt ( x, v r )) = Nl x ( k v r )
 -- up ( Rt ( v l , x )) = Nr ( k v l ) x.
--- 
+-- @
+
+
 -- 
 -- To generate all the splits, we need to be able to start from any leaf.
--- Thus we let f↑ :: b -> [( b, a )] return the list of values on each leaf,
--- paired with a seed to go up with. 
+--
+-- Thus we let:
+--
+-- @
+--   f↑ :: b -> [( b, a )] 
+-- @
+--
+-- return the list of values on each leaf, paired with a seed to go up with. 
 -- 
 -- We may then define unfp↑ by:
 -- 
@@ -306,30 +321,31 @@ test55 = undefined
 -- Equation (14) is satisfiable if 
 -- 
 -- @
--- k = mem . unf↑ ( g↑, f↑ ) 
+--        k = mem . unf↑ ( g↑, f↑ ) 
 -- @
 -- 
--- is a function
--- (that is, all routes from leaves to the root yields the same tree), and
+-- is a function (that is, all routes from leaves to the root yields the same tree), and
 -- 
 -- @
--- k' = mem . cxt↑ g↑ v.
+--        k' = mem . cxt↑ g↑ v.
 -- @
 -- 
 -- 
--- With (13) and (14), we therefore obtain from Theorem 7 that
+-- With ('p13') and ('p14'), we therefore obtain from Theorem 7 that
 -- 
+
+p15 :: property
+p15 = undefined
+-- ^
 -- @
--- fill° . k = ( k' '><' k ) . ( k'° '><' k° ) . fill° .k
--- 
--- if k = unf↓ ( g↓, f↓, p ) = mem .  unf↑ ( g↑, f↑ ) and k' = mem . cxt↑ g↑ v. 
+--
+--   ('p15')   fill° . k   = ( k' '><' k ) . ( k'° '><' k° ) . fill° .k
+--    \   \  if        k   = unf↓ ( g↓, f↓, p ) = mem .  unf↑ ( g↑, f↑ )
+--    \   \            k'  = mem . cxt↑ g↑ v. 
 -- @
--- 
 -- 
 -- To compute k “from the middle”, we may pick g to be a subset of 
 -- 
 -- @
 -- ( k'° '><' k°) . fill° . k
 -- @
--- 
--- 

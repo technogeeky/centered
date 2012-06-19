@@ -11,32 +11,32 @@
 -- Portability :  portable (ViewPatterns, PatternGuards)
 --
 ------------------------------------------------------------------------------------------------
-module Pearl.GaDtTLHT.Ref
+module Pearl.GaDtTLHT.References
      (
      -- * References
      -- ** Original Paper
      -- *** Original References
-     -- * \('r01'\) Reference 01
-     r01
-     -- * \('r02'\) Reference 02
+     -- * 'r01' Reference 01
+       r01
+     -- * 'r02' Reference 02
      , r02
-     -- * \('r03'\) Reference 03
+     -- * 'r03' Reference 03
      , r03
-     -- * \('r04'\) Reference 04
+     -- * 'r04' Reference 04
      , r04
-     -- * \('r05'\) Reference 05
+     -- * 'r05' Reference 05
      , r05
-     -- * \('r06'\) Reference 06
+     -- * 'r06' Reference 06
      , r06
-     -- * \('r07'\) Reference 07
+     -- * 'r07' Reference 07
      , r07
-     -- * \('r08'\) Reference 08
+     -- * 'r08' Reference 08
      , r08
-     -- * \('r09'\) Reference 09
+     -- * 'r09' Reference 09
      , r09
-     -- * \('r10'\) Reference 10
+     -- * 'r10' Reference 10
      , r10
-     -- * \('r11'\) Reference 11
+     -- * 'r11' Reference 11
      , r11
      )    where
 

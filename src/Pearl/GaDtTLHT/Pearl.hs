@@ -18,7 +18,10 @@ module Pearl.GaDtTLHT.Pearl
      , module Pearl.GaDtTLHT.Section04
      , module Pearl.GaDtTLHT.Section05
      , module Pearl.GaDtTLHT.Section06
-     , module Pearl.GaDtTLHT.Ref
+     , module Pearl.GaDtTLHT.References
+     , module Pearl.GaDtTLHT.Properties
+     , module Pearl.GaDtTLHT.Theorems
+     , module Pearl.GaDtTLHT.Examples
      , test
      ) where
 
@@ -28,8 +31,13 @@ import Pearl.GaDtTLHT.Section02 hiding (cat,h)
 import Pearl.GaDtTLHT.Section03 hiding ((||>), (<||))
 import Pearl.GaDtTLHT.Section04
 import Pearl.GaDtTLHT.Section05 
-import Pearl.GaDtTLHT.Section06 
-import Pearl.GaDtTLHT.Ref 
+import Pearl.GaDtTLHT.Section06
+
+import Pearl.GaDtTLHT.References
+import Pearl.GaDtTLHT.Theorems
+import Pearl.GaDtTLHT.Properties
+import Pearl.GaDtTLHT.Examples
+
 
 
 -- | This is a reference to the "Ref" module.

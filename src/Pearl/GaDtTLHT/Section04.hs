@@ -22,39 +22,72 @@ module Pearl.GaDtTLHT.Section04
 -- $ssort
 
 -- *** g <- Lemma 06
--- $gfromlemma06
-
--- * \('p09'\)
--- $property09
-
+-- * 'p09'
+  p09
 -- ** Proof
--- $property09proof
+, p09proof
+, p09pick
 
--- *** A Valid Definition
+-- *** 'sort': A definition
+-- $withp09pick
+
 -- $qsort
+
+-- *** 'sort': A valid definition
+-- $validqsort
 
 
 -- ** Parallel Scan
 
--- *** scanl
+-- $pscanintro
 
--- **** scan
+, p10a
 
--- *** reduce
+-- $p10acomments
 
--- *** growers
+-- $p10bintro
 
--- * \('p10'\)
--- $property10
+, p10b
 
--- ** Proof
--- $property10proof
+, e03
 
-note02 
-) where
+, p10c
+
+-- $p10c2d
+
+, p10d
+, p10e
+, p10g
+
+-- $p10gto10
+
+, p10
+
+-- $p10toproof
+
+, p10proof
+
+, p10pick
+
+-- $scandef
+
+-- $srdef
+
+-- $scaneffdef
+
+-- $p10h
+
+, p10h
+, p10i
+, p10j
+
+
+-- $scancomments
+
+, note02 ) where
 
 import Pearl.GaDtTLHT.Section03 (unfoldr,unfoldrp,unfoldl,unfoldlp)
-import Pearl.GaDtTLHT.Ref
+import Pearl.GaDtTLHT.References
 
 import Data.IntSet (IntSet)
 import qualified Data.IntSet as Set
@@ -99,7 +132,7 @@ test04 = id
 -- 
 -- @
 --     xs ≤ ys ≡ (∀ x ∈ xs,
---                  y ∈ ys ∶∶ x ≤ y ).
+--                  y ∈ ys :: x ≤ y ).
 -- @
 -- 
 -- One can see that
@@ -108,10 +141,8 @@ test04 = id
 -- ( sort xs,      ys ) ∈ 'unfoldrp ('||>')  p zs,
 -- (      xs, sort ys ) ∈ 'unfoldlp ('<||')  p zs,
 -- 
--- if xs `djU` ys = zs and xs ≤ ys. 
+--        if xs `djU` ys = zs and xs ≤ ys. 
 -- @
--- 
--- We show only the proof of the first membership, for which we show that
 -- 
 
 
@@ -128,22 +159,28 @@ sortL = unfoldl (<||)  p
 
 
 
--- $property09
--- 
+
+p09 :: property
+p09 = undefined
+-- ^
+-- We show only the proof of the first membership, for which we show that:
+--
 -- @
 --  ('p09')  ( ws ++ sort xs, ys ) ∈ iterF ( ws, zs ) <== xs `djU` ys = zs ∧ xs ≤ ys
 -- @
 -- 
--- 
--- Property ('p09') can be proved by induction on the size of zs. For
--- zs = ∅ the property trivially holds. The nonempty case is shown
--- in Figure 2.
--- 
 
 
--- $property09proof
+p09proof :: proof
+p09proof = undefined
+-- ^
+-- Property ('p09') can be proved by induction on the size of zs. 
+--
+-- For
+-- @ zs = ∅ @
+-- the property trivially holds. The nonempty case is shown below:
+-- 
 -- @
--- ------- proof of (9)
 -- ( ws ++ sort xs, ys ) ∈ iterF ( ws, zs )
 -- 
 -- ≡      { zs /= ∅ , let z = min zs }
@@ -160,33 +197,39 @@ sortL = unfoldl (<||)  p
 -- 
 -- ≡ xs `djU` ys = zs ∧ xs  ≤ ys.
 -- @
--- 
--- 
 
 
--- $gfromlemma06
--- 
--- By Lemma 6 we may thus choose 
+p09pick :: pick
+p09pick = undefined
+-- ^
+-- By Lemma 6 we may thus /pick/:
 -- 
 -- @
--- g zs =  ( xs, ys ) for any
--- xs `djU` ys = zs ∧ xs ≤ ys. 
+--   ('p09pick')    g zs =  ( xs    , ys ) 
+--                   
+-- \       for any           xs `djU` ys = zs ∧ xs ≤ ys. 
 -- @
 -- 
+
 -- 
 -- That is, we split the set zs into two, such
 -- that all elements in one set are no larger than any element in the
--- other set, and sort them recursively. That gives rise to the equation,
+-- other set, and sort them recursively.
+
+
+-- $withp09pick
+-- This gives rise to the equation,
 -- 
 -- @
--- sort ( xs `djU` ys ) | xs ≤ ys = sort xs ++ sort ys.
+-- sort ( xs `djU` ys ) 
+--      | xs ≤ ys = sort xs ++ sort ys.
 -- @
 -- 
+--
 -- Despite being valid, the equation does not form a definition - as a 
 -- program sort might not terminate since, for example, xs could be
 -- empty and the size of ys equals that of zs. For this example, one may come up 
 -- with a terminating definition by enforcing that the neither xs nor ys is empty. 
--- 
 -- 
 
 
@@ -195,95 +238,131 @@ sortL = unfoldl (<||)  p
 -- We thus have 
 -- 
 -- @
--- sort = unhom g f p q
--- where g zs = ( xs, ys ) 
+-- \  \       \     sort = unhom  g  f  p  q     
+-- \ ('p09pick')         where    g zs = ( xs, ys ) 
 -- @
 -- 
 -- for some non-empty xs and ys such that
 -- 
 -- @
--- xs `djU` ys = zs ∧ xs ≤ ys, f { x } = x, p xs ≡ xs = ∅ , and q xs holds if
+-- \ xs `djU` ys = zs ∧ xs ≤ ys
+-- f { x } = x, p xs ≡ xs = ∅ , and q xs holds if
 -- xs is singleton.
 -- @
 -- 
 -- By /unfolding/ sort by one step we come up with
--- the definition:
--- 
+-- the definition
+
+
+-- $validqsort
 -- @
 -- sort ∅ = [ ]
 -- sort ( xs `djU` { x } `djU` ys )  | xs  ≤ { x }  ≤ ys
--- = sort xs ++ [ x ] ++ sort ys.
+--                                   = sort xs ++ [ x ] ++ sort ys.
 -- @
 -- 
 -- 
 
+-- sort ∅ = [ ]
+-- sort ( xs `djU` { x } `djU` ys )  | xs  ≤ { x }  ≤ ys =  sort xs ++ [ x ] ++ sort ys.
 
 
 -- $pscanintro
 -- 
 -- It is known that the Haskell prelude function 'scanl' (⊕) e, when
 -- (⊕) is associative and e = ι⊕, the unit of (⊕) , is both a 'foldr' and a
--- 'foldl'. Geser and Gorlatch [@'r5'@] in fact showed how the following list
+-- 'foldl'. Geser and Gorlatch [@'r05'@] in fact showed how the following list
 -- homomorphism can be derived using the third list homomorphism
 -- theorem:
 -- 
--- 
+
+
+p10a :: property 
+p10a = undefined
+-- ^
 -- @
 -- scanl (⊕) ι⊕ ( xs ++ ys ) 
 --      | xs' ++ [ x ] <- scanl (⊕) ι⊕ xs
 --      = xs' ++ [ x ] ++  map ( x ⊕) ( scanl (⊕) ι⊕ ys )
 -- @
--- 
+
+
+-- $p10acomments
 -- In an actual implementation, however, one would like to avoid having to perform map ( x ⊕) .
 -- Here we demonstrate that an attention to unfolds leads to a faster program.
--- 
--- 
--- $pscanlossy
+ 
+ 
+
+-- $p10bintro
 -- 
 -- For a concise presentation we again consider a slightly different
 -- variation. The following scan discards the right-most element of the input list:
--- 
+
+
+p10b :: property
+p10b = undefined
+-- ^
 -- @
 -- scan ( e, [ ])      = [ ]
 -- scan ( e, x ∶ xs ) = e ∶ scan ( e ⊕ x, xs )
 -- @
--- 
--- 
--- 
--- $pscanexample
--- 
+
+--scan ( e, [ ])      = [ ]
+--scan ( e, x ∶ xs ) = e ∶ scan ( e `⊕` x, xs )
+ 
+
+e03 :: example
+e03 = undefined
+-- ^
 -- For example
 -- 
 -- @ scan ( e, [ 1, 2, 3 ]) = [ e, e ⊕ 1, e ⊕ 1 ⊕ 2 ] @
 -- 
--- It is not hard to show that
+-- It is not hard to show that:
 -- 
+
+
+p10c :: property
+p10c = undefined
+-- ^
 -- @
 -- scan ( e, xs ++ [ x ])  = scan ( e, xs ) ++ [ e ⊕ reduce xs ] ,
 --      where 
 --                reduce = hom (⊕) id ι⊕
 -- @
--- 
--- 
+
+
+
+-- $p10c2d
 -- We thus have:
--- 
+
+p10d :: property
+p10d = undefined
+-- ^
 -- @
 -- scan = 'unfoldr' ('||>') p 
 --      = 'unfoldl' ('<||') p
---   where p = null '.' snd 
+--      where               p = null '.' snd 
 -- @
--- 
--- and:
--- 
+
+
+
+p10e :: property
+p10e = undefined
+-- ^ 
 -- @
 --                     ('||>') ( e, x ∶ xs )     = ( e, ( e ⊕ x, xs ))
 --                     ('<||') ( e, xs ++ [ ]) = (( e, xs ) , e ⊕ reduce xs )
 -- @
--- 
+--
 -- where the domains of ('||>') and ('<||') are pairs whose second components
 -- are non-empty.
 -- 
--- 
+
+
+p10g :: property
+p10g = undefined
+-- ^ 
 -- To construct g, we show that for xs ++ ys = zs we have:
 -- 
 -- @
@@ -292,22 +371,27 @@ sortL = unfoldl (<||)  p
 -- @
 -- 
 -- 
+
+-- $p10gto10
 -- Again we prove only the first property, for which we need to prove
 -- a slight generalisation,
--- 
--- 
 
--- $property10
--- 
+p10 :: property
+p10 = undefined
+-- ^
 -- @
--- ( ws ++ scan ( e, xs ) , ( e ⊕ reduce xs, ys )) ∈ iterF ( ws, ( e, zs )) (10)
--- if xs ++ ys = zs.
+--   ('p10')   ( ws ++ scan ( e, xs ) , ( e ⊕ reduce xs, ys )) ∈ iterF ( ws, ( e, zs ))
+--             if xs ++ ys = zs.
 -- @
--- 
+
+
+-- $p10toproof
 -- The proof is an uninteresting induction on zs, and the inductive case is shown:
 
 
--- $property10proof
+p10proof :: proof
+p10proof = undefined
+-- ^
 -- @
 --    ( ws ++ scan ( e, xs ) , ( e ⊕ r xs, ys )) ∈ iterF ( ws, ( e, z ∶ zs ))
 -- ≡  ( ws ++ scan ( e, xs ) , ( e ⊕ r xs, ys )) = ( ws, ( e, z ∶ zs )) ∨
@@ -324,13 +408,19 @@ sortL = unfoldl (<||)  p
 -- ≡ xs ++ ys = z ∶ zs.
 -- @
 -- 
--- 
--- Thus we pick 
+
+
+p10pick :: pick
+p10pick = undefined
+-- ^
+-- Thus we /pick/:
 -- 
 -- @
 --      g ( e, zs )  =  (( e, xs ) , ( e ⊕ reduce xs, ys )) for some xs ++ ys = zs. 
 -- @
--- 
+
+
+-- $scandef
 -- For termination we want xs and ys to be both non-empty, which gives rise to the definition:
 -- 
 -- @
@@ -343,6 +433,8 @@ sortL = unfoldl (<||)  p
 -- This is not yet an efficient implementation. To avoid repeated
 -- calls to reduce, one typically performs a tupling. 
 -- 
+
+-- $srdef
 -- Let
 -- 
 -- @ 
@@ -363,8 +455,9 @@ sortL = unfoldl (<||)  p
 -- However, the second call to sr in the xs ++ ys case demands the
 -- value of r1, which is a result of the first call to sr. 
 -- This prevents the two calls to sr from being executed in parallel.
--- 
--- 
+
+
+-- $scaneffdef
 -- Instead, we compute scan in two phases: all the r’s are first
 -- computed and cached, which are then used in the second phase to
 -- compute scan. For that we need a data structure storing the r’s.
@@ -378,26 +471,47 @@ sortL = unfoldl (<||)  p
 -- val ( N _ n _  ) = n.
 -- @
 -- 
--- 
--- The following function builds a tree out of a non-empty list, with
--- the invariant that val ( build xs ) = reduce xs:
--- 
--- 
+
+
+-- $p10h
+-- The following function builds a tree out of a non-empty list:
+--
+
+p10h :: property
+p10h = undefined
+-- ^
 -- @
 -- build [ x ]         = L x
--- build ( xs ++ ys )  |                                                      xs /= [ ] ∧ ys /= [ ]
+-- build ( xs ++ ys )  |                               xs /= [ ] ∧ ys /= [ ]
 --                     = let t = build xs
 --                           u = build ys
 --                       in 
 --                          N t ( val t ⊕ val u ) u
 -- @
--- 
+
+
+p10i :: property
+p10i = undefined
+
+-- ^
+-- with the invariant that:
+--
+-- @
+--   val ( build xs ) = reduce xs:
+-- @
+
+
+p10j :: property
+p10j = undefined
+-- ^ 
 -- The key to construct an efficient implementation of scan is to
 -- perform build in a separate phase and use only the results stored in
--- the tree. That is, we wish to construct some function f such that
+-- the tree. 
+--
+-- That is, we wish to construct some function f such that:
 -- 
 -- @
--- scan ( e, xs ) = f ( e, build xs ) .
+-- scan ( e, xs ) = f ( e, build xs )
 -- @
 -- 
 -- The singleton case is easy: 
@@ -425,19 +539,20 @@ sortL = unfoldl (<||)  p
 -- 
 -- @
 -- scan ( e, [ ])      = [ ]
--- scan ( e, xs )      = acc ( e, build xs ) ,
+-- scan ( e, xs )      = acc ( e, build xs )
 -- @
 -- 
 -- @
 -- acc ( e, L x )      = [ e ]
--- acc ( e, N t   u ) = acc ( e, t ) ++ acc ( e ⊕ val t, u ) .
+-- acc ( e, N t   u )  = acc ( e, t ) ++ acc ( e ⊕ val t, u )
 -- @
--- 
+
+
+-- $scancomments
 -- By constructing a balanced binary tree, the evaluation can be performed in O ( log n ) time 
 -- given a sufficient number of processors, or in O ( n / p + log p ) time if the number of
 -- processors is much smaller than n. We have in fact reconstructed a well-known efficient
 -- implementation of scan recorded by, for example, Blelloch [@'r02'@].
--- 
 -- 
 
 note02 = undefined

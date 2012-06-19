@@ -25,30 +25,38 @@ module Pearl.GaDtTLHT.Section02
      , cons
      -- ** a product function
      , (><)
-     , a1
+     , p01b
      -- ** foldrr: a resumed foldr
      , foldrr
+     , p02
      , cat
+     , p03
      -- ** DLists
      , unsnoc
      , snoc
+     , p03b
+     , p03h
      -- ** foldlr: a resumed foldl
      , foldlr
+     , p04
      -- ** A List Homomorphism
      , hom
      -- * Some Theorems
 
      -- ** Theorem 1
-     , theorem01
-     -- ** Theorem 2
-     , theorem02
+     , t01
      -- *** Proof
-     , theorem02proof
+     , t01proof
+
+     -- ** Theorem 2
+     , t02
+     -- *** Proof
+     , t02proof
      -- *** Comments
-     , theorem02comments
+     , t02comments
      ) where
 
-import Pearl.GaDtTLHT.Ref
+import Pearl.GaDtTLHT.References
 
 
 -- $p01
@@ -60,17 +68,20 @@ p01 (x:xs) = (<||) (x, p01 xs)
 -- As is well known, in the world of sets and total functions, the equations:
 -- 
 -- @
---  ('p01')       'h'  [    ]  =   'e'
---  ('p01')       'h'  (x:xs)  = ('<||') (x, 'h' xs)
+--   ('p01')       'h'  [    ]  =   'e'
+--   ('p01')       'h'  (x:xs)  = \    \  ('<||') (x, 'h' xs)
+--   ('p01a')      'h'          = 'foldr' ('<||') 'e'
 -- @
---
+-- 
 -- have @('p01a')@ as unique solution for @'h' :: [a] -> b@.
+
 
 p01a = foldr (<||) e
 -- ^
 -- @
---  ('p01a')      'h'          = 'foldr' ('<||') 'e'
+--   ('p01a')      'h'          = 'foldr' ('<||') 'e'
 -- @
+
 
 h :: [a] -> b
 h = undefined
@@ -136,12 +147,21 @@ infix 4 \/
 
 
 -- |
--- Thus ('p01') can be written
+-- Thus ('p01'):
 -- 
--- @ (1b)  'h' '.' 'cons' = ('<||') '.' ('id' '><' 'h') @
+-- @
+--   ('p01')       'h'  [    ]  =   'e'
+--   ('p01')       'h'  (x:xs)  = ('<||') (x, 'h' xs)
+-- @
+-- 
+-- can be written:
+-- 
+-- @
+--   ('p01b')     'h' '.' 'cons' = ('<||') '.' ('id' '><' 'h')
+-- @
 --
 
-a1 = h . cons
+p01b = h . cons
 
 
 -- ** Deriving 'foldrr' from 'foldr'
@@ -154,31 +174,42 @@ foldrr (<||) ( x:xs,  e ) = (<||) (  x  , foldrr (<||) (xs,e)  )
 --
 -- It can be seen as a @resumed@ version of 'foldr' (hence the suffix @r@ in the name).
 --
+
+p02 :: property
+p02 = undefined
+-- ^
 -- That is, if:
 --
--- @    'h'              = 'foldr' ('<||') 'e' @
+-- @
+--   ('p01a')      'h'          = 'foldr' ('<||') 'e'
+-- @
 --
 -- then one can show:
 -- 
--- @(2) 'h' (xs '++' ys)   = 'foldrr' ('<||') ( xs , 'h' ys )@
+-- @
+--   ('p02') 'h' (xs '++' ys)   = 'foldrr' ('<||') ( xs , 'h' ys )
+-- @
 --
 -- by induction on xs.
 --
 
 cat :: ([a],[a]) -> [a]
 cat (xs,ys) = xs ++ ys
+
+p03 :: property p02 [pointfree] [resumed] version
+p03 = undefined
 -- ^
 -- Let:
 --
 -- @ 'cat' (xs,ys) = xs '++' ys @
 -- 
--- then equation (2):
+-- then equation ('p02'):
 --
--- @(2) 'h' (xs '++' ys) = 'foldrr' ('<||') ( xs , 'h' ys )@
+-- @('p02') 'h' (xs '++' ys) = 'foldrr' ('<||') ( xs , 'h' ys )@
 -- 
 -- can be point-free as:
---
--- @(3) 'h' '.' 'cat'      = 'foldrr' ('<||') '.' ( 'id' '><' 'h' ) @
+-- 
+-- @('p03') 'h' '.' 'cat'      = 'foldrr' ('<||') '.' ( 'id' '><' 'h' ) @
 --
 
 
@@ -196,6 +227,10 @@ snoc (xs,x) = xs ++ [x]
 --
 -- @ 'snoc' (xs, x) = xs '++' [x] @
 --
+
+p03b :: property (foldl with (||>) (pronounced forward)) is the unique solution for snoclists
+p03b = undefined
+-- ^
 -- It is known that 
 --
 -- @ 'foldl' ('||>') 'e' @
@@ -204,12 +239,17 @@ snoc (xs,x) = xs ++ [x]
 --
 -- in:
 --
+
+p03h :: dual to p01h [pointfree]
+p03h = undefined
+-- ^
 -- @
---        'h' [] = 'e'
---        'h' '.' 'snoc' = ('||>') '.' ( 'h' '><' 'id' )
+--   ('p03h')  'h' [] = 'e'
+--             'h' '.' 'snoc' = ('||>') '.' ( 'h' '><' 'id' )
 -- @
 --
 -- where @ ('||>') :: (b,a) -> b. @
+
 
 -- |
 -- Defining @resumable@ 'foldl' as:
@@ -223,11 +263,13 @@ foldlr :: ((b,a) -> b) -> ( b , [a]) -> b
 foldlr (||>) ( e   ,  []              ) = e
 foldlr (||>) ( e   , unsnoc -> (xs,x) ) = (||>) ( foldlr (||>) (e,xs)  ,  x  )
 
+
+p04 :: dual to p03 [pointfree]
+p04 = undefined
 -- ^
--- we have, if @ 'h' = 'foldl' ('||>') 'e' @, that:
---
--- @ (4)  'h' '.' 'cat' = 'foldlr' ('||>') '.' ( 'h' '><' 'id' ) @
---
+-- We have, if @ 'h' = 'foldl' ('||>') 'e' @, that:
+-- 
+-- @ ('p04')  'h' '.' 'cat' = 'foldlr' ('||>') '.' ( 'h' '><' 'id' ) @
 
 
 -- ** A List Homomorphism
@@ -281,7 +323,7 @@ hom = undefined
 -- ** Second List Homomorphism Theorem
 -- |
 -- (the 2nd list-homomorphism theorem [@'r01'@]).
--- #theorem01#
+-- #t01#
 --
 -- If
 -- @
@@ -302,15 +344,24 @@ hom = undefined
 --        ('||>') (v, x) = f (  v, k x)
 -- @
 --
-theorem01 :: a
-theorem01 = undefined
+t01 :: a
+t01 = undefined
 
 
+t01proof :: a
+t01proof = undefined
+-- ^
+-- /Proof./
+--
+-- A complete proof is given in [@'r01'@].
+--
+
+
+-- $t02
 -- ** Third List Homomorphism Theorem 
--- #theorem02#
-
-theorem02 :: a
-theorem02 = undefined
+-- #t02#
+t02 :: a
+t02 = undefined
 -- ^
 -- Somewhat surprisingly, if a function can be computed both by a 'foldr' and a 'foldl',
 -- it /is/ a list homomorphism:
@@ -330,8 +381,8 @@ theorem02 = undefined
 --
 -- for some @f@ and @k@.
 
-theorem02proof :: a
-theorem02proof = undefined
+t02proof :: a
+t02proof = undefined
 -- ^
 -- /Proof./
 --
@@ -381,7 +432,11 @@ theorem02proof = undefined
 -- @
 --
 
--- |
+t02comments :: a
+t02comments = undefined
+-- ^
+-- /Comments./
+--
 -- Theorem 2 in fact provides hints how to construct list homomorphisms. 
 -- 
 -- For example, since @sum = foldr (+) 0 = foldl (+) 0@, Theorem 2 states that sum can be written as:
@@ -410,5 +465,4 @@ theorem02proof = undefined
 -- to be discovered, which is indeed what we will see in the following sections. 
 -- The syntactical approach makes such generalisations much easier to spot.
 -- 
-theorem02comments :: a
-theorem02comments = undefined
+

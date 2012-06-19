@@ -26,9 +26,9 @@ module Pearl.GaDtTLHT.Section03
           -- $unhom
      , unhom
      -- ** Lemma 3
-     , lemma03
+     , t03
      -- *** Proof: by Example
-     , lemma03proof
+     , t03proof
      -- **** Example
      , example0
      -- ** Theorem 02 for Unfolds?
@@ -40,6 +40,8 @@ module Pearl.GaDtTLHT.Section03
 
      -- ** A crucial property
           -- $property
+     , p05
+     , p06
      , splits
 
      -- ** A Relational Perspective
@@ -57,27 +59,31 @@ module Pearl.GaDtTLHT.Section03
      -- **** Laws
           -- $relationlaws
 
+          -- $unfrunfl
+     , p07
+          -- $p07comments
+     , p08
+          -- $findingg
+
      -- ** Theorem 4
-          -- $theorem04
-
+     , t04
      -- *** Proof
-          -- $theorem04proof
-
+     , t04proof
      -- ** Corollary 5 \<- Theorem 4
-          -- $theorem05
-
+     , t05
      -- ** Proof
-          -- $theorem05proof
+     , t05proof
 
      -- ** Calculating 'g'
           -- $calculating
+     , p08pick     
 
      -- ** Figure 1
           -- $figure01
 
      -- *** Lemma 6
-          -- $theorem06
-     
+     , t06 
+     , t06proof
      -- ** Extra Stuff
      , (<||)
      , (||>)
@@ -93,8 +99,9 @@ module Pearl.GaDtTLHT.Section03
      , (/\)
      )    where
 
-import Pearl.GaDtTLHT.Section02 ((><), foldlr, foldrr,cat,h)
-import Pearl.GaDtTLHT.Ref
+import Pearl.GaDtTLHT.Section02 ((><), foldlr, foldrr,cat,h, p03, p04)
+
+import Pearl.GaDtTLHT.References
 import Data.List.Unicode ((∈),(∋),(∪),(∩))
 
 (<||) :: (b, t) -> t
@@ -187,9 +194,10 @@ unhom3 g f p q = k
          | (l,c,r) <- g v = 'k' l ++ 'k' c ++ 'k' r
 
 -}
+
 -- ** Lemma 3
-lemma03 :: a
-lemma03 = undefined
+t03 :: lemma
+t03 = undefined
 -- ^
 -- There /exist/ @h@ such that:
 --
@@ -204,8 +212,8 @@ lemma03 = undefined
 --
 
 -- *** Proof (by example)
-lemma03proof :: a
-lemma03proof = undefined
+t03proof :: proof
+t03proof = undefined
 -- ^
 -- Let @'example0' :: Int -> [Int]@ generate a list of @1@s of length @2^n@ for a given n.
 --
@@ -345,6 +353,7 @@ unfoldlp (<||) p v = (|<|) (v, []) where (|<|) (v, xs) | p v                = [(
 --
 
 
+
 -- $property
 --
 -- A crucial property relating 'unfoldr' and 'unfoldrp' is that if:
@@ -357,8 +366,8 @@ unfoldlp (<||) p v = (|<|) (v, []) where (|<|) (v, xs) | p v                = [(
 -- we have both:
 --
 -- @
---   (5)       'splits' . 'k' = 'map' ('id' '><' k) . 'unfoldrp' ('||>')
---   (6)       'splits' . 'k' = 'map' (k '><' 'id') . 'unfoldlp' ('<||')
+--   ('p05')       'splits' . 'k' = 'map' ('id' '><' k) . 'unfoldrp' ('||>')
+--   ('p06')       'splits' . 'k' = 'map' (k '><' 'id') . 'unfoldlp' ('<||')
 -- @
 --
 -- where
@@ -367,16 +376,16 @@ unfoldlp (<||) p v = (|<|) (v, []) where (|<|) (v, xs) | p v                = [(
 --   'splits' :: [a] -> ( [a], [a] )
 -- @
 --
--- Notice how they resemble the /converses/ of @(3)@ and @(4)@:
+-- Notice how they resemble the /converses/ of @('p03')@ and @('p04')@:
 --
 -- @
---   (3)       'h' '.' 'cat' = 'foldrr' ('<||') '.' ( 'id' '><' 'h' )
---   (4)       'h' '.' 'cat' = 'foldlr' ('||>') '.' ( 'h' '><' 'id' )
+--   ('p03')       'h' '.' 'cat' = 'foldrr' ('<||') '.' ( 'id' '><' 'h' )
+--   ('p04')       'h' '.' 'cat' = 'foldlr' ('||>') '.' ( 'h' '><' 'id' )
 -- @
 --
 -- @
---   (5)       'splits' . 'k' = 'map' ('id' '><' k) . 'unfoldrp' ('||>')
---   (6)       'splits' . 'k' = 'map' (k '><' 'id') . 'unfoldlp' ('<||')
+--   ('p05')       'splits' . 'k' = 'map' ('id' '><' k) . 'unfoldrp' ('||>')
+--   ('p06')       'splits' . 'k' = 'map' (k '><' 'id') . 'unfoldlp' ('<||')
 -- @
 --
 --
@@ -387,6 +396,21 @@ unfoldlp (<||) p v = (|<|) (v, []) where (|<|) (v, xs) | p v                = [(
 -- * @('id' '><' k)@ in @(5)@ is on the left-hand side of ('.'), and is lifted to lists by 'map'
 --   due to the type, etc.
 --
+
+p05 :: property
+p05 = undefined
+-- ^
+-- @
+--   ('p05')       'splits' . 'k' = 'map' ('id' '><' k) . 'unfoldrp' ('||>')
+-- @
+
+p06 :: property
+p06 = undefined
+-- ^
+-- @
+--   ('p06')       'splits' . 'k' = 'map' (k '><' 'id') . 'unfoldlp' ('<||')
+-- @
+
 
 splits :: [a] -> ([a],[a])
 splits = undefined
@@ -405,7 +429,7 @@ splits = undefined
 
 -- $relationcomments
 -- 
--- We could have proceeded from @(5)@ and @(6)@ to construct @g@ and thereby prove
+-- We could have proceeded from @('p05')@ and @('p06')@ to construct @g@ and thereby prove
 -- the dual theorem. However, we would like to take a bold approach and ask the readers
 -- to see paused unfolding /as a relation/.
 --
@@ -417,6 +441,7 @@ splits = undefined
 -- has to bring up relations to appreciate the nice duality between the theorems for
 -- folding and unfolding.
 --
+
 
 -- $relation
 -- 
@@ -500,7 +525,7 @@ splits = undefined
 unfr fwd p = elem . (unfoldrp fwd p)
 
 
---
+-- $unfrunfl
 -- While 'unfoldrp' and 'unfoldlp' generate the entire trace, 'unfr' and 'unfl' map
 -- the input seed to one arbitrary intermediate state.
 --
@@ -518,27 +543,39 @@ unfr fwd p = elem . (unfoldrp fwd p)
 -- \ if:                        ( x_i+1  ,v_i+1) = ('||>') v_i
 -- @
 --
--- The equality @(5)@ can be expressed relationally:
+
+p07 :: property
+p07 = undefined
+-- ^
+-- The equality @('p05')@ can be expressed relationally.
 --
 -- If @k = 'unfoldr' ('||>') p@ we have:
---
+-- 
 -- @
--- \ (7)     cat° . 'k' = ('id' '><' 'k' ) . 'unfr' ('||>') p
+-- \ ('p07')     cat° . 'k' = ('id' '><' 'k' ) . 'unfr' ('||>') p
 -- @
---
+
+-- $p07comments
 -- Both sides relate the input seed, say @v@, to a /pair/ of lists.
 -- On the left hand side, the list returned by @k v@ is arbitrarily split into @(xs,ys)@.
 -- 
 -- The equation says that @xs '++' ys = 'k' v@ if and only if @xs@ can be generated by
 --    @'unfr' ('||>') p@ and @ys@ can be generated by 'k' starting from where
 --    @'unfr' ('||>') p@ left off.
---
+
+p08 :: property
+p08 = undefined
+-- ^
 -- For @k = 'unfoldl' ('<||') p@, a symmetric property holds:
 --
 -- @
--- \ (8)     cat° . 'k' = ('k'  '><' 'id') . 'unfl' ('<||') p
+-- \ ('p08')     cat° . 'k' = ('k'  '><' 'id') . 'unfl' ('<||') p
 -- @
 --
+
+
+
+-- $findingg
 -- Recall that our aim is to construct 'g'. It suffices to find a 'g' such that:
 --
 -- @ cat° . 'k' = ('k' '><' 'k') . 'g' @
@@ -553,8 +590,8 @@ unfr fwd p = elem . (unfoldrp fwd p)
 -- \ \ \            \   \              from seeds produced by 'g' v.
 -- @
 --
--- Notice that by applying the converse operator @(_)*@ to both sides of @(7)@ and @(8)@,
--- we get equations that are almost @(3)@ and @(4)@ apart from having converses of 'k' and
+-- Notice that by applying the converse operator @(_)*@ to both sides of @('p07')@ and @('p08')@,
+-- we get equations that are almost @('p03')@ and @('p04')@ apart from having converses of 'k' and
 -- unfolds in the formulae:
 --
 -- @
@@ -564,7 +601,9 @@ unfr fwd p = elem . (unfoldrp fwd p)
 --
 
 
--- $theorem04
+t04 :: theorem
+t04 = undefined
+-- ^
 -- The proof of Theorem 2, however, proceeds the same way even if the components
 -- are not functions! In the realm of relations, part of the proof of Theorem 2
 -- can be generalized to:
@@ -579,20 +618,18 @@ unfr fwd p = elem . (unfoldrp fwd p)
 -- { ... }                \   \ = R  . 'cat' . (R° '><' R°) . (R '><' R)
 -- @
 --
-theorem04 :: a
-theorem04 = undefined
--- ^
 
--- $theorem04proof
---
+t04proof :: proof
+t04proof = undefined
+-- ^
 -- /Proof./
 --
 -- The same as that of Theorem 2. We will prove a more general Theorem 7 later.
-theorem04proof :: a
-theorem04proof = undefined
--- ^
 
--- $theorem05
+
+t05 :: corollary
+t05 = undefined
+-- ^
 -- The desired dual theorem thus follows:
 --
 -- @
@@ -607,13 +644,9 @@ theorem04proof = undefined
 --
 --
 
--- |
-theorem05 :: a
-theorem05 = undefined
+t05proof :: proof
+t05proof = undefined
 -- ^
-
--- $theorem05proof
--- 
 -- /Proof./
 --
 -- We have already talked about 'f' and 'q', and now we aim to find 'g'
@@ -623,29 +656,27 @@ theorem05 = undefined
 --        'cat'° . 'k' = ( 'k' '><' 'k' ) . 'g'
 -- @
 --
--- Using properties @(7)@ and @(8)@ as antecedents of Theorem 4 we get:
+-- Using properties @('p07')@ and @('p08')@ as antecedents of Theorem 4 we get:
 --
 -- @
 -- With:
---      (7)    'cat'° . 'k' = ('id' '><' 'k' ) . 'unfr'  ('||>')  'p'
---      (8)    'cat'° . 'k' = ('k'  '><' 'id') . 'unfl'  ('<||')  'p'
+--      ('p07')    'cat'° . 'k' = ('id' '><' 'k' ) . 'unfr'  ('||>')  'p'
+--      ('p08')    'cat'° . 'k' = ('k'  '><' 'id') . 'unfl'  ('<||')  'p'
+--
 -- We get:
---             'cat'° . 'k' = ('k'  '><' 'k' ) . ('k'° '><' 'k'°) . 'cat'° . 'k'
+--                  'cat'° . 'k' = ('k'  '><' 'k' ) . ('k'° '><' 'k'°) . 'cat'° . 'k'
 -- @
 --
+
+p08pick :: pick
+p08pick = undefined
+-- ^
 -- Thus @g@ can be any functional subset of:
 --
 -- @
 --  \                                   ('k'° '><' 'k'°) . 'cat'° . 'k'
 -- @
 --
-
-
--- |
-theorem05proof :: a
-theorem05proof = undefined
--- ^ 
-
 
 
 
@@ -658,6 +689,8 @@ theorem05proof = undefined
 -- is not easy to simplify. To calculate 'g' we often use Lemma 6 to to refine:
 --
 -- @ ('k'° '><' 'k'°) . 'cat'° . 'k' @
+-- 
+-- to: 
 --
 -- @
 -- \      (('k'° '><' 'id') '.' 'unfr' ('||>') 'p')
@@ -707,8 +740,9 @@ theorem05proof = undefined
 -- @
 
 
--- $theorem06
---
+t06 :: lemma
+t06 = undefined
+-- ^
 -- This lemma has a functional formulation that may be more friendly to readers. Writing
 -- the list membership predicate @'elem' :: a -> [a] -> Bool@ in the Haskell Standard Prelude
 -- in infix position as @(∈)@, we have:
@@ -737,9 +771,13 @@ theorem05proof = undefined
 --
 -- From now on we will use Lemma 6 and restrict ourselves to functions when we calculate 'g'.
 
--- |
-theorem06 :: a
-theorem06 = undefined
+t06proof :: proof
+t06proof = undefined
+-- ^
+-- /Proof./
+--
+-- Proof omitted!
+
 -- ^ 
 
 

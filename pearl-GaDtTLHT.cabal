@@ -5,7 +5,7 @@ name:                pearl-GaDtTLHT
 version:             0.9.5
 synopsis:            A Functional Pearl: Generalising and Dualising the third list-homomorphism theorem.
 -- description:         
-homepage:            http://www.github.com/technogeeky/pearl-GaDtTLHT/
+homepage:            http://www.github.com/d-day/pearl-GaDtTLHT/
 license:             GPL-3
 license-file:        LICENSE
 author:              Drew Day
@@ -19,14 +19,16 @@ cabal-version:       >=1.8
 
 library
   hs-source-dirs:   src
-  exposed-modules:  Pearl.GaDtTLHT.Pearl,      --
-                    Pearl.GaDtTLHT.Section01,  --
-                    Pearl.GaDtTLHT.Section02,  --
-                    Pearl.GaDtTLHT.Section03,  --
-                    Pearl.GaDtTLHT.Section04,  --
-                    Pearl.GaDtTLHT.Section05,  --
-                    Pearl.GaDtTLHT.Section06,  --
-                    Pearl.GaDtTLHT.References  -- 
+  exposed-modules:  Pearl.GaDtTLHT.Pearl,
+                    Pearl.GaDtTLHT.Section01,
+                    Pearl.GaDtTLHT.Section02,
+                    Pearl.GaDtTLHT.Section03,
+                    Pearl.GaDtTLHT.Section04,
+                    Pearl.GaDtTLHT.Section05,
+                    Pearl.GaDtTLHT.Section06,
+                    Pearl.GaDtTLHT.References,
+                    Pearl.GaDtTLHT.Properties,
+                    Pearl.GaDtTLHT.Theorems
   build-depends:    base                       >= 4.5    && < 4.6,
                     base-unicode-symbols       >= 0.2    && < 0.4,
                     dlist                      >= 0.5    && < 0.6,
