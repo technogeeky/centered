@@ -1,4 +1,4 @@
-{-# LANGUAGE ViewPatterns, PatternGuards #-}
+{-# LANGUAGE ViewPatterns, PatternGuards, ImplicitParams #-}
 ------------------------------------------------------------------------------------------------
 -- |
 -- Module      :  Pearl.GaDtTLHT.Section02
@@ -54,13 +54,14 @@ module Pearl.GaDtTLHT.Section02
      , t02proof
      -- *** Comments
      , t02comments
+     , p04pick
      ) where
 
 import Pearl.GaDtTLHT.References
 
 
 -- $p01
-p01 :: [a] -> b
+-- p01 :: [a] -> b
 p01 []     = e
 p01 (x:xs) = (<||) (x, p01 xs)
 
@@ -92,11 +93,11 @@ e = undefined
 -- e is the unit for the fold, ie, it is like the @[]@ we replace at the end of a list.
 
 
-(<||) :: (a,b) -> b
-(<||) = undefined
+(<||) :: (a,b) -> a
+(<||) = fst
 
 (||>) :: (a,b) -> b
-(||>) = undefined
+(||>) = snd
 
 -- ^
 -- We deviate from the standard and let ('<||')  be uncurried since it is more convenient in point-free style,
@@ -145,8 +146,8 @@ infix 4 \/
 -- 
 -- which we will refer to as @product functor@. 
 
-
--- |
+p01b = h . cons
+-- ^
 -- Thus ('p01'):
 -- 
 -- @
@@ -161,10 +162,8 @@ infix 4 \/
 -- @
 --
 
-p01b = h . cons
 
 
--- ** Deriving 'foldrr' from 'foldr'
 foldrr :: ((a,b) -> b) -> ([a], b  ) -> b
 foldrr (<||) ( []  ,  e ) = e
 foldrr (<||) ( x:xs,  e ) = (<||) (  x  , foldrr (<||) (xs,e)  )
@@ -213,7 +212,6 @@ p03 = undefined
 --
 
 
--- ** Deriving 'foldlr' from 'foldl'
 unsnoc :: [a] -> ([a],a)
 unsnoc (l:r:[]) = ([l],r)
 unsnoc ________ = error "i didn't write this correctly"
@@ -271,8 +269,11 @@ p04 = undefined
 -- 
 -- @ ('p04')  'h' '.' 'cat' = 'foldlr' ('||>') '.' ( 'h' '><' 'id' ) @
 
+sortf :: (?cmp :: a -> a -> Bool) => [a] -> [a]
+sortf = undefined ?cmp
 
--- ** A List Homomorphism
+least xs = head (sortf xs)
+
 
 -- |
 -- A function @ 'hom' :: [a] -> b @ is a list homomoprhism if there exists:
@@ -314,13 +315,17 @@ p04 = undefined
 -- 
 -- resulting in almost linear speedups with respect to @p@.
 
-hom :: [a] -> b
-hom = undefined
+hom ::  ( ?e ::          b
+       ,  ?k :: a     -> b
+       ,  ?f :: (b,b) -> b
+       )                      => [a] -> b
+      
+hom [] = ?e
+hom [x] = ?k x
+--hd _ = ?f (hd xs, hd ys)
 
 
--- * List Homomorphism Theorems
 
--- ** Second List Homomorphism Theorem
 -- |
 -- (the 2nd list-homomorphism theorem [@'r01'@]).
 -- #t01#
@@ -359,7 +364,6 @@ t01proof = undefined
 
 -- $t02
 -- ** Third List Homomorphism Theorem 
--- #t02#
 t02 :: a
 t02 = undefined
 -- ^
@@ -425,6 +429,10 @@ t02proof = undefined
 --                         'h' . 'cat'   . ('hI' '><' 'hI')  . ( 'h' '><' 'h' )
 -- @
 --
+
+p04pick :: pick
+p04pick = undefined
+-- ^
 -- Thus the theorem holds if we pick
 --
 -- @
@@ -458,7 +466,7 @@ t02comments = undefined
 -- and @f (v,w)@ simplifies to @v + w@.
 -- 
 -- Readers might have noticed something odd in the proof: the property much talked about, 
--- that 'h' is both a 'foldr' and a 'foldl', could be weakened - properties (3) and (4) 
+-- that 'h' is both a 'foldr' and a 'foldl', could be weakened - properties ('p03') and ('p04') 
 -- were merely used to push 'h' to the right.  In fact, @'h' . 'cat'@ is never expanded in the proof.
 -- 
 -- One thus wonders whether there is something more general waiting

@@ -112,6 +112,7 @@ import Pearl.GaDtTLHT.Section02
                               , p02
                               , p03
                               , p04
+                              , p04pick
                               )
 
 import Pearl.GaDtTLHT.Section03
