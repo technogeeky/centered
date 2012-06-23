@@ -73,7 +73,7 @@ module Pearl.GaDtTLHT.Section01
 import Pearl.GaDtTLHT.References
 
 import qualified Data.List  as HaskList
-import qualified Data.DList as DList
+--import qualified Data.DList as DList
 
 -- $fromprelude
 --

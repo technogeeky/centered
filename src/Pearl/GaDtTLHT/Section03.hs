@@ -99,7 +99,7 @@ module Pearl.GaDtTLHT.Section03
      , (/\)
      )    where
 
-import Pearl.GaDtTLHT.Section02 ((><), foldlr, foldrr,cat,h, p03, p04)
+import Pearl.GaDtTLHT.Section02 ((><), foldlr, foldrr,cat, p03, p04)
 
 import Pearl.GaDtTLHT.References
 import Data.List.Unicode ((∈),(∋),(∪),(∩))
@@ -178,27 +178,12 @@ unhom g f p q = k
 -- Regrettably, @Theorem 1@ does not dualise to unfolds.
 
 
-{-
--- | extra (not in paper)
-unhom_without_pattern_guards g f p q = k
-     where 
-     'k' v | p v = []
-         | q v = [f v]
-         | otherwise = case g v of (l,r) -> 'k' l ++ 'k' r
-
--- | extra (not in paper)
-unhom3 g f p q = k
-     where 
-     'k' v | p v = []
-         | q v = [f v]
-         | (l,c,r) <- g v = 'k' l ++ 'k' c ++ 'k' r
-
--}
-
 -- ** Lemma 3
-t03 :: lemma
+t03 :: theorem
 t03 = undefined
 -- ^
+-- [/Lemma/.]
+--
 -- There /exist/ @h@ such that:
 --
 -- @ h = 'unhom' 'g' 'f' 'p' 'q' @
@@ -212,9 +197,10 @@ t03 = undefined
 --
 
 -- *** Proof (by example)
-t03proof :: proof
+t03proof :: theorem proof (by example)
 t03proof = undefined
 -- ^
+-- [/Proof/:]
 -- Let @'example0' :: Int -> [Int]@ generate a list of @1@s of length @2^n@ for a given n.
 --
 -- It can be defined:
@@ -601,12 +587,14 @@ p08 = undefined
 --
 
 
-t04 :: theorem
+t04 :: theorem (t02) [on relations]
 t04 = undefined
 -- ^
 -- The proof of Theorem 2, however, proceeds the same way even if the components
 -- are not functions! In the realm of relations, part of the proof of Theorem 2
 -- can be generalized to:
+-- 
+-- [/Theorem/.]
 --
 -- @
 -- If:
@@ -619,18 +607,20 @@ t04 = undefined
 -- @
 --
 
-t04proof :: proof
+t04proof :: theorem proof (deferred)
 t04proof = undefined
 -- ^
--- /Proof./
+-- [/Proof./]
 --
 -- The same as that of Theorem 2. We will prove a more general Theorem 7 later.
 
 
-t05 :: corollary
+t05 :: theorem (corollary to t04)
 t05 = undefined
 -- ^
 -- The desired dual theorem thus follows:
+-- 
+-- [/Theorem/.]
 --
 -- @
 -- If:
@@ -644,10 +634,10 @@ t05 = undefined
 --
 --
 
-t05proof :: proof
+t05proof :: proof (using p07) (using p08) [th04]
 t05proof = undefined
 -- ^
--- /Proof./
+-- [/Proof./]
 --
 -- We have already talked about 'f' and 'q', and now we aim to find 'g'
 -- such that:
@@ -664,7 +654,7 @@ t05proof = undefined
 --      ('p08')    'cat'° . 'k' = ('k'  '><' 'id') . 'unfl'  ('<||')  'p'
 --
 -- We get:
---                  'cat'° . 'k' = ('k'  '><' 'k' ) . ('k'° '><' 'k'°) . 'cat'° . 'k'
+--      \    \     'cat'° . 'k' = ('k'  '><' 'k' ) . ('k'° '><' 'k'°) . 'cat'° . 'k'
 -- @
 --
 
@@ -740,11 +730,13 @@ p08pick = undefined
 -- @
 
 
-t06 :: lemma
+t06 :: theorem (lemma)
 t06 = undefined
 -- ^
--- This lemma has a functional formulation that may be more friendly to readers. Writing
--- the list membership predicate @'elem' :: a -> [a] -> Bool@ in the Haskell Standard Prelude
+-- [/Lemma/.]
+--
+-- This lemma has a functional formulation that may be more friendly to readers. 
+-- Writing the list membership predicate @'elem' :: a -> [a] -> Bool@ in the Haskell Standard Prelude
 -- in infix position as @(∈)@, we have:
 --
 -- Assume that:
@@ -760,7 +752,7 @@ t06 = undefined
 --  \                                   ('k'° '><' 'k'°) . 'cat'° . k
 -- @
 --
--- If, /for all v/:
+-- If, /for all/ @v@:
 --
 -- @
 --       'g' v = (\ \ v1,\ \  v2)
@@ -774,7 +766,7 @@ t06 = undefined
 t06proof :: proof
 t06proof = undefined
 -- ^
--- /Proof./
+-- [/Proof/:]
 --
 -- Proof omitted!
 

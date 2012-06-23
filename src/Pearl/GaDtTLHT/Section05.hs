@@ -13,9 +13,13 @@
 ------------------------------------------------------------------------------------------------
 module Pearl.GaDtTLHT.Section05 where
 
-t07 :: theorem
+import Pearl.GaDtTLHT.Section03 (t05)
+
+t07 :: theorem [on relations]
 t07 = undefined
 -- ^
+-- [/Theorem/.]
+--
 -- As mentioned earlier, when looking at the proof of Theorem 2 in detail, one notices that further generalization
 -- is possible. Indeed, the presence of @R . cat@ in Theorem 4 is superficial, and the theorem can still be
 -- generalized:
@@ -39,9 +43,11 @@ t07 = undefined
 -- @
 
 
-t07proof :: proof
+t07proof :: theorem proof [t07] [on relations]
 t07proof = undefined
 -- ^
+-- [/Proof/:]
+--
 -- @
 --                     R = U . (id x S)
 --  { S invertable }     = U . (id x S) . (id x S°) . (id x S)
@@ -55,14 +61,29 @@ t07proof = undefined
 --
 
 
-t07comments :: comments
+t07comments :: theorem comments [t07]
 t07comments = undefined
 -- ^
--- However, the conclusion of the theorem, that @R = R . (T° x S°) . (T x S)@, does not have much
--- structure hinting at how this theorem can be useful. The use cases we have found are when @S@ is a
--- sub-expression of @R@ (for example, to prove Corrolary 5, we used @R = k° . cat@ and @S = T = k°@.
--- We do not require @S = T@ in general), and we use Theorem 7 to establish recursive equations about @S@,
--- hoping to construct a terminating definition of @S@.
+-- [/Comments/:]
+--
+-- However, the conclusion of the theorem, that:
+--
+-- @R = R . (T° x S°) . (T x S)@
+--
+-- does not have much structure hinting at how this theorem can be useful. 
+--
+-- The use cases we have found are when @S@ is a sub-expression of @R@ 
+-- (for example, to prove [@'t05'@], we used:
+--
+-- @ 
+-- \ R     = k° . cat
+-- \ S = T = k°
+-- @
+--
+-- We do not require @S = T@ in general. 
+--
+-- We use Theorem 7 to establish recursive equations about @S@, hoping to 
+-- construct a terminating definition of @S@.
 
 
 

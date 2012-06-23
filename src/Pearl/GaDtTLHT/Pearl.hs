@@ -27,7 +27,7 @@ module Pearl.GaDtTLHT.Pearl
 
 
 import Pearl.GaDtTLHT.Section01 hiding (cons)
-import Pearl.GaDtTLHT.Section02 hiding (cat,h)
+import Pearl.GaDtTLHT.Section02 hiding (cat, h)
 import Pearl.GaDtTLHT.Section03 hiding ((||>), (<||))
 import Pearl.GaDtTLHT.Section04
 import Pearl.GaDtTLHT.Section05 

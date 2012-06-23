@@ -15,7 +15,7 @@
 module Pearl.GaDtTLHT.Section02 
      ( 
      -- ** The Third-List Homomorphism Theorem
-       h
+     h
      , p01
      , p01a
      , e
@@ -40,7 +40,7 @@ module Pearl.GaDtTLHT.Section02
      , foldlr
      , p04
      -- ** A List Homomorphism
-     , hom
+--     , h
      -- * Some Theorems
 
      -- ** Theorem 1
@@ -58,6 +58,7 @@ module Pearl.GaDtTLHT.Section02
      ) where
 
 import Pearl.GaDtTLHT.References
+import Data.List (sortBy)
 
 
 -- $p01
@@ -76,28 +77,27 @@ p01 (x:xs) = (<||) (x, p01 xs)
 -- 
 -- have @('p01a')@ as unique solution for @'h' :: [a] -> b@.
 
-
-p01a = foldr (<||) e
+p01a :: property (foldr) with (a leftwards function) and (a unit e) is unique
+p01a = undefined
 -- ^
 -- @
 --   ('p01a')      'h'          = 'foldr' ('<||') 'e'
 -- @
 
 
-h :: [a] -> b
-h = undefined
-
-e :: b
+e :: property (e is a unit for a fold)
 e = undefined
 -- ^
 -- e is the unit for the fold, ie, it is like the @[]@ we replace at the end of a list.
 
 
-(<||) :: (a,b) -> a
-(<||) = fst
+(<||) :: (a,b) -> b
+(<||) = snd
 
-(||>) :: (a,b) -> b
-(||>) = snd
+(||>) :: (a,b) -> a
+(||>) = fst
+
+
 
 -- ^
 -- We deviate from the standard and let ('<||')  be uncurried since it is more convenient in point-free style,
@@ -114,6 +114,9 @@ e = undefined
 cons :: (a, [a]) -> [a]
 cons (x,xs)     = x:xs
 
+uncons :: [a] -> (a, [a])
+uncons (l:r:[]) = (l,[r])
+uncons ________ = error "i didn't write this correctly"
 
 infix 6  /\
 -- | The infix split combinator.
@@ -146,7 +149,9 @@ infix 4 \/
 -- 
 -- which we will refer to as @product functor@. 
 
-p01b = h . cons
+
+p01b :: property (p01) [pointfree style]
+p01b = undefined
 -- ^
 -- Thus ('p01'):
 -- 
@@ -164,7 +169,7 @@ p01b = h . cons
 
 
 
-foldrr :: ((a,b) -> b) -> ([a], b  ) -> b
+foldrr :: ((a,b) -> b) -> ([a], b) -> b
 foldrr (<||) ( []  ,  e ) = e
 foldrr (<||) ( x:xs,  e ) = (<||) (  x  , foldrr (<||) (xs,e)  )
 
@@ -174,7 +179,7 @@ foldrr (<||) ( x:xs,  e ) = (<||) (  x  , foldrr (<||) (xs,e)  )
 -- It can be seen as a @resumed@ version of 'foldr' (hence the suffix @r@ in the name).
 --
 
-p02 :: property
+p02 :: property (foldrr is foldr [resumed])
 p02 = undefined
 -- ^
 -- That is, if:
@@ -195,7 +200,7 @@ p02 = undefined
 cat :: ([a],[a]) -> [a]
 cat (xs,ys) = xs ++ ys
 
-p03 :: property p02 [pointfree] [resumed] version
+p03 :: property (p02) [pointfree style]
 p03 = undefined
 -- ^
 -- Let:
@@ -238,7 +243,7 @@ p03b = undefined
 -- in:
 --
 
-p03h :: dual to p01h [pointfree]
+p03h :: property (p03b) [pointfree]
 p03h = undefined
 -- ^
 -- @
@@ -262,21 +267,18 @@ foldlr (||>) ( e   ,  []              ) = e
 foldlr (||>) ( e   , unsnoc -> (xs,x) ) = (||>) ( foldlr (||>) (e,xs)  ,  x  )
 
 
-p04 :: dual to p03 [pointfree]
+p04 :: property (dual to p03) [pointfree]
 p04 = undefined
 -- ^
 -- We have, if @ 'h' = 'foldl' ('||>') 'e' @, that:
 -- 
 -- @ ('p04')  'h' '.' 'cat' = 'foldlr' ('||>') '.' ( 'h' '><' 'id' ) @
 
-sortf :: (?cmp :: a -> a -> Bool) => [a] -> [a]
-sortf = undefined ?cmp
 
-least xs = head (sortf xs)
-
-
--- |
--- A function @ 'hom' :: [a] -> b @ is a list homomoprhism if there exists:
+h :: property (h is a list homomorphism) denoted (hom f k e)
+h = undefined
+-- ^
+-- A function @ 'h' :: [a] -> b @ is a [/list homoprhism/] if there exists:
 --
 -- @ 'e' :: b @
 --
@@ -287,15 +289,16 @@ least xs = head (sortf xs)
 -- such that:
 -- 
 -- @
---   hom [] = e
---   hom [x] = k x
---   hom (xs '++' ys) = f ('hom' xs, 'hom' ys)
+--   h [] = e
+--   h [x] = k x
+--   h (xs '++' ys) = f ('h' xs, 'h' ys)
 -- @
 --
 -- In such a case, we denote 'h' by @'hom' f k 'e'@.
 --
 -- The equations imply that @f@ is associative, on the range of 'h', with unit 'e'. 
--- To compute a list homomorphism 'h', one may
+--
+-- To compute a list homorphism 'h', one may
 --
 -- 1. split the list arbitrarily into two parts
 --
@@ -304,7 +307,7 @@ least xs = head (sortf xs)
 -- 3. and combine the results using @f@
 --
 -- implying a potential for parallel computation. If @f@ and @k@ are constant-time
--- operations, a list homomorphism can be evaluted in time @ O( n / p + log p )@
+-- operations, a list homorphism can be evaluted in time @ O( n / p + log p )@
 --
 -- where
 --
@@ -315,22 +318,15 @@ least xs = head (sortf xs)
 -- 
 -- resulting in almost linear speedups with respect to @p@.
 
-hom ::  ( ?e ::          b
-       ,  ?k :: a     -> b
-       ,  ?f :: (b,b) -> b
-       )                      => [a] -> b
-      
-hom [] = ?e
-hom [x] = ?k x
---hd _ = ?f (hd xs, hd ys)
 
-
-
--- |
+t01 :: theorem (second list homomoprhism theorem)
+t01 = undefined
+-- ^
+-- [/Theorem/:]
 -- (the 2nd list-homomorphism theorem [@'r01'@]).
--- #t01#
 --
 -- If
+--
 -- @
 --        'h' = 'hom' f k 'e'
 -- @
@@ -349,26 +345,25 @@ hom [x] = ?k x
 --        ('||>') (v, x) = f (  v, k x)
 -- @
 --
-t01 :: a
-t01 = undefined
 
 
-t01proof :: a
+t01proof :: theorem proof [t01]
 t01proof = undefined
 -- ^
--- /Proof./
+-- [/Proof./]
 --
 -- A complete proof is given in [@'r01'@].
 --
 
 
--- $t02
--- ** Third List Homomorphism Theorem 
-t02 :: a
+t02 :: theorem (third list homomorphism theorem)
 t02 = undefined
 -- ^
+-- 
 -- Somewhat surprisingly, if a function can be computed both by a 'foldr' and a 'foldl',
--- it /is/ a list homomorphism:
+-- it /is/ a list homomorphism.
+-- 
+-- [/Theorem/:]
 -- 
 -- (the 3rd list-homomorphism theorem [@'r06'@])
 -- 
@@ -385,10 +380,10 @@ t02 = undefined
 --
 -- for some @f@ and @k@.
 
-t02proof :: a
+t02proof :: theorem proof [t02]
 t02proof = undefined
 -- ^
--- /Proof./
+-- [/Proof./]
 --
 -- The only possible choice for @k@ is:
 --
@@ -440,7 +435,7 @@ p04pick = undefined
 -- @
 --
 
-t02comments :: a
+t02comments :: theorem comments [t02]
 t02comments = undefined
 -- ^
 -- /Comments./
