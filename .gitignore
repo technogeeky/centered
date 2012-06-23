@@ -1,3 +1,5 @@
 *.hi
-dist/
+dist/build
+dist/package.conf.inplace
+dist/setup-config
 
