@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Pearl.GaDtTLHT.Section02</title><link href="ocean.css" rel="stylesheet" type="text/css" title="Ocean" /><script src="haddock-util.js" type="text/javascript"></script><script type="text/javascript">//<![CDATA[
+window.onload = function () {pageLoad();setSynopsis("mini_Pearl-GaDtTLHT-Section02.html");};
+//]]>
+</script></head><body><div id="package-header"><ul class="links" id="page-menu"><li><a href="index.html">Contents</a></li><li><a href="doc-index.html">Index</a></li></ul><p class="caption">pearl-GaDtTLHT-0.9.5: A Functional Pearl: Generalising and Dualising the third list-homomorphism theorem.</p></div><div id="content"><div id="module-header"><table class="info"><tr><th>Portability</th><td>portable (ViewPatterns, PatternGuards)</td></tr><tr><th>Stability</th><td>stable</td></tr><tr><th>Maintainer</th><td>Drew Day &lt;drewday@gmail.com&gt;</td></tr><tr><th>Safe Haskell</th><td>Safe-Infered</td></tr></table><p class="caption">Pearl.GaDtTLHT.Section02</p></div><div id="table-of-contents"><p class="caption">Contents</p><ul><li><a href="#g:1">The Third-List Homomorphism Theorem
+</a></li><li><a href="#g:2">Uncurrying some familiar functions
+</a></li><li><a href="#g:3">a product function
+</a></li><li><a href="#g:4">foldrr: a resumed foldr
+</a></li><li><a href="#g:5">DLists
+</a></li><li><a href="#g:6">foldlr: a resumed foldl
+</a></li><li><a href="#g:7">A List Homomorphism
+</a></li><li><a href="#g:8">Some Theorems
+</a><ul><li><a href="#g:9">Theorem 1
+</a><ul><li><a href="#g:10">Proof
+</a></li></ul></li><li><a href="#g:11">Theorem 2
+</a><ul><li><a href="#g:12">Proof
+</a></li><li><a href="#g:13">Comments
+</a></li></ul></li></ul></li></ul></div><div id="description"><p class="caption">Description</p><div class="doc empty">&nbsp;</div></div><div id="synopsis"><p id="control.syn" class="caption expander" onclick="toggleSection('syn')">Synopsis</p><ul id="section.syn" class="hide" onclick="toggleSection('syn')"><li class="src short"><a href="#v:h">h</a> ::  property (h is a list homomorphism) denoted (hom f k e)</li><li class="src short"><a href="#v:p01">p01</a> ::  [a1] -&gt; property (e is a unit for a fold)</li><li class="src short"><a href="#v:p01a">p01a</a> ::  property foldr with (a leftwards function) and (a unit e) is unique</li><li class="src short"><a href="#v:e">e</a> ::  property (e is a unit for a fold)</li><li class="src short"><a href="#v:-60--124--124-">(&lt;||)</a> ::  (a, b) -&gt; b</li><li class="src short"><a href="#v:-124--124--62-">(||&gt;)</a> ::  (a, b) -&gt; a</li><li class="src short"><a href="#v:cons">cons</a> ::  (a, [a]) -&gt; [a]</li><li class="src short"><a href="#v:-62--60-">(&gt;&lt;)</a> ::  (l -&gt; r) -&gt; (u -&gt; d) -&gt; (l, u) -&gt; (r, d)</li><li class="src short"><a href="#v:p01b">p01b</a> ::  property p01 [pointfree style]</li><li class="src short"><a href="#v:foldrr">foldrr</a> ::  ((a, b) -&gt; b) -&gt; ([a], b) -&gt; b</li><li class="src short"><a href="#v:p02">p02</a> ::  property (foldrr is foldr [resumed])</li><li class="src short"><a href="#v:cat">cat</a> ::  ([a], [a]) -&gt; [a]</li><li class="src short"><a href="#v:p03">p03</a> ::  property p02 [pointfree style]</li><li class="src short"><a href="#v:unsnoc">unsnoc</a> ::  [a] -&gt; ([a], a)</li><li class="src short"><a href="#v:snoc">snoc</a> ::  ([a], a) -&gt; [a]</li><li class="src short"><a href="#v:p03b">p03b</a> ::  property (foldl with ||&gt; (pronounced forward)) is the unique solution for snoclists</li><li class="src short"><a href="#v:p03h">p03h</a> ::  property p03b [pointfree]</li><li class="src short"><a href="#v:foldlr">foldlr</a> ::  ((b, a) -&gt; b) -&gt; (b, [a]) -&gt; b</li><li class="src short"><a href="#v:p04">p04</a> ::  property (dual to p03) [pointfree]</li><li class="src short"><a href="#v:t01">t01</a> ::  theorem (second list homomoprhism theorem)</li><li class="src short"><a href="#v:t01proof">t01proof</a> ::  theorem proof [t01]</li><li class="src short"><a href="#v:t02">t02</a> ::  theorem (third list homomorphism theorem)</li><li class="src short"><a href="#v:t02proof">t02proof</a> ::  theorem proof [t02]</li><li class="src short"><a href="#v:t02comments">t02comments</a> ::  theorem comments [t02]</li><li class="src short"><a href="#v:p04pick">p04pick</a> ::  pick</li></ul></div><div id="interface"><h2 id="g:1">The Third-List Homomorphism Theorem
+</h2><div class="top"><p class="src"><a name="v:h" class="def">h</a> ::  property (h is a list homomorphism) denoted (hom f k e)</p><div class="doc"><p>A function <code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> :: [a] -&gt; b </code> is a [<em>list homoprhism</em>] if there exists:
+</p><pre> <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code> :: b</pre><pre> <code>k</code> :: a -&gt; b</pre><pre> <code>f</code> :: (b <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> b) -&gt; b</pre><p>such that:
+</p><pre>
+   h [] = e
+   h [x] = k x
+   h (xs <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:-43--43-">++</a></code> ys) = f (<code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> xs, <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> ys)
+</pre><p>In such a case, we denote <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> by <code><code>hom</code> f k <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code></code>.
+</p><p>The equations imply that <code>f</code> is associative, on the range of <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>, with unit <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>. 
+</p><p>To compute a list homorphism <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>, one may
+</p><ol><li> split the list arbitrarily into two parts
+</li><li> recursively compute <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> on both parts
+</li><li> and combine the results using <code>f</code>
+</li></ol><p>implying a potential for parallel computation. If <code>f</code> and <code>k</code> are constant-time
+ operations, a list homorphism can be evaluted in time <code> O( n / p + log p )</code>
+</p><p>where
+</p><ul><li> <code>n</code> is the length of the list, and
+</li><li> <code>p</code> is the number of processors
+</li></ul><p>resulting in almost linear speedups with respect to <code>p</code>.
+</p></div></div><div class="top"><p class="src"><a name="v:p01" class="def">p01</a> ::  [a1] -&gt; property (e is a unit for a fold)</p><div class="doc"><p>As is well known, in the world of sets and total functions, the equations:
+</p><pre>
+   (<code><a href="Pearl-GaDtTLHT-Section02.html#v:p01">p01</a></code>)       <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>  [    ]  =   <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+   (<code><a href="Pearl-GaDtTLHT-Section02.html#v:p01">p01</a></code>)       <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>  (x:xs)  =       (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>) (x, <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> xs)
+   (<code><a href="Pearl-GaDtTLHT-Section02.html#v:p01a">p01a</a></code>)      <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>          = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>) <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+</pre><p>have <code>(<code><a href="Pearl-GaDtTLHT-Section02.html#v:p01a">p01a</a></code>)</code> as unique solution for <code><code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> :: [a] -&gt; b</code>.
+</p></div></div><div class="top"><p class="src"><a name="v:p01a" class="def">p01a</a> ::  property foldr with (a leftwards function) and (a unit e) is unique</p><div class="doc"><pre>
+   (<code><a href="Pearl-GaDtTLHT-Section02.html#v:p01a">p01a</a></code>)      <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>          = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>) <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+</pre></div></div><div class="top"><p class="src"><a name="v:e" class="def">e</a> ::  property (e is a unit for a fold)</p><div class="doc"><p>e is the unit for the fold, ie, it is like the <code>[]</code> we replace at the end of a list.
+</p></div></div><h2 id="g:2">Uncurrying some familiar functions
+</h2><div class="top"><p class="src"><a name="v:-60--124--124-" class="def">(&lt;||)</a> ::  (a, b) -&gt; b</p></div><div class="top"><p class="src"><a name="v:-124--124--62-" class="def">(||&gt;)</a> ::  (a, b) -&gt; a</p><div class="doc"><p>We deviate from the standard and let (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>)  be uncurried since it is more convenient in point-free style,
+ where programs are described by function composition rather than application. 
+</p></div></div><div class="top"><p class="src"><a name="v:cons" class="def">cons</a> ::  (a, [a]) -&gt; [a]</p><div class="doc"><p>In fact, we will also introduce uncurried constructor:
+</p><pre>
+   cons ( x, xs ) = x &#8758; xs
+</pre></div></div><h2 id="g:3">a product function
+</h2><div class="top"><p class="src"><a name="v:-62--60-" class="def">(&gt;&lt;)</a> ::  (l -&gt; r) -&gt; (u -&gt; d) -&gt; (l, u) -&gt; (r, d)</p></div><div class="top"><p class="src"><a name="v:p01b" class="def">p01b</a> ::  property p01 [pointfree style]</p><div class="doc"><p>Thus (<code><a href="Pearl-GaDtTLHT-Section02.html#v:p01">p01</a></code>):
+</p><pre>
+   (<code><a href="Pearl-GaDtTLHT-Section02.html#v:p01">p01</a></code>)       <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>  [    ]  =   <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+   (<code><a href="Pearl-GaDtTLHT-Section02.html#v:p01">p01</a></code>)       <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>  (x:xs)  = (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>) (x, <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> xs)
+</pre><p>can be written:
+</p><pre>
+   (<code><a href="Pearl-GaDtTLHT-Section02.html#v:p01b">p01b</a></code>)     <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:.">.</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:cons">cons</a></code> = (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>) <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:.">.</a></code> (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>)
+</pre></div></div><h2 id="g:4">foldrr: a resumed foldr
+</h2><div class="top"><p class="src"><a name="v:foldrr" class="def">foldrr</a> ::  ((a, b) -&gt; b) -&gt; ([a], b) -&gt; b</p><div class="doc"><p>We define a variation of <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code> that takes the base case as an extra argument.
+</p><p>It can be seen as a <code>resumed</code> version of <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code> (hence the suffix <code>r</code> in the name).
+</p></div></div><div class="top"><p class="src"><a name="v:p02" class="def">p02</a> ::  property (foldrr is foldr [resumed])</p><div class="doc"><p>That is, if:
+</p><pre>
+   (<code><a href="Pearl-GaDtTLHT-Section02.html#v:p01a">p01a</a></code>)      <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>          = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>) <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+</pre><p>then one can show:
+</p><pre>
+   (<code><a href="Pearl-GaDtTLHT-Section02.html#v:p02">p02</a></code>) <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> (xs <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:-43--43-">++</a></code> ys)   = <code><a href="Pearl-GaDtTLHT-Section02.html#v:foldrr">foldrr</a></code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>) ( xs , <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> ys )
+</pre><p>by induction on xs.
+</p></div></div><div class="top"><p class="src"><a name="v:cat" class="def">cat</a> ::  ([a], [a]) -&gt; [a]</p></div><div class="top"><p class="src"><a name="v:p03" class="def">p03</a> ::  property p02 [pointfree style]</p><div class="doc"><p>Let:
+</p><pre> <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code> (xs,ys) = xs <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:-43--43-">++</a></code> ys</pre><p>then equation (<code><a href="Pearl-GaDtTLHT-Section02.html#v:p02">p02</a></code>):
+</p><pre>(<code><a href="Pearl-GaDtTLHT-Section02.html#v:p02">p02</a></code>) <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> (xs <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:-43--43-">++</a></code> ys) = <code><a href="Pearl-GaDtTLHT-Section02.html#v:foldrr">foldrr</a></code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>) ( xs , <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> ys )</pre><p>can be point-free as:
+</p><pre>(<code><a href="Pearl-GaDtTLHT-Section02.html#v:p03">p03</a></code>) <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:.">.</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code>      = <code><a href="Pearl-GaDtTLHT-Section02.html#v:foldrr">foldrr</a></code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>) <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:.">.</a></code> ( <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> )</pre></div></div><h2 id="g:5">DLists
+</h2><div class="top"><p class="src"><a name="v:unsnoc" class="def">unsnoc</a> ::  [a] -&gt; ([a], a)</p></div><div class="top"><p class="src"><a name="v:snoc" class="def">snoc</a> ::  ([a], a) -&gt; [a]</p><div class="doc"><p>Symmetrically, let:
+</p><pre> <code><a href="Pearl-GaDtTLHT-Section02.html#v:snoc">snoc</a></code> (xs, x) = xs <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:-43--43-">++</a></code> [x]</pre></div></div><div class="top"><p class="src"><a name="v:p03b" class="def">p03b</a> ::  property (foldl with ||&gt; (pronounced forward)) is the unique solution for snoclists</p><div class="doc"><p>It is known that 
+</p><pre> <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldl">foldl</a></code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code>) <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code></pre><p>is the unique solution for <code><code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> :: [a] -&gt; b</code>
+</p><p>in:
+</p></div></div><div class="top"><p class="src"><a name="v:p03h" class="def">p03h</a> ::  property p03b [pointfree]</p><div class="doc"><pre>
+   (<code><a href="Pearl-GaDtTLHT-Section02.html#v:p03h">p03h</a></code>)  <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> [] = <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+             <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:.">.</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:snoc">snoc</a></code> = (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code>) <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:.">.</a></code> ( <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> )
+</pre><p>where <code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code>) :: (b,a) -&gt; b. </code>
+</p></div></div><h2 id="g:6">foldlr: a resumed foldl
+</h2><div class="top"><p class="src"><a name="v:foldlr" class="def">foldlr</a> ::  ((b, a) -&gt; b) -&gt; (b, [a]) -&gt; b</p><div class="doc"><p>Defining <code>resumable</code> <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldl">foldl</a></code> as:
+</p><pre>
+   <code><a href="Pearl-GaDtTLHT-Section02.html#v:foldlr">foldlr</a></code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code>) ( <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>   ,  []              ) = <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+   <code><a href="Pearl-GaDtTLHT-Section02.html#v:foldlr">foldlr</a></code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code>) ( <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>   , <code><a href="Pearl-GaDtTLHT-Section02.html#v:unsnoc">unsnoc</a></code> -&gt; (xs,x) ) = (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code>) ( <code><a href="Pearl-GaDtTLHT-Section02.html#v:foldlr">foldlr</a></code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code>) (<code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>,xs)  ,  x  ) 
+</pre></div></div><div class="top"><p class="src"><a name="v:p04" class="def">p04</a> ::  property (dual to p03) [pointfree]</p><div class="doc"><p>We have, if <code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldl">foldl</a></code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code>) <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code> </code>, that:
+</p><pre> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:p04">p04</a></code>)  <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:.">.</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code> = <code><a href="Pearl-GaDtTLHT-Section02.html#v:foldlr">foldlr</a></code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code>) <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:.">.</a></code> ( <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> )</pre></div></div><h2 id="g:7">A List Homomorphism
+</h2><h1 id="g:8">Some Theorems
+</h1><h2 id="g:9">Theorem 1
+</h2><div class="top"><p class="src"><a name="v:t01" class="def">t01</a> ::  theorem (second list homomoprhism theorem)</p><div class="doc"><dl><dt><em>Theorem</em>:</dt><dd>
+ (the 2nd list-homomorphism theorem [<code><code><a href="Pearl-GaDtTLHT-References.html#v:r01">r01</a></code></code>]).
+</dd></dl><p>If
+</p><pre>
+        <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> = <code>hom</code> f k <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+</pre><p>Then
+</p><pre>
+        <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+        <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldl">foldl</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+</pre><p>Where
+</p><pre>
+        (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>) (x, v) = f (k x,   v)
+        (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code>) (v, x) = f (  v, k x)
+</pre></div></div><h3 id="g:10">Proof
+</h3><div class="top"><p class="src"><a name="v:t01proof" class="def">t01proof</a> ::  theorem proof [t01]</p><div class="doc"><dl><dt><em>Proof.</em></dt><dd>
+</dd></dl><p>A complete proof is given in [<code><code><a href="Pearl-GaDtTLHT-References.html#v:r01">r01</a></code></code>].
+</p></div></div><h2 id="g:11">Theorem 2
+</h2><div class="top"><p class="src"><a name="v:t02" class="def">t02</a> ::  theorem (third list homomorphism theorem)</p><div class="doc"><p>Somewhat surprisingly, if a function can be computed both by a <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code> and a <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldl">foldl</a></code>,
+ it <em>is</em> a list homomorphism.
+</p><dl><dt><em>Theorem</em>:</dt><dd>
+</dd></dl><p>(the 3rd list-homomorphism theorem [<code><code><a href="Pearl-GaDtTLHT-References.html#v:r06">r06</a></code></code>])
+</p><pre>
+        <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+        <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldl">foldl</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+</pre><p>implies
+</p><pre>
+        <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> = <code>hom</code> f k <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+</pre><p>for some <code>f</code> and <code>k</code>.
+</p></div></div><h3 id="g:12">Proof
+</h3><div class="top"><p class="src"><a name="v:t02proof" class="def">t02proof</a> ::  theorem proof [t02]</p><div class="doc"><dl><dt><em>Proof.</em></dt><dd>
+</dd></dl><p>The only possible choice for <code>k</code> is:
+</p><pre>
+        <code>k</code> x = <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> [x]
+</pre><p>The aim is to find <code>f</code> such that:
+</p><pre>
+        <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> . <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code> = f . (<code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>)
+</pre><p>A function <code>fI</code> is called a <em>right inverse</em> of <code>f</code> if, for all <code>y</code> in the
+ range of <code>f</code>, we have <code>f (fI y) = y</code>. Equivalently, <code>f . fI . f = f</code>. 
+</p><p>In a set-theoretical model, a right inverse always exists but may not be unique.
+</p><p>While a semantical proof was given by [<code>Gibbons <code><a href="Pearl-GaDtTLHT-References.html#v:r06">r06</a></code></code>], we will provide a proof
+ having a much more equational flavour.
+</p><p>We reason:
+</p><pre>
+                        <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> . <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code>
+ { use (3) }           =
+                        <code><a href="Pearl-GaDtTLHT-Section02.html#v:foldrr">foldrr</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code> . (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>)
+ { h = h . hI . h
+  and product functor} =
+                        <code><a href="Pearl-GaDtTLHT-Section02.html#v:foldrr">foldrr</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code> . (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>)   . (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code>hI</code>) . (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>)
+ { (3) backwards
+  and (4) forwards }   =
+                        <code><a href="Pearl-GaDtTLHT-Section02.html#v:foldlr">foldlr</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code> . (<code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>  <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code>)  . (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code>hI</code>) . (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>)
+ { h = h . hI . h
+  and product functor} =
+                        <code><a href="Pearl-GaDtTLHT-Section02.html#v:foldlr">foldlr</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code> . (<code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>  <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code>)  . (<code>hI</code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code>hI</code>) . (<code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>)
+ { (4) backwards }     =
+                         <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> . <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code>   . (<code>hI</code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code>hI</code>)  . ( <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> )
+</pre></div></div><h3 id="g:13">Comments
+</h3><div class="top"><p class="src"><a name="v:t02comments" class="def">t02comments</a> ::  theorem comments [t02]</p><div class="doc"><p><em>Comments.</em>
+</p><p>Theorem 2 in fact provides hints how to construct list homomorphisms. 
+</p><p>For example, since <code>sum = foldr (+) 0 = foldl (+) 0</code>, Theorem 2 states that sum can be written as:
+</p><pre>
+      <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:sum">sum</a></code> = <code>hom</code> f k 0 
+        where k x        = sum [ x ] = x 
+              f ( v, w ) = sum ( g v ++ g w ) 
+</pre><p>for any right inverse <code>g</code> of <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:sum">sum</a></code>. 
+</p><p>One may simply pick 
+</p><pre>
+      g x = [x]
+</pre><p>and <code>f (v,w)</code> simplifies to <code>v + w</code>.
+</p><p>Readers might have noticed something odd in the proof: the property much talked about, 
+ that <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> is both a <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code> and a <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldl">foldl</a></code>, could be weakened - properties (<code><a href="Pearl-GaDtTLHT-Section02.html#v:p03">p03</a></code>) and (<code><a href="Pearl-GaDtTLHT-Section02.html#v:p04">p04</a></code>) 
+ were merely used to push <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> to the right.  In fact, <code><code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> . <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code></code> is never expanded in the proof.
+</p><p>One thus wonders whether there is something more general waiting
+ to be discovered, which is indeed what we will see in the following sections. 
+ The syntactical approach makes such generalisations much easier to spot.
+</p></div></div><div class="top"><p class="src"><a name="v:p04pick" class="def">p04pick</a> ::  pick</p><div class="doc"><p>Thus the theorem holds if we pick
+</p><pre>
+                    f  = <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> . <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code>   . (<code>hI</code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code>hI</code>)
+</pre></div></div></div></div><div id="footer"><p>Produced by <a href="http://www.haskell.org/haddock/">Haddock</a> version 2.11.0</p></div></body></html>

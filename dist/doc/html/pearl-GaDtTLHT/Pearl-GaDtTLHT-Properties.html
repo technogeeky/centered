@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Pearl.GaDtTLHT.Properties</title><link href="ocean.css" rel="stylesheet" type="text/css" title="Ocean" /><script src="haddock-util.js" type="text/javascript"></script><script type="text/javascript">//<![CDATA[
+window.onload = function () {pageLoad();setSynopsis("mini_Pearl-GaDtTLHT-Properties.html");};
+//]]>
+</script></head><body><div id="package-header"><ul class="links" id="page-menu"><li><a href="index.html">Contents</a></li><li><a href="doc-index.html">Index</a></li></ul><p class="caption">pearl-GaDtTLHT-0.9.5: A Functional Pearl: Generalising and Dualising the third list-homomorphism theorem.</p></div><div id="content"><div id="module-header"><table class="info"><tr><th>Portability</th><td>portable (ViewPatterns, PatternGuards)</td></tr><tr><th>Stability</th><td>stable</td></tr><tr><th>Maintainer</th><td>Drew Day &lt;drewday@gmail.com&gt;</td></tr><tr><th>Safe Haskell</th><td>Safe-Infered</td></tr></table><p class="caption">Pearl.GaDtTLHT.Properties</p></div><div id="table-of-contents"><p class="caption">Contents</p><ul><li><a href="#g:1">Section 1
+</a><ul><li><a href="#g:2"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p00">p00</a></code>
+</a></li></ul></li><li><a href="#g:3">Section 2
+</a><ul><li><a href="#g:4"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p01">p01</a></code>
+</a></li><li><a href="#g:5"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p01a">p01a</a></code> 
+</a></li><li><a href="#g:6"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p01b">p01b</a></code>
+</a></li><li><a href="#g:7"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p02">p02</a></code>
+</a></li><li><a href="#g:8"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p03">p03</a></code>
+</a></li><li><a href="#g:9"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p04">p04</a></code>
+</a></li></ul></li><li><a href="#g:10">Section 3
+</a><ul><li><a href="#g:11"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p05">p05</a></code>
+</a></li><li><a href="#g:12"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p06">p06</a></code> 
+</a></li><li><a href="#g:13"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p07">p07</a></code>
+</a></li><li><a href="#g:14"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p08">p08</a></code>
+</a></li><li><a href="#g:15"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p08pick">p08pick</a></code>
+</a></li></ul></li><li><a href="#g:16">Section 4
+</a><ul><li><a href="#g:17"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p09">p09</a></code>
+</a></li><li><a href="#g:18"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p09proof">p09proof</a></code>
+</a></li><li><a href="#g:19"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p09pick">p09pick</a></code>
+</a></li><li><a href="#g:20"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10a">p10a</a></code>
+</a></li><li><a href="#g:21"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10b">p10b</a></code>
+</a></li><li><a href="#g:22"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10c">p10c</a></code>
+</a></li><li><a href="#g:23"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10d">p10d</a></code>
+</a></li><li><a href="#g:24"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10e">p10e</a></code>
+</a></li><li><a href="#g:25"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10g">p10g</a></code>
+</a></li><li><a href="#g:26"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10">p10</a></code>
+</a></li><li><a href="#g:27"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10proof">p10proof</a></code>
+</a></li><li><a href="#g:28"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10pick">p10pick</a></code>
+</a></li><li><a href="#g:29"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10h">p10h</a></code>
+</a></li><li><a href="#g:30"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10i">p10i</a></code>
+</a></li><li><a href="#g:31"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10j">p10j</a></code>
+</a></li></ul></li><li><a href="#g:32">Section 5
+</a><ul><li><a href="#g:33"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p11">p11</a></code>
+</a></li><li><a href="#g:34"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p12">p12</a></code>
+</a></li><li><a href="#g:35"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p13">p13</a></code>
+</a></li><li><a href="#g:36"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p14">p14</a></code>
+</a></li><li><a href="#g:37"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p15">p15</a></code>
+</a></li></ul></li><li><a href="#g:38">Section 6
+</a></li></ul></div><div id="description"><p class="caption">Description</p><div class="doc empty">&nbsp;</div></div><div id="synopsis"><p id="control.syn" class="caption expander" onclick="toggleSection('syn')">Synopsis</p><ul id="section.syn" class="hide" onclick="toggleSection('syn')"><li class="src short"><a href="#v:p00">p00</a> ::  property (h is a list homomorphism)</li><li class="src short"><a href="#v:p01">p01</a> ::  [a1] -&gt; property (e is a unit for a fold)</li><li class="src short"><a href="#v:p01a">p01a</a> ::  property foldr with (a leftwards function) and (a unit e) is unique</li><li class="src short"><a href="#v:p01b">p01b</a> ::  property p01 [pointfree style]</li><li class="src short"><a href="#v:p02">p02</a> ::  property (foldrr is foldr [resumed])</li><li class="src short"><a href="#v:p03">p03</a> ::  property p02 [pointfree style]</li><li class="src short"><a href="#v:p04">p04</a> ::  property (dual to p03) [pointfree]</li><li class="src short"><a href="#v:p05">p05</a> ::  property</li><li class="src short"><a href="#v:p06">p06</a> ::  property</li><li class="src short"><a href="#v:p07">p07</a> ::  property</li><li class="src short"><a href="#v:p08">p08</a> ::  property</li><li class="src short"><a href="#v:p08pick">p08pick</a> ::  pick</li><li class="src short"><a href="#v:p09">p09</a> ::  property</li><li class="src short"><a href="#v:p09proof">p09proof</a> ::  proof</li><li class="src short"><a href="#v:p09pick">p09pick</a> ::  pick</li><li class="src short"><a href="#v:p10a">p10a</a> ::  property</li><li class="src short"><a href="#v:p10b">p10b</a> ::  property</li><li class="src short"><a href="#v:p10c">p10c</a> ::  property</li><li class="src short"><a href="#v:p10d">p10d</a> ::  property</li><li class="src short"><a href="#v:p10e">p10e</a> ::  property</li><li class="src short"><a href="#v:p10g">p10g</a> ::  property</li><li class="src short"><a href="#v:p10">p10</a> ::  property</li><li class="src short"><a href="#v:p10proof">p10proof</a> ::  proof</li><li class="src short"><a href="#v:p10pick">p10pick</a> ::  pick</li><li class="src short"><a href="#v:p10h">p10h</a> ::  property</li><li class="src short"><a href="#v:p10i">p10i</a> ::  property</li><li class="src short"><a href="#v:p10j">p10j</a> ::  property</li><li class="src short"><a href="#v:p11">p11</a> ::  property</li><li class="src short"><a href="#v:p12">p12</a> ::  property</li><li class="src short"><a href="#v:p13">p13</a> ::  property</li><li class="src short"><a href="#v:p14">p14</a> ::  property</li><li class="src short"><a href="#v:p15">p15</a> ::  property</li></ul></div><div id="interface"><h1 id="g:1">Section 1
+</h1><h2 id="g:2"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p00">p00</a></code>
+</h2><div class="top"><p class="src"><a name="v:p00" class="def">p00</a> ::  property (h is a list homomorphism)</p><div class="doc"><pre>
+   (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p00">p00</a></code>)      <code><a href="Pearl-GaDtTLHT-Section01.html#v:h">h</a></code> (xs <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:-43--43-">++</a></code> ys) = <code><a href="Pearl-GaDtTLHT-Section01.html#v:h">h</a></code> xs &#8857; <code><a href="Pearl-GaDtTLHT-Section01.html#v:h">h</a></code> ys
+</pre><p>which says that to compute <code><a href="Pearl-GaDtTLHT-Section01.html#v:h">h</a></code>:
+</p><ol><li> one may arbitrarily split the input list into xs <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:-43--43-">++</a></code> ys,
+</li><li> compute <code><a href="Pearl-GaDtTLHT-Section01.html#v:h">h</a></code> on them recursively in parallel, 
+</li><li> and combine the results using an associative operator <code>&#8857;</code>.
+</li></ol></div></div><h1 id="g:3">Section 2
+</h1><h2 id="g:4"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p01">p01</a></code>
+</h2><div class="top"><p class="src"><a name="v:p01" class="def">p01</a> ::  [a1] -&gt; property (e is a unit for a fold)</p><div class="doc"><p>As is well known, in the world of sets and total functions, the equations:
+</p><pre>
+   (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p01">p01</a></code>)       <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>  [    ]  =   <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+   (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p01">p01</a></code>)       <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>  (x:xs)  =       (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>) (x, <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> xs)
+   (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p01a">p01a</a></code>)      <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>          = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>) <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+</pre><p>have <code>(<code><a href="Pearl-GaDtTLHT-Properties.html#v:p01a">p01a</a></code>)</code> as unique solution for <code><code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> :: [a] -&gt; b</code>.
+</p></div></div><h2 id="g:5"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p01a">p01a</a></code> 
+</h2><div class="top"><p class="src"><a name="v:p01a" class="def">p01a</a> ::  property foldr with (a leftwards function) and (a unit e) is unique</p><div class="doc"><pre>
+   (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p01a">p01a</a></code>)      <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>          = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>) <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+</pre></div></div><h2 id="g:6"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p01b">p01b</a></code>
+</h2><div class="top"><p class="src"><a name="v:p01b" class="def">p01b</a> ::  property p01 [pointfree style]</p><div class="doc"><p>Thus (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p01">p01</a></code>):
+</p><pre>
+   (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p01">p01</a></code>)       <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>  [    ]  =   <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+   (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p01">p01</a></code>)       <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>  (x:xs)  = (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>) (x, <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> xs)
+</pre><p>can be written:
+</p><pre>
+   (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p01b">p01b</a></code>)     <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:.">.</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:cons">cons</a></code> = (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>) <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:.">.</a></code> (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>)
+</pre></div></div><h2 id="g:7"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p02">p02</a></code>
+</h2><div class="top"><p class="src"><a name="v:p02" class="def">p02</a> ::  property (foldrr is foldr [resumed])</p><div class="doc"><p>That is, if:
+</p><pre>
+   (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p01a">p01a</a></code>)      <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>          = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>) <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+</pre><p>then one can show:
+</p><pre>
+   (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p02">p02</a></code>) <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> (xs <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:-43--43-">++</a></code> ys)   = <code><a href="Pearl-GaDtTLHT-Section02.html#v:foldrr">foldrr</a></code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>) ( xs , <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> ys )
+</pre><p>by induction on xs.
+</p></div></div><h2 id="g:8"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p03">p03</a></code>
+</h2><div class="top"><p class="src"><a name="v:p03" class="def">p03</a> ::  property p02 [pointfree style]</p><div class="doc"><p>Let:
+</p><pre> <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code> (xs,ys) = xs <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:-43--43-">++</a></code> ys</pre><p>then equation (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p02">p02</a></code>):
+</p><pre>(<code><a href="Pearl-GaDtTLHT-Properties.html#v:p02">p02</a></code>) <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> (xs <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:-43--43-">++</a></code> ys) = <code><a href="Pearl-GaDtTLHT-Section02.html#v:foldrr">foldrr</a></code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>) ( xs , <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> ys )</pre><p>can be point-free as:
+</p><pre>(<code><a href="Pearl-GaDtTLHT-Properties.html#v:p03">p03</a></code>) <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:.">.</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code>      = <code><a href="Pearl-GaDtTLHT-Section02.html#v:foldrr">foldrr</a></code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>) <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:.">.</a></code> ( <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> )</pre></div></div><h2 id="g:9"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p04">p04</a></code>
+</h2><div class="top"><p class="src"><a name="v:p04" class="def">p04</a> ::  property (dual to p03) [pointfree]</p><div class="doc"><p>We have, if <code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldl">foldl</a></code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code>) <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code> </code>, that:
+</p><pre> (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p04">p04</a></code>)  <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:.">.</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code> = <code><a href="Pearl-GaDtTLHT-Section02.html#v:foldlr">foldlr</a></code> (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code>) <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:.">.</a></code> ( <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> )</pre></div></div><h1 id="g:10">Section 3
+</h1><h2 id="g:11"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p05">p05</a></code>
+</h2><div class="top"><p class="src"><a name="v:p05" class="def">p05</a> ::  property</p><div class="doc"><pre>
+   (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p05">p05</a></code>)       <code><a href="Pearl-GaDtTLHT-Section03.html#v:splits">splits</a></code> . <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code> = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:map">map</a></code> (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> k) . <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldrp">unfoldrp</a></code> (<code><a href="Pearl-GaDtTLHT-Section03.html#v:-124--124--62-">||&gt;</a></code>)
+</pre></div></div><h2 id="g:12"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p06">p06</a></code> 
+</h2><div class="top"><p class="src"><a name="v:p06" class="def">p06</a> ::  property</p><div class="doc"><pre>
+   (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p06">p06</a></code>)       <code><a href="Pearl-GaDtTLHT-Section03.html#v:splits">splits</a></code> . <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code> = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:map">map</a></code> (k <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code>) . <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldlp">unfoldlp</a></code> (<code><a href="Pearl-GaDtTLHT-Section03.html#v:-60--124--124-">&lt;||</a></code>)
+</pre></div></div><h2 id="g:13"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p07">p07</a></code>
+</h2><div class="top"><p class="src"><a name="v:p07" class="def">p07</a> ::  property</p><div class="doc"><p>The equality <code>(<code><a href="Pearl-GaDtTLHT-Properties.html#v:p05">p05</a></code>)</code> can be expressed relationally.
+</p><p>If <code>k = <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldr">unfoldr</a></code> (<code><a href="Pearl-GaDtTLHT-Section03.html#v:-124--124--62-">||&gt;</a></code>) p</code> we have:
+</p><pre>
+  (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p07">p07</a></code>)     cat&#176; . <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code> = (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code> ) . <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfr">unfr</a></code> (<code><a href="Pearl-GaDtTLHT-Section03.html#v:-124--124--62-">||&gt;</a></code>) p
+</pre></div></div><h2 id="g:14"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p08">p08</a></code>
+</h2><div class="top"><p class="src"><a name="v:p08" class="def">p08</a> ::  property</p><div class="doc"><p>For <code>k = <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldl">unfoldl</a></code> (<code><a href="Pearl-GaDtTLHT-Section03.html#v:-60--124--124-">&lt;||</a></code>) p</code>, a symmetric property holds:
+</p><pre>
+  (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p08">p08</a></code>)     cat&#176; . <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code> = (<code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code>  <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code>) . <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfl">unfl</a></code> (<code><a href="Pearl-GaDtTLHT-Section03.html#v:-60--124--124-">&lt;||</a></code>) p
+</pre></div></div><h2 id="g:15"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p08pick">p08pick</a></code>
+</h2><div class="top"><p class="src"><a name="v:p08pick" class="def">p08pick</a> ::  pick</p><div class="doc"><p>Thus <code>g</code> can be any functional subset of:
+</p><pre>
+                                     (<code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code>&#176; <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code>&#176;) . <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code>&#176; . <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code>
+</pre></div></div><h1 id="g:16">Section 4
+</h1><h2 id="g:17"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p09">p09</a></code>
+</h2><div class="top"><p class="src"><a name="v:p09" class="def">p09</a> ::  property</p><div class="doc"><p>We show only the proof of the first membership, for which we show that:
+</p><pre>
+  (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p09">p09</a></code>)  ( ws ++ sort xs, ys ) &#8712; iterF ( ws, zs ) &lt;== xs <code>djU</code> ys = zs &#8743; xs &#8804; ys
+</pre></div></div><h2 id="g:18"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p09proof">p09proof</a></code>
+</h2><div class="top"><p class="src"><a name="v:p09proof" class="def">p09proof</a> ::  proof</p><div class="doc"><p>Property (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p09">p09</a></code>) can be proved by induction on the size of zs. 
+</p><p>For
+ <code> zs = &#8709; </code>
+ the property trivially holds. The nonempty case is shown below:
+</p><pre>
+ ( ws ++ sort xs, ys ) &#8712; iterF ( ws, zs )
+
+&#8801;      { zs /= &#8709; , let z = min zs }
+
+( ws ++ sort xs, ys ) = ( ws, zs ) &#8744; ( ws ++ sort xs, ys ) &#8712; iterF ( ws ++ [ z ] , zs &#8722; { z })
+
+&lt;==      { for non-empty xs, let x = min xs }
+
+( xs = &#8709; &#8743; ys = zs ) &#8744; ( ws ++ [ x ] ++ sort ( xs &#8722; { x }) , ys ) &#8712; iterF ( ws ++ [ z ] , zs &#8722; { z })
+
+&lt;==      { induction }
+
+( xs = &#8709; &#8743; ys = zs ) &#8744; (( xs &#8722; { x } <code>djU</code> ys = zs &#8722; { z } &#8743; xs &#729; &#8804; ys &#8743; x = z )
+
+&#8801; xs <code>djU</code> ys = zs &#8743; xs  &#8804; ys.
+</pre></div></div><h2 id="g:19"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p09pick">p09pick</a></code>
+</h2><div class="top"><p class="src"><a name="v:p09pick" class="def">p09pick</a> ::  pick</p><div class="doc"><p>By Lemma 6 we may thus <em>pick</em>:
+</p><pre>
+   (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p09pick">p09pick</a></code>)    g zs =  ( xs    , ys ) 
+
+       for any           xs <code>djU</code> ys = zs &#8743; xs &#8804; ys. 
+</pre></div></div><h2 id="g:20"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10a">p10a</a></code>
+</h2><div class="top"><p class="src"><a name="v:p10a" class="def">p10a</a> ::  property</p><div class="doc"><pre>
+ scanl (&#8853;) &#953;&#8853; ( xs ++ ys ) 
+      | xs' ++ [ x ] &lt;- scanl (&#8853;) &#953;&#8853; xs
+      = xs' ++ [ x ] ++  map ( x &#8853;) ( scanl (&#8853;) &#953;&#8853; ys )
+</pre></div></div><h2 id="g:21"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10b">p10b</a></code>
+</h2><div class="top"><p class="src"><a name="v:p10b" class="def">p10b</a> ::  property</p><div class="doc"><pre>
+ scan ( e, [ ])      = [ ]
+ scan ( e, x &#8758; xs ) = e &#8758; scan ( e &#8853; x, xs )
+</pre></div></div><h2 id="g:22"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10c">p10c</a></code>
+</h2><div class="top"><p class="src"><a name="v:p10c" class="def">p10c</a> ::  property</p><div class="doc"><pre>
+ scan ( e, xs ++ [ x ])  = scan ( e, xs ) ++ [ e &#8853; reduce xs ] ,
+      where 
+                reduce = hom (&#8853;) id &#953;&#8853;
+</pre></div></div><h2 id="g:23"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10d">p10d</a></code>
+</h2><div class="top"><p class="src"><a name="v:p10d" class="def">p10d</a> ::  property</p><div class="doc"><pre>
+ scan = <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldr">unfoldr</a></code> (<code>||&gt;</code>) p 
+      = <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldl">unfoldl</a></code> (<code>&lt;||</code>) p
+      where               p = null <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:.">.</a></code> snd 
+</pre></div></div><h2 id="g:24"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10e">p10e</a></code>
+</h2><div class="top"><p class="src"><a name="v:p10e" class="def">p10e</a> ::  property</p><div class="doc"><pre>
+                     (<code>||&gt;</code>) ( e, x &#8758; xs )     = ( e, ( e &#8853; x, xs ))
+                     (<code>&lt;||</code>) ( e, xs ++ [ ]) = (( e, xs ) , e &#8853; reduce xs )
+</pre><p>where the domains of (<code>||&gt;</code>) and (<code>&lt;||</code>) are pairs whose second components
+ are non-empty.
+</p></div></div><h2 id="g:25"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10g">p10g</a></code>
+</h2><div class="top"><p class="src"><a name="v:p10g" class="def">p10g</a> ::  property</p><div class="doc"><p>To construct g, we show that for xs ++ ys = zs we have:
+</p><pre>
+ ( scan ( e, xs ) ,      ( e &#8853; reduce xs, ys )) &#8712; <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldrp">unfoldrp</a></code> (<code>||&gt;</code>)  p ( e, zs )
+ (      ( e, xs ) , scan ( e &#8853; reduce xs, ys )) &#8712; <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldlp">unfoldlp</a></code> (<code>&lt;||</code>)  p ( e, zs )
+</pre></div></div><h2 id="g:26"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10">p10</a></code>
+</h2><div class="top"><p class="src"><a name="v:p10" class="def">p10</a> ::  property</p><div class="doc"><pre>
+   (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p10">p10</a></code>)   ( ws ++ scan ( e, xs ) , ( e &#8853; reduce xs, ys )) &#8712; iterF ( ws, ( e, zs ))
+             if xs ++ ys = zs.
+</pre></div></div><h2 id="g:27"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10proof">p10proof</a></code>
+</h2><div class="top"><p class="src"><a name="v:p10proof" class="def">p10proof</a> ::  proof</p><div class="doc"><pre>
+    ( ws ++ scan ( e, xs ) , ( e &#8853; r xs, ys )) &#8712; iterF ( ws, ( e, z &#8758; zs ))
+ &#8801;  ( ws ++ scan ( e, xs ) , ( e &#8853; r xs, ys )) = ( ws, ( e, z &#8758; zs )) &#8744;
+    ( ws ++ scan ( e, xs ) , ( e &#8853; r xs, ys )) &#8712; iterF ( ws ++ [ e ] , ( e &#8853; z, zs ))
+
+&lt;==  { let xs = x &#8758; xs' for the non-empty case }
+
+( xs = [ ] &#8743; ys = z &#8758; zs ) &#8744; ( ws ++ [ e ] ++ scan ( e &#8853; x, xs') , ( e &#8853; x &#8853; r xs', ys )) &#8712; iterF ( ws ++ [ e ] , ( e &#8853; z, zs ))
+
+&lt;==      { induction }
+
+( xs = [ ] &#8743; ys = z &#8758; zs ) &#8744; ( xs' ++ ys = zs &#8743; x = z )
+
+&#8801; xs ++ ys = z &#8758; zs.
+</pre></div></div><h2 id="g:28"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10pick">p10pick</a></code>
+</h2><div class="top"><p class="src"><a name="v:p10pick" class="def">p10pick</a> ::  pick</p><div class="doc"><p>Thus we <em>pick</em>:
+</p><pre>
+      g ( e, zs )  =  (( e, xs ) , ( e &#8853; reduce xs, ys )) for some xs ++ ys = zs. 
+</pre></div></div><h2 id="g:29"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10h">p10h</a></code>
+</h2><div class="top"><p class="src"><a name="v:p10h" class="def">p10h</a> ::  property</p><div class="doc"><pre>
+ build [ x ]         = L x
+ build ( xs ++ ys )  |                               xs <em>= [ ] &#8743; ys </em>= [ ]
+                     = let t = build xs
+                           u = build ys
+                       in 
+                          N t ( val t &#8853; val u ) u
+</pre></div></div><h2 id="g:30"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10i">p10i</a></code>
+</h2><div class="top"><p class="src"><a name="v:p10i" class="def">p10i</a> ::  property</p><div class="doc"><p>with the invariant that:
+</p><pre>
+   val ( build xs ) = reduce xs:
+</pre></div></div><h2 id="g:31"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p10j">p10j</a></code>
+</h2><div class="top"><p class="src"><a name="v:p10j" class="def">p10j</a> ::  property</p><div class="doc"><p>The key to construct an efficient implementation of scan is to
+ perform build in a separate phase and use only the results stored in
+ the tree. 
+</p><p>That is, we wish to construct some function f such that:
+</p><pre>
+ scan ( e, xs ) = f ( e, build xs )
+</pre><p>The singleton case is easy: 
+</p><pre>
+ f ( e, L x ) = [ e ] . 
+</pre><p>For inputs of length at least two, we calculate (for non-empty xs and ys):
+</p><pre>
+ scan ( e, xs ++ ys )
+ = scan ( e, xs ) ++ scan ( e &#8853; reduce xs, ys )
+ =      { since val ( build xs ) = reduce xs }
+ scan ( e, xs ) ++ scan ( e &#8853; val ( build xs ) , ys )
+ =      { induction: scan ( e, xs ) = f ( e, build xs )  }
+ f ( e, build xs ) ++ f ( e &#8853; val ( build xs ) , build ys )
+ =      { let N t v u = build ( xs ++ ys )  }
+ f ( e, t ) ++ f ( e &#8853; val t, u )
+ =      { let f ( e, N t   u ) = f ( e, t ) ++ f ( e &#8853; val t, u )  }
+ f ( e, build ( xs ++ ys )) .
+</pre><p>We rename f to acc since it accumulates the result:
+</p><pre>
+ scan ( e, [ ])      = [ ]
+ scan ( e, xs )      = acc ( e, build xs )
+</pre><pre>
+ acc ( e, L x )      = [ e ]
+ acc ( e, N t   u )  = acc ( e, t ) ++ acc ( e &#8853; val t, u )
+</pre></div></div><h1 id="g:32">Section 5
+</h1><h2 id="g:33"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p11">p11</a></code>
+</h2><div class="top"><p class="src"><a name="v:p11" class="def">p11</a> ::  property</p><div class="doc"><pre>
+   (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p11">p11</a></code>)   f . fill = U . ( id <code>&gt;&lt;</code> f ) &#8743;
+</pre></div></div><h2 id="g:34"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p12">p12</a></code>
+</h2><div class="top"><p class="src"><a name="v:p12" class="def">p12</a> ::  property</p><div class="doc"><pre>
+   (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p12">p12</a></code>)   f . fill = V . ( f&#8242; <code>&gt;&lt;</code> id )
+</pre></div></div><h2 id="g:35"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p13">p13</a></code>
+</h2><div class="top"><p class="src"><a name="v:p13" class="def">p13</a> ::  property</p><div class="doc"><pre>
+   (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p13">p13</a></code>)   fill&#176; . k = ( id <code>&gt;&lt;</code> k ) . mem . unfp&#8595; ( g&#8595;, f&#8595;, p )
+</pre><p>By generating a tree &#8220;from the middle&#8221; we mean to find:
+</p><pre>
+     g  :: b -&gt; ( b, b )
+     k&#8242; :: b -&gt;  Cxt a 
+</pre><p>such that:
+</p><pre>
+ k v  | p v = L ( f&#8595; v )
+      | ( v&#8593;, v&#8595; ) &lt;- g v = fill ( k' v&#8593; ) ( k v&#8595; )
+</pre><p>That is, the tree returned by k, if not a leaf, can be split into a
+ context and a subtree that can be generated separately from the two
+ seeds returned by g. 
+</p><p>It suffices for g and k'to satisfy:
+</p><pre>
+       fill&#176; . k = (k <code>&gt;&lt;</code> k ) . g
+</pre><p>Generating a tree &#8220;upwards&#8221; intuitively means to start from a
+ leaf and find the path back to the root. 
+</p><p>With application of Theorem 7 in mind, we want to come up with a function:
+</p><pre>
+   unfp&#8593; ( g&#8593;, f&#8593; ) :: b -&gt; [( b, Tree a )]
+</pre><p>that satisfies, for some k':
+</p></div></div><h2 id="g:36"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p14">p14</a></code>
+</h2><div class="top"><p class="src"><a name="v:p14" class="def">p14</a> ::  property</p><div class="doc"><pre>
+   (<code><a href="Pearl-GaDtTLHT-Properties.html#v:p14">p14</a></code>)   fill&#176; . k = ( k' <code>&gt;&lt;</code> id ) . mem . unfp&#8593; ( g&#8593;, f&#8593; )
+</pre></div></div><h2 id="g:37"><code><a href="Pearl-GaDtTLHT-Properties.html#v:p15">p15</a></code>
+</h2><div class="top"><p class="src"><a name="v:p15" class="def">p15</a> ::  property</p><div class="doc"><pre>
+
+(<code><a href="Pearl-GaDtTLHT-Properties.html#v:p15">p15</a></code>)   fill&#176; . k   = ( k' <code>&gt;&lt;</code> k ) . ( k'&#176; <code>&gt;&lt;</code> k&#176; ) . fill&#176; .k
+         if        k   = unf&#8595; ( g&#8595;, f&#8595;, p ) = mem .  unf&#8593; ( g&#8593;, f&#8593; )
+                   k'  = mem . cxt&#8593; g&#8593; v. 
+</pre><p>To compute k &#8220;from the middle&#8221;, we may pick g to be a subset of 
+</p><pre>
+ ( k'&#176; <code>&gt;&lt;</code> k&#176;) . fill&#176; . k
+</pre></div></div><h1 id="g:38">Section 6
+</h1></div></div><div id="footer"><p>Produced by <a href="http://www.haskell.org/haddock/">Haddock</a> version 2.11.0</p></div></body></html>

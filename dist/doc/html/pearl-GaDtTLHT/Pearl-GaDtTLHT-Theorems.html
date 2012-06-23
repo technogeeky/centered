@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Pearl.GaDtTLHT.Theorems</title><link href="ocean.css" rel="stylesheet" type="text/css" title="Ocean" /><script src="haddock-util.js" type="text/javascript"></script><script type="text/javascript">//<![CDATA[
+window.onload = function () {pageLoad();setSynopsis("mini_Pearl-GaDtTLHT-Theorems.html");};
+//]]>
+</script></head><body><div id="package-header"><ul class="links" id="page-menu"><li><a href="index.html">Contents</a></li><li><a href="doc-index.html">Index</a></li></ul><p class="caption">pearl-GaDtTLHT-0.9.5: A Functional Pearl: Generalising and Dualising the third list-homomorphism theorem.</p></div><div id="content"><div id="module-header"><table class="info"><tr><th>Portability</th><td>portable (ViewPatterns, PatternGuards)</td></tr><tr><th>Stability</th><td>stable</td></tr><tr><th>Maintainer</th><td>Drew Day &lt;drewday@gmail.com&gt;</td></tr><tr><th>Safe Haskell</th><td>Safe-Infered</td></tr></table><p class="caption">Pearl.GaDtTLHT.Theorems</p></div><div id="table-of-contents"><p class="caption">Contents</p><ul><li><a href="#g:1">Section 2
+</a><ul><li><a href="#g:2"><code><a href="Pearl-GaDtTLHT-Theorems.html#v:t01">t01</a></code> Second LHT
+</a><ul><li><a href="#g:3">Proof
+</a></li></ul></li><li><a href="#g:4"><code><a href="Pearl-GaDtTLHT-Theorems.html#v:t02">t02</a></code> Third LHT
+</a><ul><li><a href="#g:5">Proof
+</a></li><li><a href="#g:6">Comments
+</a></li></ul></li></ul></li><li><a href="#g:7">Section 3
+</a><ul><li><a href="#g:8"><code><a href="Pearl-GaDtTLHT-Theorems.html#v:t03">t03</a></code> Lemma 3
+</a><ul><li><a href="#g:9">Proof
+</a></li></ul></li><li><a href="#g:10"><code><a href="Pearl-GaDtTLHT-Theorems.html#v:t04">t04</a></code> Third LHT (on Relations)
+</a><ul><li><a href="#g:11">Proof
+</a></li></ul></li><li><a href="#g:12"><code><a href="Pearl-GaDtTLHT-Theorems.html#v:t05">t05</a></code> Dual to Third LHT
+</a><ul><li><a href="#g:13">Proof
+</a></li></ul></li><li><a href="#g:14"><code><a href="Pearl-GaDtTLHT-Theorems.html#v:t06">t06</a></code> Lemma 6
+</a><ul><li><a href="#g:15">Proof
+</a></li></ul></li></ul></li><li><a href="#g:16">Section 5
+</a><ul><li><a href="#g:17"><code><a href="Pearl-GaDtTLHT-Theorems.html#v:t07">t07</a></code> Unnamed Theorem
+</a><ul><li><a href="#g:18">Proof
+</a></li><li><a href="#g:19">Comments
+</a></li></ul></li></ul></li></ul></div><div id="description"><p class="caption">Description</p><div class="doc"><p>All of the theorems are collected here, in one place, for convenience.
+</p></div></div><div id="synopsis"><p id="control.syn" class="caption expander" onclick="toggleSection('syn')">Synopsis</p><ul id="section.syn" class="hide" onclick="toggleSection('syn')"><li class="src short"><a href="#v:t01">t01</a> ::  theorem (second list homomoprhism theorem)</li><li class="src short"><a href="#v:t01proof">t01proof</a> ::  theorem proof [t01]</li><li class="src short"><a href="#v:t02">t02</a> ::  theorem (third list homomorphism theorem)</li><li class="src short"><a href="#v:t02proof">t02proof</a> ::  theorem proof [t02]</li><li class="src short"><a href="#v:t02comments">t02comments</a> ::  theorem comments [t02]</li><li class="src short"><a href="#v:t03">t03</a> ::  theorem</li><li class="src short"><a href="#v:t03proof">t03proof</a> ::  theorem proof (by example)</li><li class="src short"><a href="#v:t04">t04</a> ::  theorem t02 [on relations]</li><li class="src short"><a href="#v:t04proof">t04proof</a> ::  theorem proof deferred</li><li class="src short"><a href="#v:t05">t05</a> ::  theorem (corollary to t04)</li><li class="src short"><a href="#v:t05proof">t05proof</a> ::  proof (using p07) (using p08) [th04]</li><li class="src short"><a href="#v:t06">t06</a> ::  theorem lemma</li><li class="src short"><a href="#v:t06proof">t06proof</a> ::  proof</li><li class="src short"><a href="#v:t07">t07</a> ::  theorem [on relations]</li><li class="src short"><a href="#v:t07proof">t07proof</a> ::  theorem proof [t07] [on relations]</li><li class="src short"><a href="#v:t07comments">t07comments</a> ::  theorem comments [t07]</li></ul></div><div id="interface"><h1 id="g:1">Section 2
+</h1><h2 id="g:2"><code><a href="Pearl-GaDtTLHT-Theorems.html#v:t01">t01</a></code> Second LHT
+</h2><div class="top"><p class="src"><a name="v:t01" class="def">t01</a> ::  theorem (second list homomoprhism theorem)</p><div class="doc"><dl><dt><em>Theorem</em>:</dt><dd>
+ (the 2nd list-homomorphism theorem [<code><code><a href="Pearl-GaDtTLHT-References.html#v:r01">r01</a></code></code>]).
+</dd></dl><p>If
+</p><pre>
+        <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> = <code>hom</code> f k <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+</pre><p>Then
+</p><pre>
+        <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+        <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldl">foldl</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+</pre><p>Where
+</p><pre>
+        (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code>) (x, v) = f (k x,   v)
+        (<code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code>) (v, x) = f (  v, k x)
+</pre></div></div><h3 id="g:3">Proof
+</h3><div class="top"><p class="src"><a name="v:t01proof" class="def">t01proof</a> ::  theorem proof [t01]</p><div class="doc"><dl><dt><em>Proof.</em></dt><dd>
+</dd></dl><p>A complete proof is given in [<code><code><a href="Pearl-GaDtTLHT-References.html#v:r01">r01</a></code></code>].
+</p></div></div><h2 id="g:4"><code><a href="Pearl-GaDtTLHT-Theorems.html#v:t02">t02</a></code> Third LHT
+</h2><div class="top"><p class="src"><a name="v:t02" class="def">t02</a> ::  theorem (third list homomorphism theorem)</p><div class="doc"><p>Somewhat surprisingly, if a function can be computed both by a <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code> and a <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldl">foldl</a></code>,
+ it <em>is</em> a list homomorphism.
+</p><dl><dt><em>Theorem</em>:</dt><dd>
+</dd></dl><p>(the 3rd list-homomorphism theorem [<code><code><a href="Pearl-GaDtTLHT-References.html#v:r06">r06</a></code></code>])
+</p><pre>
+        <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+        <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldl">foldl</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+</pre><p>implies
+</p><pre>
+        <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> = <code>hom</code> f k <code><a href="Pearl-GaDtTLHT-Section02.html#v:e">e</a></code>
+</pre><p>for some <code>f</code> and <code>k</code>.
+</p></div></div><h3 id="g:5">Proof
+</h3><div class="top"><p class="src"><a name="v:t02proof" class="def">t02proof</a> ::  theorem proof [t02]</p><div class="doc"><dl><dt><em>Proof.</em></dt><dd>
+</dd></dl><p>The only possible choice for <code>k</code> is:
+</p><pre>
+        <code>k</code> x = <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> [x]
+</pre><p>The aim is to find <code>f</code> such that:
+</p><pre>
+        <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> . <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code> = f . (<code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>)
+</pre><p>A function <code>fI</code> is called a <em>right inverse</em> of <code>f</code> if, for all <code>y</code> in the
+ range of <code>f</code>, we have <code>f (fI y) = y</code>. Equivalently, <code>f . fI . f = f</code>. 
+</p><p>In a set-theoretical model, a right inverse always exists but may not be unique.
+</p><p>While a semantical proof was given by [<code>Gibbons <code><a href="Pearl-GaDtTLHT-References.html#v:r06">r06</a></code></code>], we will provide a proof
+ having a much more equational flavour.
+</p><p>We reason:
+</p><pre>
+                        <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> . <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code>
+ { use (3) }           =
+                        <code><a href="Pearl-GaDtTLHT-Section02.html#v:foldrr">foldrr</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code> . (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>)
+ { h = h . hI . h
+  and product functor} =
+                        <code><a href="Pearl-GaDtTLHT-Section02.html#v:foldrr">foldrr</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-60--124--124-">&lt;||</a></code> . (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>)   . (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code>hI</code>) . (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>)
+ { (3) backwards
+  and (4) forwards }   =
+                        <code><a href="Pearl-GaDtTLHT-Section02.html#v:foldlr">foldlr</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code> . (<code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>  <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code>)  . (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code>hI</code>) . (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>)
+ { h = h . hI . h
+  and product functor} =
+                        <code><a href="Pearl-GaDtTLHT-Section02.html#v:foldlr">foldlr</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-124--124--62-">||&gt;</a></code> . (<code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>  <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code>)  . (<code>hI</code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code>hI</code>) . (<code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code>)
+ { (4) backwards }     =
+                         <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> . <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code>   . (<code>hI</code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code>hI</code>)  . ( <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> )
+</pre></div></div><h3 id="g:6">Comments
+</h3><div class="top"><p class="src"><a name="v:t02comments" class="def">t02comments</a> ::  theorem comments [t02]</p><div class="doc"><p><em>Comments.</em>
+</p><p>Theorem 2 in fact provides hints how to construct list homomorphisms. 
+</p><p>For example, since <code>sum = foldr (+) 0 = foldl (+) 0</code>, Theorem 2 states that sum can be written as:
+</p><pre>
+      <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:sum">sum</a></code> = <code>hom</code> f k 0 
+        where k x        = sum [ x ] = x 
+              f ( v, w ) = sum ( g v ++ g w ) 
+</pre><p>for any right inverse <code>g</code> of <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:sum">sum</a></code>. 
+</p><p>One may simply pick 
+</p><pre>
+      g x = [x]
+</pre><p>and <code>f (v,w)</code> simplifies to <code>v + w</code>.
+</p><p>Readers might have noticed something odd in the proof: the property much talked about, 
+ that <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> is both a <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code> and a <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldl">foldl</a></code>, could be weakened - properties (<code><a href="Pearl-GaDtTLHT-Section02.html#v:p03">p03</a></code>) and (<code><a href="Pearl-GaDtTLHT-Section02.html#v:p04">p04</a></code>) 
+ were merely used to push <code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> to the right.  In fact, <code><code><a href="Pearl-GaDtTLHT-Section02.html#v:h">h</a></code> . <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code></code> is never expanded in the proof.
+</p><p>One thus wonders whether there is something more general waiting
+ to be discovered, which is indeed what we will see in the following sections. 
+ The syntactical approach makes such generalisations much easier to spot.
+</p></div></div><h1 id="g:7">Section 3
+</h1><h2 id="g:8"><code><a href="Pearl-GaDtTLHT-Theorems.html#v:t03">t03</a></code> Lemma 3
+</h2><div class="top"><p class="src"><a name="v:t03" class="def">t03</a> ::  theorem</p><div class="doc"><dl><dt><em>Lemma</em>.</dt><dd>
+</dd></dl><p>There <em>exist</em> <code>h</code> such that:
+</p><pre> h = <code><a href="Pearl-GaDtTLHT-Section03.html#v:unhom">unhom</a></code> <code><a href="Pearl-GaDtTLHT-Section03.html#v:g">g</a></code> <code><a href="Pearl-GaDtTLHT-Section03.html#v:f">f</a></code> <code><a href="Pearl-GaDtTLHT-Section03.html#v:p">p</a></code> <code><a href="Pearl-GaDtTLHT-Section03.html#v:q">q</a></code></pre><p>for which there is no corresponding:
+</p><pre>
+        h = <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldr">unfoldr</a></code> (<code><a href="Pearl-GaDtTLHT-Section03.html#v:-124--124--62-">||&gt;</a></code>) <code><a href="Pearl-GaDtTLHT-Section03.html#v:p">p</a></code>
+          = <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldl">unfoldl</a></code> (<code><a href="Pearl-GaDtTLHT-Section03.html#v:-60--124--124-">&lt;||</a></code>) <code><a href="Pearl-GaDtTLHT-Section03.html#v:p">p</a></code>
+</pre></div></div><h3 id="g:9">Proof
+</h3><div class="top"><p class="src"><a name="v:t03proof" class="def">t03proof</a> ::  theorem proof (by example)</p><div class="doc"><dl><dt><em>Proof</em>:</dt><dd>
+ Let <code><code><a href="Pearl-GaDtTLHT-Section03.html#v:example0">example0</a></code> :: Int -&gt; [Int]</code> generate a list of <code>1</code>s of length <code>2^n</code> for a given n.
+</dd></dl><p>It can be defined:
+</p><pre>
+   example0 :: Int -&gt; [Int]
+   example0 = unhom
+                  (\n -&gt; (n - 1, n - 1))   {-g-}
+                  (\0 -&gt; 1)                {-f-}
+                  (0 &gt;)                    {-p-}
+                  (0 ==)                   {-q-}
+</pre><p>But it <em>can not</em> be defined by an <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldl">unfoldl</a></code> or <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldr">unfoldr</a></code>. An intuitive reason is that there
+ is not always an m such that <code>2^n - 1 = 2^m</code>. One may use theories of Gibbons et al. [<code><code><a href="Pearl-GaDtTLHT-References.html#v:r07">r07</a></code></code>]
+ for proof.
+</p></div></div><h2 id="g:10"><code><a href="Pearl-GaDtTLHT-Theorems.html#v:t04">t04</a></code> Third LHT (on Relations)
+</h2><div class="top"><p class="src"><a name="v:t04" class="def">t04</a> ::  theorem t02 [on relations]</p><div class="doc"><p>The proof of Theorem 2, however, proceeds the same way even if the components
+ are not functions! In the realm of relations, part of the proof of Theorem 2
+ can be generalized to:
+</p><dl><dt><em>Theorem</em>.</dt><dd>
+</dd></dl><pre>
+ If:
+       R . R&#176; . R     =    R                   (R has converse)
+
+Then:
+                    R . <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code> = Sfwd     . (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> R )
+                            = Srev     . (R  <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code>)
+ { ... }                    = R  . <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code> . (R&#176; <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> R&#176;) . (R <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> R)
+</pre></div></div><h3 id="g:11">Proof
+</h3><div class="top"><p class="src"><a name="v:t04proof" class="def">t04proof</a> ::  theorem proof deferred</p><div class="doc"><dl><dt><em>Proof.</em></dt><dd>
+</dd></dl><p>The same as that of Theorem 2. We will prove a more general Theorem 7 later.
+</p></div></div><h2 id="g:12"><code><a href="Pearl-GaDtTLHT-Theorems.html#v:t05">t05</a></code> Dual to Third LHT
+</h2><div class="top"><p class="src"><a name="v:t05" class="def">t05</a> ::  theorem (corollary to t04)</p><div class="doc"><p>The desired dual theorem thus follows:
+</p><dl><dt><em>Theorem</em>.</dt><dd>
+</dd></dl><pre>
+ If:
+   <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code>  =  <code><a href="Pearl-GaDtTLHT-Section03.html#v:unhom">unhom</a></code>      <code><a href="Pearl-GaDtTLHT-Section03.html#v:g">g</a></code>  <code><a href="Pearl-GaDtTLHT-Section03.html#v:f">f</a></code>  <code><a href="Pearl-GaDtTLHT-Section03.html#v:p">p</a></code>  <code><a href="Pearl-GaDtTLHT-Section03.html#v:q">q</a></code>
+                    |  |  |  |
+                    ?  ?  ?  ?  -- ^ for some g , f , p , and q
+ Then:                    |  
+   <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code>  =  <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldr">unfoldr</a></code> (<code><a href="Pearl-GaDtTLHT-Section03.html#v:-124--124--62-">||&gt;</a></code>)    <code><a href="Pearl-GaDtTLHT-Section03.html#v:p">p</a></code>
+      =  <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldl">unfoldl</a></code> (<code><a href="Pearl-GaDtTLHT-Section03.html#v:-60--124--124-">&lt;||</a></code>)    <code><a href="Pearl-GaDtTLHT-Section03.html#v:p">p</a></code>
+</pre></div></div><h3 id="g:13">Proof
+</h3><div class="top"><p class="src"><a name="v:t05proof" class="def">t05proof</a> ::  proof (using p07) (using p08) [th04]</p><div class="doc"><dl><dt><em>Proof.</em></dt><dd>
+</dd></dl><p>We have already talked about <code><a href="Pearl-GaDtTLHT-Section03.html#v:f">f</a></code> and <code><a href="Pearl-GaDtTLHT-Section03.html#v:q">q</a></code>, and now we aim to find <code><a href="Pearl-GaDtTLHT-Section03.html#v:g">g</a></code>
+ such that:
+</p><pre>
+        <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code>&#176; . <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code> = ( <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code> ) . <code><a href="Pearl-GaDtTLHT-Section03.html#v:g">g</a></code>
+</pre><p>Using properties <code>(<code><a href="Pearl-GaDtTLHT-Section03.html#v:p07">p07</a></code>)</code> and <code>(<code><a href="Pearl-GaDtTLHT-Section03.html#v:p08">p08</a></code>)</code> as antecedents of Theorem 4 we get:
+</p><pre>
+ With:
+      (<code><a href="Pearl-GaDtTLHT-Section03.html#v:p07">p07</a></code>)    <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code>&#176; . <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code> = (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code> <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code> ) . <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfr">unfr</a></code>  (<code><a href="Pearl-GaDtTLHT-Section03.html#v:-124--124--62-">||&gt;</a></code>)  <code><a href="Pearl-GaDtTLHT-Section03.html#v:p">p</a></code>
+      (<code><a href="Pearl-GaDtTLHT-Section03.html#v:p08">p08</a></code>)    <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code>&#176; . <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code> = (<code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code>  <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:id">id</a></code>) . <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfl">unfl</a></code>  (<code><a href="Pearl-GaDtTLHT-Section03.html#v:-60--124--124-">&lt;||</a></code>)  <code><a href="Pearl-GaDtTLHT-Section03.html#v:p">p</a></code>
+
+We get:
+               <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code>&#176; . <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code> = (<code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code>  <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code> ) . (<code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code>&#176; <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code>&#176;) . <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code>&#176; . <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code>
+</pre></div></div><h2 id="g:14"><code><a href="Pearl-GaDtTLHT-Theorems.html#v:t06">t06</a></code> Lemma 6
+</h2><div class="top"><p class="src"><a name="v:t06" class="def">t06</a> ::  theorem lemma</p><div class="doc"><dl><dt><em>Lemma</em>.</dt><dd>
+</dd></dl><p>This lemma has a functional formulation that may be more friendly to readers. 
+ Writing the list membership predicate <code><code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:elem">elem</a></code> :: a -&gt; [a] -&gt; Bool</code> in the Haskell Standard Prelude
+ in infix position as <code>(&#8712;)</code>, we have:
+</p><p>Assume that:
+</p><pre>
+   <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code>  =  <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldr">unfoldr</a></code> (<code><a href="Pearl-GaDtTLHT-Section03.html#v:-124--124--62-">||&gt;</a></code>)    <code><a href="Pearl-GaDtTLHT-Section03.html#v:p">p</a></code>
+      =  <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldl">unfoldl</a></code> (<code><a href="Pearl-GaDtTLHT-Section03.html#v:-60--124--124-">&lt;||</a></code>)    <code><a href="Pearl-GaDtTLHT-Section03.html#v:p">p</a></code>
+</pre><p>A function <code><a href="Pearl-GaDtTLHT-Section03.html#v:g">g</a></code> is a subset of:
+</p><pre>
+                                     (<code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code>&#176; <code><a href="Pearl-GaDtTLHT-Section02.html#v:-62--60-">&gt;&lt;</a></code> <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code>&#176;) . <code><a href="Pearl-GaDtTLHT-Section02.html#v:cat">cat</a></code>&#176; . k
+</pre><p>If, <em>for all</em> <code>v</code>:
+</p><pre>
+       <code><a href="Pearl-GaDtTLHT-Section03.html#v:g">g</a></code> v = (  v1,   v2)
+ Where:
+             (<code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code> v1,   v2) &#8712; <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldrp">unfoldrp</a></code> (<code><a href="Pearl-GaDtTLHT-Section03.html#v:-124--124--62-">||&gt;</a></code>) <code><a href="Pearl-GaDtTLHT-Section03.html#v:p">p</a></code> v
+             (  v1, <code><a href="Pearl-GaDtTLHT-Section03.html#v:k">k</a></code> v2) &#8712; <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldlp">unfoldlp</a></code> (<code><a href="Pearl-GaDtTLHT-Section03.html#v:-60--124--124-">&lt;||</a></code>) <code><a href="Pearl-GaDtTLHT-Section03.html#v:p">p</a></code> v
+</pre><p>From now on we will use Lemma 6 and restrict ourselves to functions when we calculate <code><a href="Pearl-GaDtTLHT-Section03.html#v:g">g</a></code>.
+</p></div></div><h3 id="g:15">Proof
+</h3><div class="top"><p class="src"><a name="v:t06proof" class="def">t06proof</a> ::  proof</p><div class="doc"><dl><dt><em>Proof</em>:</dt><dd>
+</dd></dl><p>Proof omitted!
+</p></div></div><h1 id="g:16">Section 5
+</h1><h2 id="g:17"><code><a href="Pearl-GaDtTLHT-Theorems.html#v:t07">t07</a></code> Unnamed Theorem
+</h2><div class="top"><p class="src"><a name="v:t07" class="def">t07</a> ::  theorem [on relations]</p><div class="doc"><dl><dt><em>Theorem</em>.</dt><dd>
+</dd></dl><p>As mentioned earlier, when looking at the proof of Theorem 2 in detail, one notices that further generalization
+ is possible. Indeed, the presence of <code>R . cat</code> in Theorem 4 is superficial, and the theorem can still be
+ generalized:
+</p><pre>
+ R   = U . (id <code>&gt;&lt;</code> S )    -- (RUS)
+     = V . (T  <code>&gt;&lt;</code> id)    -- (RVT)
+</pre><p>where
+</p><pre>
+     S . S&#176; . S = S        -- (S invertable)
+     T . T&#176; . T = T        -- (T invertable)
+</pre><p>imply
+</p><pre>
+ R   = R . (T&#176; <code>&gt;&lt;</code> S&#176;) . (T <code>&gt;&lt;</code> S)
+</pre></div></div><h3 id="g:18">Proof
+</h3><div class="top"><p class="src"><a name="v:t07proof" class="def">t07proof</a> ::  theorem proof [t07] [on relations]</p><div class="doc"><dl><dt><em>Proof</em>:</dt><dd>
+</dd></dl><pre>
+                     R = U . (id x S)
+  { S invertable }     = U . (id x S) . (id x S&#176;) . (id x S)
+  { RUS, in reverse }  = R            . (id x S&#176;) . (id x S)
+  { RVT }              = V . (T x id) . (id x S&#176;) . (id x S)
+  { T&#176; T = id ? }      = V . (T x id) . (T&#176; x S&#176;) . (T x S)
+  { RVT, in reverse }  = R            . (T&#176; x S&#176;) . (T x S)
+
+{ done }           R = R . (T&#176; x S&#176;) . (T x S)
+</pre></div></div><h3 id="g:19">Comments
+</h3><div class="top"><p class="src"><a name="v:t07comments" class="def">t07comments</a> ::  theorem comments [t07]</p><div class="doc"><dl><dt><em>Comments</em>:</dt><dd>
+</dd></dl><p>However, the conclusion of the theorem, that:
+</p><pre>R = R . (T&#176; x S&#176;) . (T x S)</pre><p>does not have much structure hinting at how this theorem can be useful. 
+</p><p>The use cases we have found are when <code>S</code> is a sub-expression of <code>R</code> 
+ (for example, to prove [<code><code><a href="Pearl-GaDtTLHT-Theorems.html#v:t05">t05</a></code></code>], we used:
+</p><pre> 
+  R     = k&#176; . cat
+  S = T = k&#176;
+</pre><p>We do not require <code>S = T</code> in general. 
+</p><p>We use Theorem 7 to establish recursive equations about <code>S</code>, hoping to 
+ construct a terminating definition of <code>S</code>.
+</p></div></div></div></div><div id="footer"><p>Produced by <a href="http://www.haskell.org/haddock/">Haddock</a> version 2.11.0</p></div></body></html>

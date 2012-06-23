@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Pearl.GaDtTLHT.Section04</title><link href="ocean.css" rel="stylesheet" type="text/css" title="Ocean" /><script src="haddock-util.js" type="text/javascript"></script><script type="text/javascript">//<![CDATA[
+window.onload = function () {pageLoad();setSynopsis("mini_Pearl-GaDtTLHT-Section04.html");};
+//]]>
+</script></head><body><div id="package-header"><ul class="links" id="page-menu"><li><a href="index.html">Contents</a></li><li><a href="doc-index.html">Index</a></li></ul><p class="caption">pearl-GaDtTLHT-0.9.5: A Functional Pearl: Generalising and Dualising the third list-homomorphism theorem.</p></div><div id="content"><div id="module-header"><table class="info"><tr><th>Portability</th><td>portable (ViewPatterns, PatternGuards)</td></tr><tr><th>Stability</th><td>stable</td></tr><tr><th>Maintainer</th><td>Drew Day &lt;drewday@gmail.com&gt;</td></tr><tr><th>Safe Haskell</th><td>Safe-Infered</td></tr></table><p class="caption">Pearl.GaDtTLHT.Section04</p></div><div id="table-of-contents"><p class="caption">Contents</p><ul><li><a href="#g:1">Generating Sequences from the Middle
+</a><ul><li><a href="#g:2">Quicksort &lt;- Selection Sort
+</a><ul><li><a href="#g:3">Selection Sort
+</a></li><li><a href="#g:4">g &lt;- Lemma 06
+</a></li></ul></li></ul></li><li><a href="#g:5"><code><a href="Pearl-GaDtTLHT-Section04.html#v:p09">p09</a></code>
+</a><ul><li><a href="#g:6">Proof
+</a><ul><li><a href="#g:7"><code>sort</code>: A definition
+</a></li><li><a href="#g:8"><code>sort</code>: A valid definition
+</a></li></ul></li><li><a href="#g:9">Parallel Scan
+</a></li></ul></li></ul></div><div id="description"><p class="caption">Description</p><div class="doc empty">&nbsp;</div></div><div id="synopsis"><p id="control.syn" class="caption expander" onclick="toggleSection('syn')">Synopsis</p><ul id="section.syn" class="hide" onclick="toggleSection('syn')"><li class="src short"><a href="#v:p09">p09</a> ::  property</li><li class="src short"><a href="#v:p09proof">p09proof</a> ::  proof</li><li class="src short"><a href="#v:p09pick">p09pick</a> ::  pick</li><li class="src short"><a href="#v:p10a">p10a</a> ::  property</li><li class="src short"><a href="#v:p10b">p10b</a> ::  property</li><li class="src short"><a href="#v:e03">e03</a> ::  example</li><li class="src short"><a href="#v:p10c">p10c</a> ::  property</li><li class="src short"><a href="#v:p10d">p10d</a> ::  property</li><li class="src short"><a href="#v:p10e">p10e</a> ::  property</li><li class="src short"><a href="#v:p10g">p10g</a> ::  property</li><li class="src short"><a href="#v:p10">p10</a> ::  property</li><li class="src short"><a href="#v:p10proof">p10proof</a> ::  proof</li><li class="src short"><a href="#v:p10pick">p10pick</a> ::  pick</li><li class="src short"><a href="#v:p10h">p10h</a> ::  property</li><li class="src short"><a href="#v:p10i">p10i</a> ::  property</li><li class="src short"><a href="#v:p10j">p10j</a> ::  property</li><li class="src short"><a href="#v:note02">note02</a> ::  a</li></ul></div><div id="interface"><h1 id="g:1">Generating Sequences from the Middle
+</h1><h2 id="g:2">Quicksort &lt;- Selection Sort
+</h2><div class="doc"><p>While Gibbons [<code><code><a href="Pearl-GaDtTLHT-References.html#v:r06">r06</a></code></code>] demonstrated how to derive merge sort from
+ insertion sort using the third list homomorphism theorem, we use
+ the dual theorem to derive quicksort from selection sort. [<code><code><a href="Pearl-GaDtTLHT-Section04.html#v:note02">note02</a></code></code>]
+</p><p>We regard the input as a set and denote disjoint union by <code>djU</code> .
+</p><p>One may come up with two definitions of selection sort: 
+</p></div><h3 id="g:3">Selection Sort
+</h3><div class="doc"><pre>
+ sort = <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldr">unfoldr</a></code> (<code>||&gt;</code>)  p 
+      = <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldl">unfoldl</a></code> (<code>&lt;||</code>)  p
+      , where p = null and
+</pre><pre>
+ (<code>||&gt;</code>)  zs | zs /= &#8709; , x &lt;- min zs = ( x, zs <code>without</code> { x }) ,
+ (<code>&lt;||</code>)  zs | zs /= &#8709; , x &lt;- max zs = ( zs <code>without</code> { x } , x ) .
+</pre><p>Let 
+</p><pre>
+     xs &#8804; ys &#8801; (&#8704; x &#8712; xs,
+                  y &#8712; ys :: x &#8804; y ).
+</pre><p>One can see that
+</p><pre>
+ ( sort xs,      ys ) &#8712; 'unfoldrp (<code>||&gt;</code>)  p zs,
+ (      xs, sort ys ) &#8712; 'unfoldlp (<code>&lt;||</code>)  p zs,
+
+if xs <code>djU</code> ys = zs and xs &#8804; ys. 
+</pre></div><h3 id="g:4">g &lt;- Lemma 06
+</h3><h1 id="g:5"><code><a href="Pearl-GaDtTLHT-Section04.html#v:p09">p09</a></code>
+</h1><div class="top"><p class="src"><a name="v:p09" class="def">p09</a> ::  property</p><div class="doc"><p>We show only the proof of the first membership, for which we show that:
+</p><pre>
+  (<code><a href="Pearl-GaDtTLHT-Section04.html#v:p09">p09</a></code>)  ( ws ++ sort xs, ys ) &#8712; iterF ( ws, zs ) &lt;== xs <code>djU</code> ys = zs &#8743; xs &#8804; ys
+</pre></div></div><h2 id="g:6">Proof
+</h2><div class="top"><p class="src"><a name="v:p09proof" class="def">p09proof</a> ::  proof</p><div class="doc"><p>Property (<code><a href="Pearl-GaDtTLHT-Section04.html#v:p09">p09</a></code>) can be proved by induction on the size of zs. 
+</p><p>For
+ <code> zs = &#8709; </code>
+ the property trivially holds. The nonempty case is shown below:
+</p><pre>
+ ( ws ++ sort xs, ys ) &#8712; iterF ( ws, zs )
+
+&#8801;      { zs /= &#8709; , let z = min zs }
+
+( ws ++ sort xs, ys ) = ( ws, zs ) &#8744; ( ws ++ sort xs, ys ) &#8712; iterF ( ws ++ [ z ] , zs &#8722; { z })
+
+&lt;==      { for non-empty xs, let x = min xs }
+
+( xs = &#8709; &#8743; ys = zs ) &#8744; ( ws ++ [ x ] ++ sort ( xs &#8722; { x }) , ys ) &#8712; iterF ( ws ++ [ z ] , zs &#8722; { z })
+
+&lt;==      { induction }
+
+( xs = &#8709; &#8743; ys = zs ) &#8744; (( xs &#8722; { x } <code>djU</code> ys = zs &#8722; { z } &#8743; xs &#729; &#8804; ys &#8743; x = z )
+
+&#8801; xs <code>djU</code> ys = zs &#8743; xs  &#8804; ys.
+</pre></div></div><div class="top"><p class="src"><a name="v:p09pick" class="def">p09pick</a> ::  pick</p><div class="doc"><p>By Lemma 6 we may thus <em>pick</em>:
+</p><pre>
+   (<code><a href="Pearl-GaDtTLHT-Section04.html#v:p09pick">p09pick</a></code>)    g zs =  ( xs    , ys ) 
+
+       for any           xs <code>djU</code> ys = zs &#8743; xs &#8804; ys. 
+</pre></div></div><h3 id="g:7"><code>sort</code>: A definition
+</h3><div class="doc"><p>This gives rise to the equation,
+</p><pre>
+ sort ( xs <code>djU</code> ys ) 
+      | xs &#8804; ys = sort xs ++ sort ys.
+</pre><p>Despite being valid, the equation does not form a definition - as a 
+ program sort might not terminate since, for example, xs could be
+ empty and the size of ys equals that of zs. For this example, one may come up 
+ with a terminating definition by enforcing that the neither xs nor ys is empty. 
+</p></div><div class="doc"><p>We thus have 
+</p><pre>
+               sort = unhom  g  f  p  q     
+  (<code><a href="Pearl-GaDtTLHT-Section04.html#v:p09pick">p09pick</a></code>)         where    g zs = ( xs, ys ) 
+</pre><p>for some non-empty xs and ys such that
+</p><pre>
+  xs <code>djU</code> ys = zs &#8743; xs &#8804; ys
+ f { x } = x, p xs &#8801; xs = &#8709; , and q xs holds if
+ xs is singleton.
+</pre><p>By <em>unfolding</em> sort by one step we come up with
+ the definition
+</p></div><h3 id="g:8"><code>sort</code>: A valid definition
+</h3><div class="doc"><pre>
+ sort &#8709; = [ ]
+ sort ( xs <code>djU</code> { x } <code>djU</code> ys )  | xs  &#8804; { x }  &#8804; ys
+                                   = sort xs ++ [ x ] ++ sort ys.
+</pre></div><h2 id="g:9">Parallel Scan
+</h2><div class="doc"><p>It is known that the Haskell prelude function <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:scanl">scanl</a></code> (&#8853;) e, when
+ (&#8853;) is associative and e = &#953;&#8853;, the unit of (&#8853;) , is both a <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code> and a
+ <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldl">foldl</a></code>. Geser and Gorlatch [<code><code><a href="Pearl-GaDtTLHT-References.html#v:r05">r05</a></code></code>] in fact showed how the following list
+ homomorphism can be derived using the third list homomorphism
+ theorem:
+</p></div><div class="top"><p class="src"><a name="v:p10a" class="def">p10a</a> ::  property</p><div class="doc"><pre>
+ scanl (&#8853;) &#953;&#8853; ( xs ++ ys ) 
+      | xs' ++ [ x ] &lt;- scanl (&#8853;) &#953;&#8853; xs
+      = xs' ++ [ x ] ++  map ( x &#8853;) ( scanl (&#8853;) &#953;&#8853; ys )
+</pre></div></div><div class="doc"><p>In an actual implementation, however, one would like to avoid having to perform map ( x &#8853;) .
+ Here we demonstrate that an attention to unfolds leads to a faster program.
+</p></div><div class="doc"><p>For a concise presentation we again consider a slightly different
+ variation. The following scan discards the right-most element of the input list:
+</p></div><div class="top"><p class="src"><a name="v:p10b" class="def">p10b</a> ::  property</p><div class="doc"><pre>
+ scan ( e, [ ])      = [ ]
+ scan ( e, x &#8758; xs ) = e &#8758; scan ( e &#8853; x, xs )
+</pre></div></div><div class="top"><p class="src"><a name="v:e03" class="def">e03</a> ::  example</p><div class="doc"><p>For example
+</p><pre> scan ( e, [ 1, 2, 3 ]) = [ e, e &#8853; 1, e &#8853; 1 &#8853; 2 ]</pre><p>It is not hard to show that:
+</p></div></div><div class="top"><p class="src"><a name="v:p10c" class="def">p10c</a> ::  property</p><div class="doc"><pre>
+ scan ( e, xs ++ [ x ])  = scan ( e, xs ) ++ [ e &#8853; reduce xs ] ,
+      where 
+                reduce = hom (&#8853;) id &#953;&#8853;
+</pre></div></div><div class="doc"><p>We thus have:
+</p></div><div class="top"><p class="src"><a name="v:p10d" class="def">p10d</a> ::  property</p><div class="doc"><pre>
+ scan = <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldr">unfoldr</a></code> (<code>||&gt;</code>) p 
+      = <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldl">unfoldl</a></code> (<code>&lt;||</code>) p
+      where               p = null <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:.">.</a></code> snd 
+</pre></div></div><div class="top"><p class="src"><a name="v:p10e" class="def">p10e</a> ::  property</p><div class="doc"><pre>
+                     (<code>||&gt;</code>) ( e, x &#8758; xs )     = ( e, ( e &#8853; x, xs ))
+                     (<code>&lt;||</code>) ( e, xs ++ [ ]) = (( e, xs ) , e &#8853; reduce xs )
+</pre><p>where the domains of (<code>||&gt;</code>) and (<code>&lt;||</code>) are pairs whose second components
+ are non-empty.
+</p></div></div><div class="top"><p class="src"><a name="v:p10g" class="def">p10g</a> ::  property</p><div class="doc"><p>To construct g, we show that for xs ++ ys = zs we have:
+</p><pre>
+ ( scan ( e, xs ) ,      ( e &#8853; reduce xs, ys )) &#8712; <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldrp">unfoldrp</a></code> (<code>||&gt;</code>)  p ( e, zs )
+ (      ( e, xs ) , scan ( e &#8853; reduce xs, ys )) &#8712; <code><a href="Pearl-GaDtTLHT-Section03.html#v:unfoldlp">unfoldlp</a></code> (<code>&lt;||</code>)  p ( e, zs )
+</pre></div></div><div class="doc"><p>Again we prove only the first property, for which we need to prove
+ a slight generalisation,
+</p></div><div class="top"><p class="src"><a name="v:p10" class="def">p10</a> ::  property</p><div class="doc"><pre>
+   (<code><a href="Pearl-GaDtTLHT-Section04.html#v:p10">p10</a></code>)   ( ws ++ scan ( e, xs ) , ( e &#8853; reduce xs, ys )) &#8712; iterF ( ws, ( e, zs ))
+             if xs ++ ys = zs.
+</pre></div></div><div class="doc"><p>The proof is an uninteresting induction on zs, and the inductive case is shown:
+</p></div><div class="top"><p class="src"><a name="v:p10proof" class="def">p10proof</a> ::  proof</p><div class="doc"><pre>
+    ( ws ++ scan ( e, xs ) , ( e &#8853; r xs, ys )) &#8712; iterF ( ws, ( e, z &#8758; zs ))
+ &#8801;  ( ws ++ scan ( e, xs ) , ( e &#8853; r xs, ys )) = ( ws, ( e, z &#8758; zs )) &#8744;
+    ( ws ++ scan ( e, xs ) , ( e &#8853; r xs, ys )) &#8712; iterF ( ws ++ [ e ] , ( e &#8853; z, zs ))
+
+&lt;==  { let xs = x &#8758; xs' for the non-empty case }
+
+( xs = [ ] &#8743; ys = z &#8758; zs ) &#8744; ( ws ++ [ e ] ++ scan ( e &#8853; x, xs') , ( e &#8853; x &#8853; r xs', ys )) &#8712; iterF ( ws ++ [ e ] , ( e &#8853; z, zs ))
+
+&lt;==      { induction }
+
+( xs = [ ] &#8743; ys = z &#8758; zs ) &#8744; ( xs' ++ ys = zs &#8743; x = z )
+
+&#8801; xs ++ ys = z &#8758; zs.
+</pre></div></div><div class="top"><p class="src"><a name="v:p10pick" class="def">p10pick</a> ::  pick</p><div class="doc"><p>Thus we <em>pick</em>:
+</p><pre>
+      g ( e, zs )  =  (( e, xs ) , ( e &#8853; reduce xs, ys )) for some xs ++ ys = zs. 
+</pre></div></div><div class="doc"><p>For termination we want xs and ys to be both non-empty, which gives rise to the definition:
+</p><pre>
+ scan ( e, [ ]      )  = [ ]
+ scan ( e, [ x ]    )  = [ e ]
+ scan ( e, xs ++ ys )  |                                                    xs <em>= [ ] &#8743; ys </em>= [ ]
+                       = scan ( e, xs ) ++ scan ( e &#8853; reduce xs, ys )
+</pre><p>This is not yet an efficient implementation. To avoid repeated
+ calls to reduce, one typically performs a tupling. 
+</p></div><div class="doc"><p>Let
+</p><pre> 
+ sr ( e, xs ) = ( scan ( e, xs ) , reduce xs )
+</pre><p>One may calculate a definition for sr:
+</p><pre>
+ sr ( e, [ ])        = ([ ] , &#953;&#8853; )
+ sr ( e, [ x ])      = ([ e ] , x )
+ sr ( e, xs ++ ys )  |                                                       xs <em>= [ ] &#8743; ys </em>= [ ]
+                     = let ( s1 , r1 ) = sr ( e, xs )
+                           ( s2 , r2 ) = sr ( e &#8853; r1 , ys )
+                        in ( s1 ++ s2 , r1 &#8853; r2 ) .
+</pre><p>However, the second call to sr in the xs ++ ys case demands the
+ value of r1, which is a result of the first call to sr. 
+ This prevents the two calls to sr from being executed in parallel.
+</p></div><div class="doc"><p>Instead, we compute scan in two phases: all the r&#8217;s are first
+ computed and cached, which are then used in the second phase to
+ compute scan. For that we need a data structure storing the r&#8217;s.
+ Consider the following binary tree, with a function val extracting
+ the value at the root,
+</p><pre>
+ data Tree a = L a | N ( Tree a ) a ( Tree a ) ,
+
+val ( L   n    ) = n
+ val ( N _ n _  ) = n.
+</pre></div><div class="doc"><p>The following function builds a tree out of a non-empty list:
+</p></div><div class="top"><p class="src"><a name="v:p10h" class="def">p10h</a> ::  property</p><div class="doc"><pre>
+ build [ x ]         = L x
+ build ( xs ++ ys )  |                               xs <em>= [ ] &#8743; ys </em>= [ ]
+                     = let t = build xs
+                           u = build ys
+                       in 
+                          N t ( val t &#8853; val u ) u
+</pre></div></div><div class="top"><p class="src"><a name="v:p10i" class="def">p10i</a> ::  property</p><div class="doc"><p>with the invariant that:
+</p><pre>
+   val ( build xs ) = reduce xs:
+</pre></div></div><div class="top"><p class="src"><a name="v:p10j" class="def">p10j</a> ::  property</p><div class="doc"><p>The key to construct an efficient implementation of scan is to
+ perform build in a separate phase and use only the results stored in
+ the tree. 
+</p><p>That is, we wish to construct some function f such that:
+</p><pre>
+ scan ( e, xs ) = f ( e, build xs )
+</pre><p>The singleton case is easy: 
+</p><pre>
+ f ( e, L x ) = [ e ] . 
+</pre><p>For inputs of length at least two, we calculate (for non-empty xs and ys):
+</p><pre>
+ scan ( e, xs ++ ys )
+ = scan ( e, xs ) ++ scan ( e &#8853; reduce xs, ys )
+ =      { since val ( build xs ) = reduce xs }
+ scan ( e, xs ) ++ scan ( e &#8853; val ( build xs ) , ys )
+ =      { induction: scan ( e, xs ) = f ( e, build xs )  }
+ f ( e, build xs ) ++ f ( e &#8853; val ( build xs ) , build ys )
+ =      { let N t v u = build ( xs ++ ys )  }
+ f ( e, t ) ++ f ( e &#8853; val t, u )
+ =      { let f ( e, N t   u ) = f ( e, t ) ++ f ( e &#8853; val t, u )  }
+ f ( e, build ( xs ++ ys )) .
+</pre><p>We rename f to acc since it accumulates the result:
+</p><pre>
+ scan ( e, [ ])      = [ ]
+ scan ( e, xs )      = acc ( e, build xs )
+</pre><pre>
+ acc ( e, L x )      = [ e ]
+ acc ( e, N t   u )  = acc ( e, t ) ++ acc ( e &#8853; val t, u )
+</pre></div></div><div class="doc"><p>By constructing a balanced binary tree, the evaluation can be performed in O ( log n ) time 
+ given a sufficient number of processors, or in O ( n / p + log p ) time if the number of
+ processors is much smaller than n. We have in fact reconstructed a well-known efficient
+ implementation of scan recorded by, for example, Blelloch [<code><code><a href="Pearl-GaDtTLHT-References.html#v:r02">r02</a></code></code>].
+</p></div><div class="top"><p class="src"><a name="v:note02" class="def">note02</a> ::  a</p><div class="doc"><p>What we derive here, however, is the toy Quicksort well-known among
+ functional programmers. It is arguable that the essence of real Quicksort is
+ the algorithm for partition, which is not addressed here.
+</p></div></div></div></div><div id="footer"><p>Produced by <a href="http://www.haskell.org/haddock/">Haddock</a> version 2.11.0</p></div></body></html>

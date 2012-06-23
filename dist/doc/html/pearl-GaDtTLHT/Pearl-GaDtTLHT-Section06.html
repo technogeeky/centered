@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Pearl.GaDtTLHT.Section06</title><link href="ocean.css" rel="stylesheet" type="text/css" title="Ocean" /><script src="haddock-util.js" type="text/javascript"></script><script type="text/javascript">//<![CDATA[
+window.onload = function () {pageLoad();setSynopsis("mini_Pearl-GaDtTLHT-Section06.html");};
+//]]>
+</script></head><body><div id="package-header"><ul class="links" id="page-menu"><li><a href="index.html">Contents</a></li><li><a href="doc-index.html">Index</a></li></ul><p class="caption">pearl-GaDtTLHT-0.9.5: A Functional Pearl: Generalising and Dualising the third list-homomorphism theorem.</p></div><div id="content"><div id="module-header"><table class="info"><tr><th>Portability</th><td>portable (ViewPatterns, PatternGuards)</td></tr><tr><th>Stability</th><td>stable</td></tr><tr><th>Maintainer</th><td>Drew Day &lt;drewday@gmail.com&gt;</td></tr><tr><th>Safe Haskell</th><td>Safe-Infered</td></tr></table><p class="caption">Pearl.GaDtTLHT.Section06</p></div><div id="table-of-contents"><p class="caption">Contents</p><ul><li><a href="#g:1">Conclusions
+</a></li><li><a href="#g:2">Acknowledgements
+</a></li></ul></div><div id="description"><p class="caption">Description</p><div class="doc empty">&nbsp;</div></div><div id="synopsis"><p id="control.syn" class="caption expander" onclick="toggleSection('syn')">Synopsis</p><ul id="section.syn" class="hide" onclick="toggleSection('syn')"><li class="src short"><a href="#v:conclusions">conclusions</a> ::  a</li><li class="src short"><a href="#v:acknowledgements">acknowledgements</a> ::  a</li></ul></div><div id="interface"><h1 id="g:1">Conclusions
+</h1><div class="top"><p class="src"><a name="v:conclusions" class="def">conclusions</a> ::  a</p><div class="doc"><p>By formulating the third list homomorphism theorem in point-free,
+ relational style, we have dualised the theorem to unfolds, as well as
+ generalised the theorem to both folds and unfolds for trees. While
+ the original theorem establishes a connection between insertion
+ sort and merge sort, the dual theorem shows a similar connection
+ between selection sort and quicksort. We have also derived an
+ efficient parallel algorithm for scan based on unfolds. To the best
+ of the authors' knowledge, while there have been many studies
+ on parallel programming based on structural recursion, none have
+ considered the dual -- list generation in the form of <em>unhom</em>.
+</p><p>The theorem generalises nicely to trees: if a function processes
+ or generates a tree both downwards and upwards, it may process or
+ generate the tree from the middle. Finally, we have also presented
+ an example that shows how a relational view may shed new light
+ on an old topic by revealing its hidden symmetry. The authors
+ believe that relational methods deserve to be appreciated more
+ among functional programmers.
+</p><p>As a remark, in practice, for both list and tree generation one
+ might need different types of seeds for left vs. right or inwards vs. outwards
+ unfolding. 
+</p><p>That is, we have 
+</p><pre>
+        k = unfoldr g_fwd p . i_1 
+          = unfoldl g_rev p . i_2
+</pre><p>or 
+</p><pre>
+        k = unf_d   fs_d . i_1 
+          = unf_u   fs_u . i_2
+</pre><p>for some i_1 and i_2 that initialise the seeds. 
+</p><p>This is also covered by Theorem 7. We leave it to the
+ readers to work out the details.
+</p></div></div><h1 id="g:2">Acknowledgements
+</h1><div class="top"><p class="src"><a name="v:acknowledgements" class="def">acknowledgements</a> ::  a</p><div class="doc"><p>The authors would like to thank Jeremy Gibbons, Jose Nuno Oliveira, and Janis Voigtlander for 
+ comments on earlier drafts, and to the anonymous referees for their valuable comments. This pearl
+ was inspired by a question proposed by Zhenjiang Hu, who also cooperated with the authors
+ throughout the development of this paper and made plenty of important technical contributions.
+</p></div></div></div></div><div id="footer"><p>Produced by <a href="http://www.haskell.org/haddock/">Haddock</a> version 2.11.0</p></div></body></html>

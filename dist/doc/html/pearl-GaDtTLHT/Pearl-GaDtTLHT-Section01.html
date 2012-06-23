@@ -1,0 +1,319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Pearl.GaDtTLHT.Section01</title><link href="ocean.css" rel="stylesheet" type="text/css" title="Ocean" /><script src="haddock-util.js" type="text/javascript"></script><script type="text/javascript">//<![CDATA[
+window.onload = function () {pageLoad();setSynopsis("mini_Pearl-GaDtTLHT-Section01.html");};
+//]]>
+</script></head><body><div id="package-header"><ul class="links" id="page-menu"><li><a href="index.html">Contents</a></li><li><a href="doc-index.html">Index</a></li></ul><p class="caption">pearl-GaDtTLHT-0.9.5: A Functional Pearl: Generalising and Dualising the third list-homomorphism theorem.</p></div><div id="content"><div id="module-header"><table class="info"><tr><th>Portability</th><td>portable (ViewPatterns, PatternGuards)</td></tr><tr><th>Stability</th><td>stable</td></tr><tr><th>Maintainer</th><td>Drew Day &lt;drewday@gmail.com&gt;</td></tr><tr><th>Safe Haskell</th><td>Safe-Infered</td></tr></table><p class="caption">Pearl.GaDtTLHT.Section01</p></div><div id="table-of-contents"><p class="caption">Contents</p><ul><li><a href="#g:1">Introduction 
+</a><ul><li><a href="#g:2">Parallel Skeletons
+</a></li><li><a href="#g:3">Foldable, and The Third-List Homomorphism Theorem
+</a></li><li><a href="#g:4">A Question of Associative Operators
+</a></li><li><a href="#g:5">Is there a dual theorem, Unfoldable?
+</a></li><li><a href="#g:6">
+</a></li><li><a href="#g:7">  
+</a></li></ul></li><li><a href="#g:8">Contents
+</a><ul><li><a href="#g:9">Editor's Note
+</a><ul><li><a href="#g:10">Uncurrying and Point-Free Syntax
+</a></li></ul></li></ul></li><li><a href="#g:11">Familar Functions
+</a><ul><li><a href="#g:12">(&lt;- Prelude?) &lt;- Data.List
+</a></li></ul></li><li><a href="#g:13">Unfamiliar Functions
+</a><ul><li><a href="#g:14">&lt;- Data.DList
+</a></li></ul></li><li><a href="#g:15">Comparing <a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html">Data.List</a> and <a href="Data-Dlist.html">Data.Dlist</a>
+</a></li></ul></div><div id="description"><p class="caption">Description</p><div class="doc empty">&nbsp;</div></div><div id="synopsis"><p id="control.syn" class="caption expander" onclick="toggleSection('syn')">Synopsis</p><ul id="section.syn" class="hide" onclick="toggleSection('syn')"><li class="src short"><a href="#v:p00">p00</a> ::  property (h is a list homomorphism)</li><li class="src short"><a href="#v:e00">e00</a> ::  example (sum with plus and zero) over (lists with append) (is both a foldl and a foldr) [thlt]</li><li class="src short"><a href="#v:cons">cons</a> ::  (a, [a]) -&gt; [a]</li><li class="src short"><a href="#v:cons_from_Prelude">cons_from_Prelude</a> ::  a -&gt; [a] -&gt; [a]</li><li class="src short"><a href="#v:cat_from_Prelude">cat_from_Prelude</a> ::  [a] -&gt; [a] -&gt; [a]</li><li class="src short"><a href="#v:cat">cat</a> ::  ([a], [a]) -&gt; [a]</li><li class="src short"><a href="#v:h">h</a> ::  [a] -&gt; b</li><li class="src short"><a href="#v:-8857-">(&#8857;)</a> ::  [a] -&gt; [a] -&gt; [a]</li></ul></div><div id="interface"><h2 id="g:1">Introduction 
+</h2><div class="doc"><p>As multicore hardware has become standard in recent years, parallel programming rekindles as an important potential
+ application of functional programming. The skeletal parallel programming [<code><code><a href="Pearl-GaDtTLHT-References.html#v:r03">r03</a></code></code>] paradigm proposes the idea of
+ developing parallel programs by combining parallel skeletons - functions that capture useful parallel programming
+ patterns. 
+</p></div><h3 id="g:2">Parallel Skeletons
+</h3><div class="doc"><p>Among the important parallel skeletons is list homomorphism [<code><code><a href="Pearl-GaDtTLHT-References.html#v:r01">r01</a></code></code>], one that satis&#64257;es the equation:
+</p></div><div class="top"><p class="src"><a name="v:p00" class="def">p00</a> ::  property (h is a list homomorphism)</p><div class="doc"><pre>
+   (<code><a href="Pearl-GaDtTLHT-Section01.html#v:p00">p00</a></code>)      <code><a href="Pearl-GaDtTLHT-Section01.html#v:h">h</a></code> (xs <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:-43--43-">++</a></code> ys) = <code><a href="Pearl-GaDtTLHT-Section01.html#v:h">h</a></code> xs &#8857; <code><a href="Pearl-GaDtTLHT-Section01.html#v:h">h</a></code> ys
+</pre><p>which says that to compute <code><a href="Pearl-GaDtTLHT-Section01.html#v:h">h</a></code>:
+</p><ol><li> one may arbitrarily split the input list into xs <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:-43--43-">++</a></code> ys,
+</li><li> compute <code><a href="Pearl-GaDtTLHT-Section01.html#v:h">h</a></code> on them recursively in parallel, 
+</li><li> and combine the results using an associative operator <code>&#8857;</code>.
+</li></ol></div></div><h3 id="g:3">Foldable, and The Third-List Homomorphism Theorem
+</h3><div class="doc"><p>A well-known third list-homomorphism theorem [<code><code><a href="Pearl-GaDtTLHT-References.html#v:r03">r03</a></code></code>] says that a function is a list homomorphism if it can be described
+ as an instance of both <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code> and <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldl">foldl</a></code>. 
+</p></div><div class="top"><p class="src"><a name="v:e00" class="def">e00</a> ::  example (sum with plus and zero) over (lists with append) (is both a foldl and a foldr) [thlt]</p><div class="doc"><p>For example, since:
+</p><pre>
+      <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:sum">sum</a></code> 
+           = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code> (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:-43-">+</a></code>) 0 
+           = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldl">foldl</a></code> (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:-43-">+</a></code>) 0
+</pre><p>Then there exists some &#8857; such that:
+</p><pre>
+      <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:sum">sum</a></code> ( xs <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:-43--43-">++</a></code> ys )  = <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:sum">sum</a></code> xs &#8857; <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:sum">sum</a></code> ys
+</pre><p>For this simple example, (&#8857;) happens to be (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:-43-">+</a></code>) as well. 
+</p></div></div><h3 id="g:4">A Question of Associative Operators
+</h3><div class="doc"><p>One naturally wonders whether (&#8857;) can be mechanically constructed.
+</p><p>Such methods have been proposed (
+        [<code><code><a href="Pearl-GaDtTLHT-References.html#v:r05">r05</a></code></code>], 
+        [<code><code><a href="Pearl-GaDtTLHT-References.html#v:r09">r09</a></code></code>], 
+  and   [<code><code><a href="Pearl-GaDtTLHT-References.html#v:r11">r11</a></code></code>] )
+  and even generalised to trees: [<code><code><a href="Pearl-GaDtTLHT-References.html#v:r10">r10</a></code></code>].
+</p></div><h3 id="g:5">Is there a dual theorem, Unfoldable?
+</h3><div class="doc"><p>Less noticed, however, is that the theorem and its proof dualise very well to unfolds on lists. 
+</p><p>Consider the function 
+</p><pre>
+      fromTo ( x, y ) = [ x, x + 1 ... y ].
+</pre><p>One may imagine three possible implementations:
+</p><ol><li> generating the list from the left
+</li><li> generating the list from the right
+</li><li> generating the list from some arbitrary point in the middle. 
+</li></ol></div><h3 id="g:6">
+</h3><div class="doc"><p>Is it true that any function that can be defined as both an <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/containers-0.4.2.1/Data-Sequence.html#v:unfoldr">unfoldr</a></code> and an <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/containers-0.4.2.1/Data-Sequence.html#v:unfoldl">unfoldl</a></code> can be written as one that generates the list from the middle?
+</p></div><h3 id="g:7">  
+</h3><div class="doc"><p>We show in this pearl that the answer is <code>positive</code>. This is not only of theoretical interest but could also have a practical impact. First, there are several efficient algorithms that are based on divide-and-conquer sequence generation, such as Quicksort. Moreover, the performance bottleneck in distributed parallel computing often lies in data distribution. Being able to generate the list anywhere allows us to distribute seeds of sublists and simultaneously generate from them, and thereby reduce communication costs and increase parallelism.
+</p></div><h1 id="g:8">Contents
+</h1><div class="doc"><p>List homomorphisms and the third list-homomorphism theorem are reviewed in Section 2, before we present a dualised
+ theorem in Section 3 and apply it, in Section 4, to examples including sorting and parallel scan. In Section 5, the
+ results are further generalised to trees, before we conclude in Section 6.
+</p></div><h2 id="g:9">Editor's Note
+</h2><h3 id="g:10">Uncurrying and Point-Free Syntax
+</h3><div class="doc"><p>Normal (or point-full) Haskell uses <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-Tuple.html#v:curry">curry</a></code>-ed functions and function application (<code>ap</code>, but really just
+ space) to programs.
+</p><p>In constrast to this, point-free Haskell syntax often uses <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-Tuple.html#v:uncurry">uncurry</a></code>-ed functions and function composition (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html#v:.">.</a></code>)
+ to describe programs.
+</p><p>Some examples of both styles, and examples on converting between them, follow.
+</p></div><div class="doc empty">&nbsp;</div><div class="top"><p class="src"><a name="v:cons" class="def">cons</a> ::  (a, [a]) -&gt; [a]</p><div class="doc"><pre class="screen"><code class="prompt">&gt;&gt;&gt; </code><strong class="userinput"><code>cons (1,[2,3])
+</code></strong>[1,2,3]
+</pre><pre class="screen"><code class="prompt">&gt;&gt;&gt; </code><strong class="userinput"><code>cons (1,[])
+</code></strong>[1]
+</pre><pre class="screen"><code class="prompt">&gt;&gt;&gt; </code><strong class="userinput"><code>cons ([],[])
+</code></strong>[[]]
+</pre></div></div><div class="top"><p class="src"><a name="v:cons_from_Prelude" class="def">cons_from_Prelude</a> ::  a -&gt; [a] -&gt; [a]</p><div class="doc"><p>First, we uncurry the normal (curried) Haskell list constructor (<code>:</code>), (which I've simply named <code>cons_from_Prelude</code>):
+</p><pre class="screen"><code class="prompt">&gt;&gt;&gt; </code><strong class="userinput"><code>1 : [2,3]
+</code></strong>[1,2,3]
+</pre><pre class="screen"><code class="prompt">&gt;&gt;&gt; </code><strong class="userinput"><code>1 `cons_from_Prelude` [2,3]
+</code></strong>[1,2,3]
+</pre><pre class="screen"><code class="prompt">&gt;&gt;&gt; </code><strong class="userinput"><code>:t (:)
+</code></strong>(:) :: a -&gt; [a] -&gt; [a]
+</pre><pre class="screen"><code class="prompt">&gt;&gt;&gt; </code><strong class="userinput"><code>:t (cons_from_Prelude)
+</code></strong>(cons_from_Prelude) :: a -&gt; [a] -&gt; [a]
+</pre><pre class="screen"><code class="prompt">&gt;&gt;&gt; </code><strong class="userinput"><code>:t uncurry (cons_from_Prelude)
+</code></strong>uncurry (cons_from_Prelude) :: (a, [a]) -&gt; [a]
+</pre><p>What we want to get is <code><a href="Pearl-GaDtTLHT-Section01.html#v:cons">cons</a></code>:
+</p></div></div><div class="doc empty">&nbsp;</div><div class="top"><p class="src"><a name="v:cat_from_Prelude" class="def">cat_from_Prelude</a> ::  [a] -&gt; [a] -&gt; [a]</p><div class="doc"><p>Then, we'll also need to uncurry (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:-43--43-">++</a></code>), which I've named <a href="cat_from_Prelude.html">cat_from_Prelude</a>:
+</p><pre class="screen"><code class="prompt">&gt;&gt;&gt; </code><strong class="userinput"><code>&quot;this&quot; ++ &quot;word&quot;
+</code></strong>&quot;thisword&quot;
+</pre><pre class="screen"><code class="prompt">&gt;&gt;&gt; </code><strong class="userinput"><code>&quot;this&quot; `cat_from_Prelude` &quot;word&quot;
+</code></strong>&quot;thisword&quot;
+</pre><p>This has a familar type:
+</p><pre class="screen"><code class="prompt">&gt;&gt;&gt; </code><strong class="userinput"><code>:t cat_from_Prelude
+</code></strong>cat_from_Prelude :: [a] -&gt; [a] -&gt; [a]
+</pre><pre class="screen"><code class="prompt">&gt;&gt;&gt; </code><strong class="userinput"><code>:t uncurry cat_from_Prelude
+</code></strong>uncurry cat_from_Prelude :: ([a], [a]) -&gt; [a]
+</pre><p>In the end, we get <code><a href="Pearl-GaDtTLHT-Section01.html#v:cat">cat</a></code>:
+</p></div></div><div class="top"><p class="src"><a name="v:cat" class="def">cat</a> ::  ([a], [a]) -&gt; [a]</p><div class="doc"><pre class="screen"><code class="prompt">&gt;&gt;&gt; </code><strong class="userinput"><code>:t cat
+</code></strong>cat :: ([a], [a]) -&gt; [a]
+</pre><pre class="screen"><code class="prompt">&gt;&gt;&gt; </code><strong class="userinput"><code>cat (&quot;this&quot;,&quot;word&quot;)
+</code></strong>&quot;thisword&quot;
+</pre><pre class="screen"><code class="prompt">&gt;&gt;&gt; </code><strong class="userinput"><code>cat ([1,2,3],[4,5,6])
+</code></strong>[1,2,3,4,5,6]
+</pre><pre class="screen"><code class="prompt">&gt;&gt;&gt; </code><strong class="userinput"><code>cat ([1,2,3],[])
+</code></strong>[1,2,3]
+</pre><pre class="screen"><code class="prompt">&gt;&gt;&gt; </code><strong class="userinput"><code>cat ([],[1,2,3])
+</code></strong>[1,2,3]
+</pre></div></div><h1 id="g:11">Familar Functions
+</h1><div class="doc"><p>This functional pearl assumes familiarity and understanding  of the following functions, as variants of these will be discussed.
+</p></div><h2 id="g:12">(&lt;- Prelude?) &lt;- Data.List
+</h2><div class="doc"><p>Here is the <em>huge</em> list of functions exported by <a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html">Data.List</a>. 
+</p><p>Don't worry, though! You only need to know about those which are linked. 
+ Many of these are exported to the <a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Prelude.html">Prelude</a> already, so you should be familiar with them. Right?
+</p><pre>
+   -- * Basic functions
+   
+     (<code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:-43--43-">++</a></code>)              -- :: [a] -&gt; [a] -&gt; [a]
+   , head              -- :: [a] -&gt; a
+   , last              -- :: [a] -&gt; a
+   , tail              -- :: [a] -&gt; [a]
+   , init              -- :: [a] -&gt; [a]
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:null">null</a></code>              -- :: [a] -&gt; Bool
+   , length            -- :: [a] -&gt; Int
+   
+   -- * List transformations
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:map">map</a></code>               -- :: (a -&gt; b) -&gt; [a] -&gt; [b]
+   , reverse           -- :: [a] -&gt; [a]
+   
+   , intersperse       -- :: a -&gt; [a] -&gt; [a]
+   , intercalate       -- :: [a] -&gt; [[a]] -&gt; [a]
+   , transpose         -- :: [[a]] -&gt; [[a]]
+   
+   , <code>subsequences</code>      -- :: [a] -&gt; [[a]]
+   , permutations      -- :: [a] -&gt; [[a]]
+   
+   -- * Reducing lists (folds)
+   
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldl">foldl</a></code>             -- :: (a -&gt; b -&gt; a) -&gt; a -&gt; [b] -&gt; a
+   , <code>foldl'</code>            -- :: (a -&gt; b -&gt; a) -&gt; a -&gt; [b] -&gt; a
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldl1">foldl1</a></code>            -- :: (a -&gt; a -&gt; a) -&gt; [a] -&gt; a
+   , <code>foldl1'</code>           -- :: (a -&gt; a -&gt; a) -&gt; [a] -&gt; a
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code>             -- :: (a -&gt; b -&gt; b) -&gt; b -&gt; [a] -&gt; b
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr1">foldr1</a></code>            -- :: (a -&gt; a -&gt; a) -&gt; [a] -&gt; a
+   
+   -- ** Special folds
+   
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:concat">concat</a></code>            -- :: [[a]] -&gt; [a]
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:concatMap">concatMap</a></code>         -- :: (a -&gt; [b]) -&gt; [a] -&gt; [b]
+   , and               -- :: [Bool] -&gt; Bool
+   , or                -- :: [Bool] -&gt; Bool
+   , any               -- :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
+   , all               -- :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:sum">sum</a></code>               -- :: (Num a) =&gt; [a] -&gt; a
+   , product           -- :: (Num a) =&gt; [a] -&gt; a
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:maximum">maximum</a></code>           -- :: (Ord a) =&gt; [a] -&gt; a
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:minimum">minimum</a></code>           -- :: (Ord a) =&gt; [a] -&gt; a
+   
+   -- * Building lists
+   
+   -- ** Scans
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:scanl">scanl</a></code>             -- :: (a -&gt; b -&gt; a) -&gt; a -&gt; [b] -&gt; [a]
+   , scanl1            -- :: (a -&gt; a -&gt; a) -&gt; [a] -&gt; [a]
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:scanr">scanr</a></code>             -- :: (a -&gt; b -&gt; b) -&gt; b -&gt; [a] -&gt; [b]
+   , scanr1            -- :: (a -&gt; a -&gt; a) -&gt; [a] -&gt; [a]
+   
+   -- ** Accumulating maps
+   , mapAccumL         -- :: (a -&gt; b -&gt; (a,c)) -&gt; a -&gt; [b] -&gt; (a,[c])
+   , mapAccumR         -- :: (a -&gt; b -&gt; (a,c)) -&gt; a -&gt; [b] -&gt; (a,[c])
+   
+   -- ** Infinite lists
+   , iterate           -- :: (a -&gt; a) -&gt; a -&gt; [a]
+   , repeat            -- :: a -&gt; [a]
+   , replicate         -- :: Int -&gt; a -&gt; [a]
+   , cycle             -- :: [a] -&gt; [a]
+   
+   -- ** Unfolding
+   , <code>unfoldr</code>           -- :: (b -&gt; Maybe (a, b)) -&gt; b -&gt; [a]
+   
+   -- * Sublists
+   
+   -- ** Extracting sublists
+   , take              -- :: Int -&gt; [a] -&gt; [a]
+   , drop              -- :: Int -&gt; [a] -&gt; [a]
+   , splitAt           -- :: Int -&gt; [a] -&gt; ([a], [a])
+   
+   , takeWhile         -- :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+   , dropWhile         -- :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+   , dropWhileEnd      -- :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+   , span              -- :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+   , break             -- :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+   
+   , stripPrefix       -- :: Eq a =&gt; [a] -&gt; [a] -&gt; Maybe [a]
+   
+   , group             -- :: Eq a =&gt; [a] -&gt; [[a]]
+   
+   , inits             -- :: [a] -&gt; [[a]]
+   , tails             -- :: [a] -&gt; [[a]]
+   
+   -- ** Predicates
+   , <code>isPrefixOf</code>        -- :: (Eq a) =&gt; [a] -&gt; [a] -&gt; Bool
+   , <code>isSuffixOf</code>        -- :: (Eq a) =&gt; [a] -&gt; [a] -&gt; Bool
+   , isInfixOf         -- :: (Eq a) =&gt; [a] -&gt; [a] -&gt; Bool
+   
+   -- * Searching lists
+   
+   -- ** Searching by equality
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:elem">elem</a></code>              -- :: a -&gt; [a] -&gt; Bool
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:notElem">notElem</a></code>           -- :: a -&gt; [a] -&gt; Bool
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:lookup">lookup</a></code>            -- :: (Eq a) =&gt; a -&gt; [(a,b)] -&gt; Maybe b
+   
+   -- ** Searching with a predicate
+   , find              -- :: (a -&gt; Bool) -&gt; [a] -&gt; Maybe a
+   , filter            -- :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+   , partition         -- :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])
+   
+   
+   -- ** &quot;Set&quot; operations
+   
+   , nub               -- :: (Eq a) =&gt; [a] -&gt; [a]
+   
+   , delete            -- :: (Eq a) =&gt; a -&gt; [a] -&gt; [a]
+   , (\\)              -- :: (Eq a) =&gt; [a] -&gt; [a] -&gt; [a]
+   
+   , <code>union</code>             -- :: (Eq a) =&gt; [a] -&gt; [a] -&gt; [a]
+   , <code>intersect</code>         -- :: (Eq a) =&gt; [a] -&gt; [a] -&gt; [a]
+   
+   -- ** Ordered lists
+   , <code>sort</code>              -- :: (Ord a) =&gt; [a] -&gt; [a]
+   , <code>insert</code>            -- :: (Ord a) =&gt; a -&gt; [a] -&gt; [a]
+   
+   -- * Generalized functions
+   
+   -- ** The By operations
+   -- | By convention, overloaded functions have a non-overloaded
+   -- counterpart whose name is suffixed with `By'.
+   --
+   -- It is often convenient to use these functions together with
+   -- 'on', for instance 'sortBy' ('compare' `on` 'fst').
+   
+   -- *** User-supplied equality (replacing an Eq context)
+   -- | The predicate is assumed to define an equivalence.
+   , nubBy             -- :: (a -&gt; a -&gt; Bool) -&gt; [a] -&gt; [a]
+   , deleteBy          -- :: (a -&gt; a -&gt; Bool) -&gt; a -&gt; [a] -&gt; [a]
+   , deleteFirstsBy    -- :: (a -&gt; a -&gt; Bool) -&gt; [a] -&gt; [a] -&gt; [a]
+   , unionBy           -- :: (a -&gt; a -&gt; Bool) -&gt; [a] -&gt; [a] -&gt; [a]
+   , intersectBy       -- :: (a -&gt; a -&gt; Bool) -&gt; [a] -&gt; [a] -&gt; [a]
+   , groupBy           -- :: (a -&gt; a -&gt; Bool) -&gt; [a] -&gt; [[a]]
+   
+   -- *** User-supplied comparison (replacing an Ord context)
+   -- | The function is assumed to define a total ordering.
+   , sortBy            -- :: (a -&gt; a -&gt; Ordering) -&gt; [a] -&gt; [a]
+   , insertBy          -- :: (a -&gt; a -&gt; Ordering) -&gt; a -&gt; [a] -&gt; [a]
+   , maximumBy         -- :: (a -&gt; a -&gt; Ordering) -&gt; [a] -&gt; a
+   , minimumBy         -- :: (a -&gt; a -&gt; Ordering) -&gt; [a] -&gt; a
+   
+   -- ** The &quot;generic&quot; operations
+   -- | The prefix `generic' indicates an overloaded function that
+   -- is a generalized version of a &quot;Prelude&quot; function.
+   
+   , genericLength     -- :: (Integral a) =&gt; [b] -&gt; a
+   , genericTake       -- :: (Integral a) =&gt; a -&gt; [b] -&gt; [b]
+   , genericDrop       -- :: (Integral a) =&gt; a -&gt; [b] -&gt; [b]
+   , genericSplitAt    -- :: (Integral a) =&gt; a -&gt; [b] -&gt; ([b], [b])
+   , genericIndex      -- :: (Integral a) =&gt; [b] -&gt; a -&gt; b
+   , genericReplicate  -- :: (Integral a) =&gt; a -&gt; b -&gt; [b]
+</pre></div><h1 id="g:13">Unfamiliar Functions
+</h1><div class="doc"><p>This functional pearl assumes a passable understanding of the following functions
+</p></div><h2 id="g:14">&lt;- Data.DList
+</h2><div class="doc"><p>The export list for DList is incredibly small compared to that of <code><a href="Data.html#t:List">List</a></code>. Again,
+ the linked functions will be those relevant to this pearl.
+</p><pre>
+   -- * Construction
+   , <code><a href="DList.html#v:fromList">fromList</a></code>      -- :: [a] -&gt; DList a
+   , <code><a href="DList.html#v:toList">toList</a></code>        -- :: DList a -&gt; [a]
+   -- * Basic functions
+   , <code><a href="DList.html#v:empty">empty</a></code>         -- :: DList a
+   , <code><a href="DList.html#v:singleton">singleton</a></code>     -- :: a -&gt; DList a
+   , <code><a href="DList.html#v:cons">cons</a></code>          -- :: a -&gt; DList a -&gt; DList a
+   , <code><a href="DList.html#v:snoc">snoc</a></code>          -- :: DList a -&gt; a -&gt; DList a
+   , <code><a href="DList.html#v:append">append</a></code>        -- :: DList a -&gt; DList a -&gt; DList a
+   , <code><a href="DList.html#v:concat">concat</a></code>        -- :: [DList a] -&gt; DList a
+   , replicate     -- :: Int -&gt; a -&gt; DList a
+   , list          -- :: b -&gt; (a -&gt; DList a -&gt; b) -&gt; DList a -&gt; b
+   , head          -- :: DList a -&gt; a
+   , tail          -- :: DList a -&gt; DList a
+   , <code><a href="DList.html#v:unfoldr">unfoldr</a></code>       -- :: (b -&gt; Maybe (a,  b)) -&gt; b -&gt; DList a
+   , <code><a href="DList.html#v:foldr">foldr</a></code>         -- :: (a -&gt; b -&gt; b) -&gt; b -&gt; DList a -&gt; b
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:map">map</a></code>           -- :: (a -&gt; b) -&gt; DList a -&gt; DList b
+   -- * MonadPlus
+   ,  maybeReturn
+</pre></div><h1 id="g:15">Comparing <a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html">Data.List</a> and <a href="Data-Dlist.html">Data.Dlist</a>
+</h1><div class="doc"><p><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html">Data.List</a>:
+</p><pre>
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:foldr">foldr</a></code>             -- :: (a -&gt; b -&gt; b) -&gt; b -&gt; [a] -&gt; b
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:unfoldr">unfoldr</a></code>           -- :: (b -&gt; Maybe (a, b)) -&gt; b -&gt; [a]
+  
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:map">map</a></code>               -- :: (a -&gt; b) -&gt; [a] -&gt; [b]
+  
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:concat">concat</a></code>            -- :: [[a]] -&gt; [a]
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:concatMap">concatMap</a></code>         -- :: (a -&gt; [b]) -&gt; [a] -&gt; [b]
+</pre><p><a href="Data-DList.html">Data.DList</a>:
+</p><pre>
+   , <code><a href="DList.html#v:foldr">foldr</a></code>         -- :: (a -&gt; b -&gt; b) -&gt; b -&gt; DList a -&gt; b
+   , <code><a href="DList.html#v:unfoldr">unfoldr</a></code>       -- :: (b -&gt; Maybe (a,  b)) -&gt; b -&gt; DList a
+ 
+   , <code><a href="C:\msg\lang\h-7.4.2\lib/../doc/html/libraries/base-4.5.1.0/Data-List.html#v:map">map</a></code>           -- :: (a -&gt; b) -&gt; DList a -&gt; DList b
+   
+   , <code><a href="DList.html#v:append">append</a></code>        -- :: DList a -&gt; DList a -&gt; DList a
+   , <code><a href="DList.html#v:concat">concat</a></code>        -- :: [DList a] -&gt; DList a
+</pre></div><div class="top"><p class="src"><a name="v:h" class="def">h</a> ::  [a] -&gt; b</p><div class="doc"><pre class="screen"><code class="prompt">&gt;&gt;&gt; </code><strong class="userinput"><code>:t h []
+</code></strong>h [] :: b
+</pre></div></div><div class="top"><p class="src"><a name="v:-8857-" class="def">(&#8857;)</a> ::  [a] -&gt; [a] -&gt; [a]</p><div class="doc"><p>An associative operator.
+</p></div></div></div></div><div id="footer"><p>Produced by <a href="http://www.haskell.org/haddock/">Haddock</a> version 2.11.0</p></div></body></html>
