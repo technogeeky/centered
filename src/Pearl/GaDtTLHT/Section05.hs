@@ -129,16 +129,23 @@ t07comments = undefined
 -- 
 -- 
 -- To parallelise a function f :: Tree  a -> b, we must have a
--- variation f' :: Cxt  a -> b defined on contexts. Instantiating R,
--- S, and T in Theorem 7 respectively to f . fill, f, and f', we see
--- that f t can be computed in terms of f' cx and f u,
+-- variation f' :: Cxt  a -> b defined on contexts. 
+--
+-- Instantiating R, S, and T in Theorem 7 respectively to:
+--
+-- @
+--   R = f . fill
+--   S = f
+--   T = f'
+-- @
+-- 
+-- we see that f t can be computed in terms of f' cx and f u,
 -- 
 -- @
 -- f . fill = f . fill . ( f' . '><' f . ) . ( f' '><' f ) ,
 -- @
 -- 
 -- if there exist U and V such that
--- 
 --
 -- @
 --   ('p11')   f . fill = U . ( id '><' f ) ∧
@@ -162,10 +169,13 @@ p12 = undefined
 
 -- 
 -- 
--- Equation ('p11') basically says that f is outwards - f ( fill ( cx, u ))
--- can be computed from cx and f u, while ('p12') says that f is also
--- inwards - f ( fill ( cx, u )) can be computed from f′
--- cx and u.
+-- Equation ('p11') basically says that f is outwards:  
+--
+-- @f ( fill ( cx, u ))@ can be computed from @cx@ and @f u@
+--
+-- while ('p12') says that f is also inwards:
+--
+-- @f ( fill ( cx, u ))@ can be computed from @f′ cx@ and @u@.
 -- 
 -- This is another way to view the previous work of Morihata et
 -- al. [@'r10'@].
@@ -359,14 +369,17 @@ p15 :: property
 p15 = undefined
 -- ^
 -- @
---
---   ('p15')   fill° . k   = ( k' '><' k ) . ( k'° '><' k° ) . fill° .k
+-- \ ('p15')   fill° . k   = ( k' '><' k ) . ( k'° '><' k° ) . fill° .k
 --    \   \  if        k   = unf↓ ( g↓, f↓, p ) = mem .  unf↑ ( g↑, f↑ )
 --    \   \            k'  = mem . cxt↑ g↑ v. 
 -- @
 -- 
 -- To compute k “from the middle”, we may pick g to be a subset of 
 -- 
+
+p15pick :: pick
+p15pick = undefined
+-- ^
 -- @
--- ( k'° '><' k°) . fill° . k
+-- \ ('p15pick')    ( k'° '><' k°) . fill° . k
 -- @

@@ -27,7 +27,7 @@ conclusions = undefined
 -- efficient parallel algorithm for scan based on unfolds. To the best
 -- of the authors' knowledge, while there have been many studies
 -- on parallel programming based on structural recursion, none have
--- considered the dual -- list generation in the form of /unhom/.
+-- considered the dual -- list generation in the form of 'unhom'.
 --
 -- The theorem generalises nicely to trees: if a function processes
 -- or generates a tree both downwards and upwards, it may process or
@@ -36,23 +36,31 @@ conclusions = undefined
 -- on an old topic by revealing its hidden symmetry. The authors
 -- believe that relational methods deserve to be appreciated more
 -- among functional programmers.
--- 
+
+
+-- * Closing Remark
 -- As a remark, in practice, for both list and tree generation one
 -- might need different types of seeds for left vs. right or inwards vs. outwards
 -- unfolding. 
 --
 -- That is, we have 
 --
+
+p17 :: property
+p17 = undefined
+-- ^
 -- @
---        k = unfoldr g_fwd p . i_1 
---          = unfoldl g_rev p . i_2
+-- \ ('p17')       k = unfoldr g_fwd p . i_1 
+-- \  \   \          = unfoldl g_rev p . i_2
 -- @
 --
--- or 
---
+
+p18 :: property
+p18 = undefined
+-- ^
 -- @
---        k = unf_d   fs_d . i_1 
---          = unf_u   fs_u . i_2
+-- \ ('p18')       k = unf_d   fs_d . i_1 
+-- \  \   \          = unf_u   fs_u . i_2
 -- @ 
 --
 -- for some i_1 and i_2 that initialise the seeds. 
@@ -60,11 +68,12 @@ conclusions = undefined
 -- This is also covered by Theorem 7. We leave it to the
 -- readers to work out the details.
 
--- * Acknowledgements
 
 acknowledgements :: a
 acknowledgements = undefined
 -- ^
+-- * Acknowledgements
+--  
 -- The authors would like to thank Jeremy Gibbons, Jose Nuno Oliveira, and Janis Voigtlander for 
 -- comments on earlier drafts, and to the anonymous referees for their valuable comments. This pearl
 -- was inspired by a question proposed by Zhenjiang Hu, who also cooperated with the authors

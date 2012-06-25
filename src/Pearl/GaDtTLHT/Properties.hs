@@ -31,6 +31,8 @@ module Pearl.GaDtTLHT.Properties
      , p02
      -- ** 'p03'
      , p03
+     , p03b
+     , p03h
      -- ** 'p04'
      , p04
 ------------------------------------------------------------------------------------------------
@@ -93,10 +95,15 @@ module Pearl.GaDtTLHT.Properties
      , p14
      -- ** 'p15'
      , p15
+     , p15pick
 
 ------------------------------------------------------------------------------------------------
      -- * Section 6
 ------------------------------------------------------------------------------------------------
+     -- ** 'p17'
+     , p17
+     -- ** 'p18'
+     , p18
      )    where
 
 import Pearl.GaDtTLHT.Section01
@@ -111,6 +118,8 @@ import Pearl.GaDtTLHT.Section02
                               , p01b
                               , p02
                               , p03
+                              , p03b
+                              , p03h
                               , p04
                               , p04pick
                               )
@@ -150,9 +159,12 @@ import Pearl.GaDtTLHT.Section05
                               , p13
                               , p14
                               , p15
+                              , p15pick
                               )
 
 import Pearl.GaDtTLHT.Section06
                               (
+                                p17
+                              , p18
                               )
 

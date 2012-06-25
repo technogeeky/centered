@@ -535,7 +535,12 @@ p07 = undefined
 -- ^
 -- The equality @('p05')@ can be expressed relationally.
 --
--- If @k = 'unfoldr' ('||>') p@ we have:
+-- If:
+-- @
+-- \                    'k' = 'unfoldr' ('||>') p
+-- @ 
+--
+-- we have:
 -- 
 -- @
 -- \ ('p07')     cat° . 'k' = ('id' '><' 'k' ) . 'unfr' ('||>') p
@@ -664,7 +669,7 @@ p08pick = undefined
 -- Thus @g@ can be any functional subset of:
 --
 -- @
---  \                                   ('k'° '><' 'k'°) . 'cat'° . 'k'
+--  \ ('p08pick')                  ('k'° '><' 'k'°) . 'cat'° . 'k'
 -- @
 --
 

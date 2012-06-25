@@ -80,6 +80,7 @@ module Pearl.GaDtTLHT.Section04
 , p10h
 , p10i
 , p10j
+, p10k
 
 
 -- $scancomments
@@ -181,6 +182,8 @@ p09proof = undefined
 -- the property trivially holds. The nonempty case is shown below:
 -- 
 -- @
+--   ('p09proof')
+--
 -- ( ws ++ sort xs, ys ) ∈ iterF ( ws, zs )
 -- 
 -- ≡      { zs /= ∅ , let z = min zs }
@@ -281,9 +284,9 @@ p10a :: property
 p10a = undefined
 -- ^
 -- @
--- scanl (⊕) ι⊕ ( xs ++ ys ) 
---      | xs' ++ [ x ] <- scanl (⊕) ι⊕ xs
---      = xs' ++ [ x ] ++  map ( x ⊕) ( scanl (⊕) ι⊕ ys )
+-- \  ('p10a')  scanl (⊕) ι⊕ ( xs ++ ys ) 
+-- \   \    \    | xs' ++ [ x ] <- scanl (⊕) ι⊕ xs
+-- \   \    \    = xs' ++ [ x ] ++  map ( x ⊕) ( scanl (⊕) ι⊕ ys )
 -- @
 
 
@@ -303,13 +306,10 @@ p10b :: property
 p10b = undefined
 -- ^
 -- @
--- scan ( e, [ ])      = [ ]
--- scan ( e, x ∶ xs ) = e ∶ scan ( e ⊕ x, xs )
+-- \ ('p10b')  scan ( e, [ ])      = [ ]
+-- \  \    \   scan ( e, x ∶ xs )  = e ∶ scan ( e ⊕ x, xs )
 -- @
 
---scan ( e, [ ])      = [ ]
---scan ( e, x ∶ xs ) = e ∶ scan ( e `⊕` x, xs )
- 
 
 e03 :: example
 e03 = undefined
@@ -326,9 +326,9 @@ p10c :: property
 p10c = undefined
 -- ^
 -- @
--- scan ( e, xs ++ [ x ])  = scan ( e, xs ) ++ [ e ⊕ reduce xs ] ,
---      where 
---                reduce = hom (⊕) id ι⊕
+-- \ ('p10c')  scan ( e, xs ++ [ x ])  = scan ( e, xs ) ++ [ e ⊕ reduce xs ] ,
+-- \  \    \        where 
+-- \  \    \                                     hom (⊕) id ι⊕ = reduce
 -- @
 
 
@@ -340,9 +340,9 @@ p10d :: property
 p10d = undefined
 -- ^
 -- @
--- scan = 'unfoldr' ('||>') p 
---      = 'unfoldl' ('<||') p
---      where               p = null '.' snd 
+-- \ ('p10d')  scan = 'unfoldr' ('||>') p 
+-- \  \    \        = 'unfoldl' ('<||') p
+-- \  \    \        where               p = null '.' snd 
 -- @
 
 
@@ -351,8 +351,8 @@ p10e :: property
 p10e = undefined
 -- ^ 
 -- @
---                     ('||>') ( e, x ∶ xs )     = ( e, ( e ⊕ x, xs ))
---                     ('<||') ( e, xs ++ [ ]) = (( e, xs ) , e ⊕ reduce xs )
+-- \ ('p10e')           ('||>') ( e, x ∶ xs )     = ( e, ( e ⊕ x, xs ))
+-- \  \    \            ('<||') ( e, xs ++ [ ])   = (( e, xs ) , e ⊕ reduce xs )
 -- @
 --
 -- where the domains of ('||>') and ('<||') are pairs whose second components
@@ -366,10 +366,9 @@ p10g = undefined
 -- To construct g, we show that for xs ++ ys = zs we have:
 -- 
 -- @
--- ( scan ( e, xs ) ,      ( e ⊕ reduce xs, ys )) ∈ 'unfoldrp' ('||>')  p ( e, zs )
--- (      ( e, xs ) , scan ( e ⊕ reduce xs, ys )) ∈ 'unfoldlp' ('<||')  p ( e, zs )
+-- \ ('p10g')  ( scan ( e, xs ) ,      ( e ⊕ reduce xs, ys )) ∈ 'unfoldrp' ('||>')  p ( e, zs )
+-- \  \    \   (      ( e, xs ) , scan ( e ⊕ reduce xs, ys )) ∈ 'unfoldlp' ('<||')  p ( e, zs )
 -- @
--- 
 -- 
 
 -- $p10gto10
@@ -393,6 +392,8 @@ p10proof :: proof
 p10proof = undefined
 -- ^
 -- @
+--   ('p10proof')
+--
 --    ( ws ++ scan ( e, xs ) , ( e ⊕ r xs, ys )) ∈ iterF ( ws, ( e, z ∶ zs ))
 -- ≡  ( ws ++ scan ( e, xs ) , ( e ⊕ r xs, ys )) = ( ws, ( e, z ∶ zs )) ∨
 --    ( ws ++ scan ( e, xs ) , ( e ⊕ r xs, ys )) ∈ iterF ( ws ++ [ e ] , ( e ⊕ z, zs ))
@@ -416,7 +417,7 @@ p10pick = undefined
 -- Thus we /pick/:
 -- 
 -- @
---      g ( e, zs )  =  (( e, xs ) , ( e ⊕ reduce xs, ys )) for some xs ++ ys = zs. 
+-- \ ('p10pick')    g ( e, zs )  =  (( e, xs ) , ( e ⊕ reduce xs, ys )) for some xs ++ ys = zs. 
 -- @
 
 
@@ -481,28 +482,25 @@ p10h :: property
 p10h = undefined
 -- ^
 -- @
--- build [ x ]         = L x
--- build ( xs ++ ys )  |                               xs /= [ ] ∧ ys /= [ ]
---                     = let t = build xs
---                           u = build ys
---                       in 
---                          N t ( val t ⊕ val u ) u
+-- \ ('p10h')  build [ x ]         = L x
+-- \  \    \   build ( xs ++ ys )  |                               xs /= [ ] ∧ ys /= [ ]
+-- \  \    \                       = let t = build xs
+-- \  \    \                             u = build ys
+-- \  \    \                         in 
+-- \  \    \                             N t ( val t ⊕ val u ) u
 -- @
+--
+-- with the invariant that:
+--
+-- @
+-- \ ('p10h')  val ( build xs ) = reduce xs:
+-- @
+-- 
+
 
 
 p10i :: property
 p10i = undefined
-
--- ^
--- with the invariant that:
---
--- @
---   val ( build xs ) = reduce xs:
--- @
-
-
-p10j :: property
-p10j = undefined
 -- ^ 
 -- The key to construct an efficient implementation of scan is to
 -- perform build in a separate phase and use only the results stored in
@@ -536,15 +534,25 @@ p10j = undefined
 -- @
 -- 
 -- We rename f to acc since it accumulates the result:
+
+
+p10j :: property
+p10j = undefined
+-- ^
 -- 
 -- @
--- scan ( e, [ ])      = [ ]
--- scan ( e, xs )      = acc ( e, build xs )
+-- \ ('p10j')  scan ( e, [ ])      = [ ]
+-- \  \    \   scan ( e, xs )      = acc ( e, build xs )
 -- @
--- 
+
+
+p10k :: property
+p10k = undefined
+-- ^
+--
 -- @
--- acc ( e, L x )      = [ e ]
--- acc ( e, N t   u )  = acc ( e, t ) ++ acc ( e ⊕ val t, u )
+-- \ ('p10k')  acc ( e, L x )      = [ e ]
+-- \  \    \   acc ( e, N t   u )  = acc ( e, t ) ++ acc ( e ⊕ val t, u )
 -- @
 
 

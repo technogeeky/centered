@@ -185,13 +185,13 @@ p02 = undefined
 -- That is, if:
 --
 -- @
---   ('p01a')      'h'          = 'foldr' ('<||') 'e'
+-- \ ('p01a')       'h'          = 'foldr' ('<||') 'e'
 -- @
 --
 -- then one can show:
 -- 
 -- @
---   ('p02') 'h' (xs '++' ys)   = 'foldrr' ('<||') ( xs , 'h' ys )
+-- \ ('p02')        'h' (xs '++' ys)   = 'foldrr' ('<||') ( xs , 'h' ys )
 -- @
 --
 -- by induction on xs.
@@ -209,11 +209,15 @@ p03 = undefined
 -- 
 -- then equation ('p02'):
 --
--- @('p02') 'h' (xs '++' ys) = 'foldrr' ('<||') ( xs , 'h' ys )@
+-- @
+-- \ ('p02')   'h' (xs '++' ys)   = 'foldrr' ('<||') ( xs , 'h' ys )
+-- @
 -- 
 -- can be point-free as:
 -- 
--- @('p03') 'h' '.' 'cat'      = 'foldrr' ('<||') '.' ( 'id' '><' 'h' ) @
+-- @
+-- \ ('p03')   'h' '.' 'cat'      = 'foldrr' ('<||') '.' ( 'id' '><' 'h' )
+-- @
 --
 
 
@@ -236,7 +240,9 @@ p03b = undefined
 -- ^
 -- It is known that 
 --
--- @ 'foldl' ('||>') 'e' @
+-- @
+-- \ ('p03b')  'foldl' ('||>') 'e'
+-- @
 --
 -- is the unique solution for @'h' :: [a] -> b@
 --
@@ -247,8 +253,8 @@ p03h :: property (p03b) [pointfree]
 p03h = undefined
 -- ^
 -- @
---   ('p03h')  'h' [] = 'e'
---             'h' '.' 'snoc' = ('||>') '.' ( 'h' '><' 'id' )
+-- \ ('p03h')  'h' [] = 'e'
+-- \  \    \   'h' '.' 'snoc' = ('||>') '.' ( 'h' '><' 'id' )
 -- @
 --
 -- where @ ('||>') :: (b,a) -> b. @
@@ -272,7 +278,9 @@ p04 = undefined
 -- ^
 -- We have, if @ 'h' = 'foldl' ('||>') 'e' @, that:
 -- 
--- @ ('p04')  'h' '.' 'cat' = 'foldlr' ('||>') '.' ( 'h' '><' 'id' ) @
+-- @
+-- \ ('p04')        'h' '.' 'cat' = 'foldlr' ('||>') '.' ( 'h' '><' 'id' )
+-- @
 
 
 h :: property (h is a list homomorphism) denoted (hom f k e)
