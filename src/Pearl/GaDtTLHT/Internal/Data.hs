@@ -1,8 +1,6 @@
 {-# LANGUAGE UnicodeSyntax #-}
 
-data Tree a = L a 
-            | R a
-            |       N  ( Tree a ) a ( Tree a )    deriving (Read,Show)
+data Tree a = L a | N  ( Tree a ) a ( Tree a )    deriving (Read,Show)
 data Z    a =       Nl            a ( Tree a )  
                   | Nr ( Tree a ) a               deriving (Read,Show)
 
@@ -75,19 +73,17 @@ k v                       | p v                   = L ( fL v )
 --                        where k' :: b -> Cxt a
 --                              k' = undefined
 
-unfL  :: ( b -> ( b, a, b ) , b -> a , b -> (Bool,(),Bool) ) -> b -> Tree a 
-unfpL :: ( b -> ( b, a, b ) , b -> a,  b -> (Bool,(),Bool) ) -> b -> [( Cxt a, b )]
+unfL  :: ( b -> ( b, a, b ) , b -> a , b -> Bool ) -> b -> Tree a 
+unfpL :: ( b -> ( b, a, b ) , b -> a,  b -> Bool ) -> b -> [( Cxt a, b )]
 
 
-unfL  fs@ ( gL, fL, p ) v  | (True,(),_____) <- p  v   = L ( fL v )
-                           | (____,(),True ) <- p  v   = R ( undefined v )
-                           | ( v1 ,c , v2  ) <- gL v   = N ( unfL fs v1 ) c ( unfL fs v2 )
+unfL  fs@ ( gL, fL, p ) v  | p v                   = L ( fL v )
+                           | (v1,c,v2) <- gL v     = N ( unfL fs v1 ) c ( unfL fs v2 )
 
 
-unfpL fs@ ( gL, fL, p ) v                        = iterL  ([] , v ) 
+unfpL fs@ ( gL, fL, p ) v                          = iterL ([],v) 
  where
-  iterL ( xs, v ) | (True,(),____) <- p v              = [( xs, v )]
-                  | (____,(),True) <- p v              = error "I don't know!"
+  iterL ( xs, v ) |                    p v = [( xs, v )]
                   | ( v1 , x, v2 ) <- gL v =  ( xs, v ) : iterL ( Nl                x ( unfL fs v2 ) : xs, v1 ) 
                                                        ++ iterL ( Nr ( unfL fs v1 ) x                : xs, v2 )
 
