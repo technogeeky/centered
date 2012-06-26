@@ -65,28 +65,28 @@ g = undefined
 p = undefined
 
 
-k :: ( ?k' :: b -> Cxt a
-     , ?g  :: b -> (b,b)
-     )                    => b -> Tree a
+--k :: ( ?k' :: b -> Cxt a
+--     , ?g  :: b -> (b,b)
+k ::                 b -> Tree a
 k v                       | p v                   = L ( fL v )
-                          | ( vR, vL ) <- ?g v    = fill (( ?k' vR ),( k vL ))
---                        where k' :: b -> Cxt a
---                              k' = undefined
+                          | ( vR, vL ) <- g v    = fill (( k' vR ),( k vL ))
+                          where k' :: b -> Cxt a
+                                k' = undefined
+                                g = (\b -> (,) b b)
 
-unfL  :: ( b -> ( b, a, b ) , b -> a , b -> Bool ) -> b -> Tree a 
-unfpL :: ( b -> ( b, a, b ) , b -> a,  b -> Bool ) -> b -> [( Cxt a, b )]
-
-
-unfL  fs@ ( gL, fL, p ) v  | p v                   = L ( fL v )
-                           | (v1,c,v2) <- gL v     = N ( unfL fs v1 ) c ( unfL fs v2 )
+unfoldL  :: ( b -> ( b, a, b ) , b -> a , b -> Bool ) -> b -> Tree a 
+unfoldpL :: ( b -> ( b, a, b ) , b -> a,  b -> Bool ) -> b -> [( Cxt a, b )]
 
 
-unfpL fs@ ( gL, fL, p ) v                          = iterL ([],v) 
+unfoldL  fs@ ( gL, fL, p ) v  | p v                   = L ( fL v )
+                              | (v1,c,v2) <- gL v     = N ( unfoldL fs v1 ) c ( unfoldL fs v2 )
+
+
+unfoldpL fs@ ( gL, fL, p ) v                          = iterL ([],v) 
  where
   iterL ( xs, v ) |                    p v = [( xs, v )]
-                  | ( v1 , x, v2 ) <- gL v =  ( xs, v ) : iterL ( Nl                x ( unfL fs v2 ) : xs, v1 ) 
-                                                       ++ iterL ( Nr ( unfL fs v1 ) x                : xs, v2 )
-
+                  | ( v1 , x, v2 ) <- gL v =  ( xs, v ) : iterL ( Nl                x ( unfoldL fs v2 ) : xs, v1 ) 
+                                                       ++ iterL ( Nr ( unfoldL fs v1 ) x                : xs, v2 )
 
 
 cxtpR gR v = iterR ( v, [ ])
@@ -95,21 +95,30 @@ cxtpR gR v = iterR ( v, [ ])
                                                y              <- iterR ( v', cx ++ [ up lr ])
                                              ]
 
-up (Right (v_l, x )) = Nr   ( k v_l ) x
-up (Left  ( x ,v_r)) = Nl             x ( k v_r )
+up (Rt (v_l, x )) = Nr   ( k v_l ) x
+up (Lt  ( x ,v_r)) = Nl             x ( k v_r )
+
+type GoR a b = forall a. b -> [ ( b , (a,b) :.+.: (b,a) ) ]
 
 
--- unfpR ::  ( GR a b, b -> [( b, a )]) -> b -> [( b, Tree a )]
+gR :: GoR (Rt a) ()
+gR v = undefined
 
-unfpR :: (?k'::b -> Cxt a, ?g::b -> (b, b)) =>   (t1 -> [ (t1 , Either (a, b) (b, a) ) ]   , t -> [ (t1, a) ] ) -> t -> [(t1,Tree a)]
-cxtR  :: (?k'::b -> Cxt a, ?g::b -> (b, b)) =>   (t  -> [ (t  , Either (a, b) (b, a) ) ]) -> t -> [ [Z a]   ]
-unfR  :: (?k'::b -> Cxt a, ?g::b -> (b, b)) =>   (t1 -> [ (t1 , Either (a, b) (b, a) ) ]   , t -> [ (t1, a) ] ) -> t -> [Tree a]
+-- infix Either or "disjoint sum"
+data a :.+.: b = Lt a
+               | Rt b
+
+unfoldpR :: (b -> [ (b , (a, b) :.+.: (b, a) ) ]   , b -> [ (b, a) ] ) -> b -> [ (,) b (Tree a) ]
+cxtR     :: (b -> [ (b , (a, b) :.+.: (b, a) ) ]                     ) -> b -> [ [Z          a] ]
+unfoldR  :: (b -> [ (b , (a, b) :.+.: (b, a) ) ]   , b -> [ (b, a) ] ) -> b -> [        Tree a  ]
 
  
-unfpR (gR,fR)  v = [ ( v'' , fill ( cx, L x) ) | ( v'  , x  )        <- fR       v
-                                               , ( v'' , cx )  <- cxtpR gR       v'                ]
-cxtR   gR      v = [ cx                        | ( v'  , cx )  <- cxtpR gR       v        
-                                               ,                                    null ( p v' )  ]
-unfR  (gR,fR)  v = [ t                         | ( v'  ,  t )  <- unfpR (gR,fR)  v
-                                               ,                                    null ( p v' )  ]
+unfoldpR (gR,fR)  v = [ ( v'' , fill ( cx, L x) ) | ( v'  , x  )        <- fR          v
+                                                  , ( v'' , cx )  <- cxtpR gR          v'                ]
+cxtR      gR      v = [ cx                        | ( v'  , cx )  <- cxtpR gR          v        
+                                               ,                                          null ( p v' )  ]
+unfoldR  (gR,fR)  v = [ t                         | ( v'  ,  t )  <- unfoldpR (gR,fR)  v
+                                               ,                                          null ( p v' )  ]
 
+
+atRoot p v = null (p v)
